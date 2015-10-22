@@ -10,6 +10,9 @@ Last Updated::
   {docdate}
 Proposed IANA Registrations::
   +application/prs.hal-forms+json+
+Github Repo::
+  https://github.com/mamund/hal-forms
+
 
 == Summary
 This document describes a simple media type designed to add runtime-support for the http://stateless.co/hal_specification.html[HAL] media type. This is an _independent backward-compatible_ extension of the HAL media type and MUST NOT be treated as standard HAL or as part of the https://tools.ietf.org/html/draft-kelly-json-hal-07[HAL specification].
