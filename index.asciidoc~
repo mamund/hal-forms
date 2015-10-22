@@ -15,7 +15,7 @@ Github Repo::
 
 
 == Summary
-This document describes a simple media type designed to add runtime FORM support for the http://stateless.co/hal_specification.html[HAL] media type. This is an _independent backward-compatible_ extension of the HAL media type and MUST NOT be treated as standard HAL or as part of the https://tools.ietf.org/html/draft-kelly-json-hal-07[HAL specification].
+This document describes a simple media type designed to add runtime-support for the http://stateless.co/hal_specification.html[HAL] media type. This is an _independent backward-compatible_ extension of the HAL media type and MUST NOT be treated as standard HAL or as part of the https://tools.ietf.org/html/draft-kelly-json-hal-07[HAL specification].
 
 == Motivation
 The HAL media type is a popular format for representing API responses. One of the possible reasons for this popularity is that HAL does not include detailed information about state transitions like filtered requests (e.g. search, sort, etc.) or write operations (e.g. create, edit, delete, etc.) as part of the specification. This means one of the challenges of using HAL for APIs that support dynamic user inputs and/or varying workflow patterns is client applications must encode the detailed transition information (args, methods, workflow) directly in the client code. That means clients must be updated each time the input or workflow details change. 
