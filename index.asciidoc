@@ -1,0 +1,114 @@
+= The HAL Forms Media Type
+:author: Mike Amundsen
+:email: mca@amundsen.com
+:toc: 
+
+== Status
+Doc Status:: 
+  *[white red-background]#Working Draft#* -- _Only experimental and `proof-of-concept' apps should be built on this unstable draft._
+Last Updated::
+  {docdate}
+Proposed IANA Registrations::
+  +application/prs.hal-forms+json+
+
+== Summary
+This document describes a simple media type designed to add runtime-support for the http://stateless.co/hal_specification.html[HAL] media type. This is an _independent backward-compatible_ extension of the HAL media type and MUST NOT be treated as standard HAL or as part of the https://tools.ietf.org/html/draft-kelly-json-hal-07[HAL specification].
+
+== Motivation
+The HAL media type is a popular format for representing API responses. One of the possible reasons for this popularity is that HAL does not include detailed information about state transitions like filtered requests (e.g. search, sort, etc.) or write operations (e.g. create, edit, delete, etc.) as part of the specification. This means one of the challenges of using HAL for APIs that support dynamic user inputs and/or varying workflow patterns is client applications must encode the detailed transition information (args, methods, workflow) directly in the client code. That means clients must be updated each time the input or workflow details change. 
+
+The HAL Forms media type is an attempt to meet this challenge by creating a format and processing pattern to support dynamic UI forms for HAL responses. This is a backward-compatible, non-standard extension. There is nothing in this format or process pattern that adds breaking changes to the HAL media type itself. Clients that implement this extension can still be valid HAL clients by degrading gracefully (e.g. not throwing errors when HAL Forms documents are not returned by the server.
+
+[NOTE]
+.RFC2119 Words
+====
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", 
+"SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be 
+interpreted as described in link:http://tools.ietf.org/html/rfc2119[RFC2119].
+====
+
+== The HAL Forms Media Type
+The HAL Forms media type is a simple JSON document that contains information on the HTTP method, and parameters to use when making a templated request to a HAL server. This media type can be used to return dynamic state transition descriptions at runtime for HAL servers.
+
+=== Example HAL Forms document
+Here is a simple HAL Forms document example:
+
+----
+{
+  "rel":"/files/hal-todo-create",
+  "method":"post",
+  "properties": [
+    {"name":"title","required":true, "value":"", "prompt":"Title", "regex":""},
+    {"name":"completed","required":false,"value":"false", "prompt":"Completed", "regex":""}
+  ]
+}
+----
+
+== Properties of a HAL Forms Document
+The following is a summary of the HAL Forms media type:
+
++method+::
+  The HTTP method the client SHOULD execute when making the service request. Any valid HTTP method is allowed. This is a REQUIRED element. If the value is empty or is not understood by the client, the value MUST be treated as an HTTP GET.
++properties+::
+  An array of one or more anonymous +property+ objects that each describe a parameter for a state transition. This is an OPTIONAL element. If the array is missing or empty, the +properties+ collection MUST be treated as an empty set of parameters -- meaning that the +method+ is meant to be executed without passing any parameters.
++property+::
+  A JSON object that describes a state transition parameter. A +property+ object has the following elements:
+  +
+  * +name+ : The parameter name. This is a valid JSON string.
+  * +prompt+ : The human-readable prompt for the parameter. This is a valid JSON string.
+  * +readOnly+ : A true/false flag to indicate whether the parameter is read-only. 
+  * +regex+ : A regular expression string to be applied to the value of the parameter. Rules for valid values are the same as the http://www.w3.org/TR/html5/forms.html#the-pattern-attribute[HTML5 pattern] attribute  
+  * +required+ : A true/false flag indicate whether the parameter is required.
+  * +value+ : The paramter value. This is a valid JSON string.
++rel+::
+  A string that holds a single string representing the associated Link Relation Value for this form. This is an OPTIONAL element.
+
+== The HAL Forms Media Type String
+The media type identifier string for HAL Forms documents is: +application/prs.hal-forms+json+  This SHOULD be used as part of the HTTP +accept+ header when clients make a request for a HAL Forms document. It SHOULD appear as the HTTP +content-type+ header when servers return a HAL Forms document. 
+
+=== Example Request/Response
+Below is a sample request and response when using the +application/prs.hal-forms+json+ media type.
+
+----
+**** REQUEST
+GET /forms/create HTTP/1.1
+Host: api.example.org
+Accept: application/prs.hal-forms+json
+
+**** RESPONSE
+HTTP/1.1 200 OK
+Content-Type: application/prs.hal-forms+json
+Date: Wed, 01 Jun 2016 14:59:30 GMT
+
+{
+  "rel":"http://api.example.org/forms/create",
+  "method":"post",
+  "properties": [
+    {"name":"title","required":true, "value":"", "prompt":"Title", "regex":""},
+    {"name":"completed","required":false,"value":"false", "prompt":"Completed", "regex":""}
+  ]
+}
+----
+
+== Suggested Process Flow for HAL Forms
+While it is completely up to authors and consumers to determine how they wish to use the HAL Forms media type, the following is a suggested process flow for runtime use of HAL Forms documents on the Web.
+
+ . Servers emit valid HAL responses that contain +rel+ values that are valid URLs which point to HAL Forms documents.
+ . Clients parse the HAL response and (either on-demand or in pre-feftch mode) pull the HAL Forms as needed.
+ . When HAL Form is returned by the server, clients use this information to render an input UI for humans to deal with at the appropriate time.
+ . Clients collect the completed user inputs and craft a valid request to send to the server.
+ 
+== Extending the HAL Forms Document
+Authors can extend the HAL Forms media type as long as the following rules are followed:
+
+ . No existing properties or objects are removed.
+ . No existing values, properties or objects are altered in a way that is non-backward compatible (e.g. changes MUST NOT break existing implementations that adhere to this specification).
+ . All new properties or objets are treated as OPTIONAL (e.g. no new REQUIRED elements are introduced in an extension).
+ 
+[WARNING]
+==== 
+Authors should be aware that a future version of this specification MAY add new elements and should take care that any extensions are implemented in a way that reduces the likelihood that a future version of this speficiation is in conflict with your extension.
+====
+
+ 
+ 
