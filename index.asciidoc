@@ -149,7 +149,7 @@ Date: Wed, 01 Jun 2016 15:03:30 GMT
 ----
  
 == Extending the HAL Forms Document
-Authors can extend the HAL Forms media type as long as the following rules are followed:
+Authors can extend the HAL Forms media type as long as the following rules are observed:
 
  . No existing properties or objects are removed.
  . No existing values, properties or objects are altered in a way that is non-backward compatible (e.g. changes MUST NOT break existing implementations that adhere to this specification).
