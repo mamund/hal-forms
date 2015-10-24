@@ -94,6 +94,15 @@ title="A+Sample+HAL+Forms+Response"&completed="false"
 == The HAL Forms Media Type Identifier String
 The media type identifier string for HAL Forms documents is: +application/prs.hal-forms+json+  This SHOULD be used as part of the HTTP +accept+ header when clients make a request for a HAL Forms document. It SHOULD appear as the HTTP +content-type+ header when servers return a HAL Forms document. 
 
+
+== Suggested Process Flow for HAL Forms
+While it is completely up to authors and consumers to determine how they wish to use the HAL Forms media type, the following is a suggested process flow for runtime use of HAL Forms documents on the Web.
+
+ . Servers emit valid HAL responses that contain +rel+ values that are valid URLs which point to HAL Forms documents.
+ . Clients parse the HAL response and (either on-demand or in pre-feftch mode) pull the HAL Forms as needed.
+ . When HAL Form is returned by the server, clients use this information to render an input UI for humans to deal with at the appropriate time.
+ . Clients collect the completed user inputs and, based on +contentType+, craft a valid request to send to the server.
+
 === Example Request/Response
 Below is a sample request and response when using the +application/prs.hal-forms+json+ media type.
 
@@ -119,13 +128,25 @@ Date: Wed, 01 Jun 2016 14:59:30 GMT
 }
 ----
 
-== Suggested Process Flow for HAL Forms
-While it is completely up to authors and consumers to determine how they wish to use the HAL Forms media type, the following is a suggested process flow for runtime use of HAL Forms documents on the Web.
+After accepting the HAL Forms response and rendering the UI, the client application can -- once the user supplies inputs and executes the "submit" action, compose a request body and send it to the URL indicated in the HAL document response (as follows):
 
- . Servers emit valid HAL responses that contain +rel+ values that are valid URLs which point to HAL Forms documents.
- . Clients parse the HAL response and (either on-demand or in pre-feftch mode) pull the HAL Forms as needed.
- . When HAL Form is returned by the server, clients use this information to render an input UI for humans to deal with at the appropriate time.
- . Clients collect the completed user inputs and, based on +contentType+, craft a valid request to send to the server.
+----
+**** REQUEST
+GET /task-list/ HTTP/1.1
+Host: api.example.org
+Accept: application/json
+
+{
+  "title" : "A Sample HAL Forms Response",
+  "completed" : false
+}
+
+**** RESPONSE
+HTTP/1.1 201 OK
+Content-Type: application/vnd.hal+json
+Date: Wed, 01 Jun 2016 15:03:30 GMT
+...
+----
  
 == Extending the HAL Forms Document
 Authors can extend the HAL Forms media type as long as the following rules are followed:
@@ -138,6 +159,15 @@ Authors can extend the HAL Forms media type as long as the following rules are f
 ==== 
 Authors should be aware that a future version of this specification MAY add new elements and should take care that any extensions are implemented in a way that reduces the likelihood that a future version of this speficiation is in conflict with your extension.
 ====
+
+== Acknowledgements
+I thank the following people who offered advice, comment, and contributions to this spec: 
+Pete Johanson,
+Mike Kelly,
+Dilip Krishnan.
+
+
+
 
  
  

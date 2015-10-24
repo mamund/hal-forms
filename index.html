@@ -938,32 +938,6 @@ interpreted as described in <a href="http://tools.ietf.org/html/rfc2119">RFC2119
 <h2 id="_the_hal_forms_media_type_identifier_string">The HAL Forms Media Type Identifier String</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>The media type identifier string for HAL Forms documents is: <code>application/prs.hal-forms+json</code>  This SHOULD be used as part of the HTTP <code>accept</code> header when clients make a request for a HAL Forms document. It SHOULD appear as the HTTP <code>content-type</code> header when servers return a HAL Forms document.</p></div>
-<div class="sect2">
-<h3 id="_example_request_response">Example Request/Response</h3>
-<div class="paragraph"><p>Below is a sample request and response when using the <code>application/prs.hal-forms+json</code> media type.</p></div>
-<div class="listingblock">
-<div class="content">
-<pre><code>**** REQUEST
-GET /forms/create HTTP/1.1
-Host: api.example.org
-Accept: application/prs.hal-forms+json
-
-**** RESPONSE
-HTTP/1.1 200 OK
-Content-Type: application/prs.hal-forms+json
-Date: Wed, 01 Jun 2016 14:59:30 GMT
-
-{
-  "self":"http://api.example.org/forms/create",
-  "method":"post",
-  "contentType":"application/json",
-  "properties": [
-    {"name":"title","required":true, "value":"", "prompt":"Title", "regex":""},
-    {"name":"completed","required":false,"value":"false", "prompt":"Completed", "regex":""}
-  ]
-}</code></pre>
-</div></div>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -992,6 +966,51 @@ Clients collect the completed user inputs and, based on <code>contentType</code>
 </p>
 </li>
 </ol></div>
+<div class="sect2">
+<h3 id="_example_request_response">Example Request/Response</h3>
+<div class="paragraph"><p>Below is a sample request and response when using the <code>application/prs.hal-forms+json</code> media type.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>**** REQUEST
+GET /forms/create HTTP/1.1
+Host: api.example.org
+Accept: application/prs.hal-forms+json
+
+**** RESPONSE
+HTTP/1.1 200 OK
+Content-Type: application/prs.hal-forms+json
+Date: Wed, 01 Jun 2016 14:59:30 GMT
+
+{
+  "self":"http://api.example.org/forms/create",
+  "method":"post",
+  "contentType":"application/json",
+  "properties": [
+    {"name":"title","required":true, "value":"", "prompt":"Title", "regex":""},
+    {"name":"completed","required":false,"value":"false", "prompt":"Completed", "regex":""}
+  ]
+}</code></pre>
+</div></div>
+<div class="paragraph"><p>After accepting the HAL Forms response and rendering the UI, the client application can&#8201;&#8212;&#8201;once the user supplies inputs and executes the "submit" action, compose a request body and send it to the URL indicated in the HAL document response (as follows):</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>**** REQUEST
+GET /task-list/ HTTP/1.1
+Host: api.example.org
+Accept: application/json
+
+{
+  "title" : "A Sample HAL Forms Response",
+  "completed" : false
+}
+
+**** RESPONSE
+HTTP/1.1 201 OK
+Content-Type: application/vnd.hal+json
+Date: Wed, 01 Jun 2016 15:03:30 GMT
+...</code></pre>
+</div></div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1027,11 +1046,20 @@ All new properties or objets are treated as OPTIONAL (e.g. no new REQUIRED eleme
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_acknowledgements">Acknowledgements</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>I thank the following people who offered advice, comment, and contributions to this spec:
+Pete Johanson,
+Mike Kelly,
+Dilip Krishnan.</p></div>
+</div>
+</div>
 </div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-10-24 13:42:26 EDT
+Last updated 2015-10-24 14:35:14 EDT
 </div>
 </div>
 </body>
