@@ -12,6 +12,8 @@ Proposed IANA Registrations::
   +application/prs.hal-forms+json+
 Github Repo::
   https://github.com/mamund/hal-forms
+Sample Implementation::
+  https://github.com/apiacademy/ndcoslo2015/tree/hal-forms
 
 
 == Summary
