@@ -1,0 +1,28 @@
+{
+  "_links": {
+    "self": {
+      "href": "http://api.example.org/task-list/",
+      "title": "Reload",
+      "templated": false
+    },
+    "http://api.example.org/rels/create": {
+      "href": "http://api.example.org/task-list/",
+      "title": "Add Task",
+      "templated": false
+    },
+    "http://api.example.org/rels/tasks": [
+      {
+        "href": "http://localhost:8181/1a14qx7qc81",
+        "title": "Yard Work"
+      },
+      {
+        "href": "http://localhost:8181/1d4jwe1ewt7",
+        "title": "Home Work"
+      },
+      {
+        "href": "http://localhost:8181/1e2ll5wa383",
+        "title": "School Work"
+      }
+    ]
+  }
+}

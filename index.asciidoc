@@ -22,6 +22,9 @@ The HAL media type is a popular format for representing API responses. One of th
 
 The HAL Forms media type is an attempt to meet this challenge by creating a format and processing pattern to support dynamic UI forms for HAL responses. This is a backward-compatible, non-standard extension. There is nothing in this format or process pattern that adds breaking changes to the HAL media type itself. Clients that implement this extension can still be valid HAL clients by degrading gracefully (e.g. not throwing errors when HAL Forms documents are not returned by the server.
 
+== Compliance
+An implementation (client or server) of this specification is not compliant if it fails to satisfy one or more of the MUST or REQUIRED elements. An implementation that satisfies all the MUST and REQUIRED elements as well as all the SHOULD and RECOMMENDED elements is said to be "unconditionally compliant"; one that satisfies all the MUST and REQUIRED elements but not all the SHOULD and RECOMMENDED elements is said to be "conditionally compliant."
+
 [NOTE]
 .RFC2119 Words
 ====
@@ -31,26 +34,18 @@ interpreted as described in link:http://tools.ietf.org/html/rfc2119[RFC2119].
 ====
 
 == The HAL Forms Media Type
-The HAL Forms media type is a simple JSON document that contains information on the HTTP method, and parameters to use when making a templated request to a HAL server. This media type can be used to return dynamic state transition descriptions at runtime for HAL servers.
+The HAL Forms media type is a simple https://tools.ietf.org/html/rfc7159[JSON] document that contains information on the HTTP method, and parameters to use when making a templated request to a HAL server. This media type can be used to return dynamic state transition descriptions at runtime for HAL servers.
 
 === Example HAL Forms document
 Here is a simple HAL Forms document example:
 
 .Example HAL Forms document.
 ----
-{
-  "self":"/files/hal-todo-create",
-  "method":"post",
-  "contentType":"application/json",
-  "properties": [
-    {"name":"title","required":true, "value":"", "prompt":"Title", "regex":""},
-    {"name":"completed","required":false,"value":"false", "prompt":"Completed", "regex":""}
-  ]
-}
+include::hal-forms-response.json[]
 ----
 
 == Properties of a HAL Forms Document
-The following is a summary of the HAL Forms media type:
+All HAL Forms documents MUST be valid https://tools.ietf.org/html/rfc7159[JSON] documents. The following is a summary of the structure of the HAL Forms media type:
 
 +contentType+::
   The value of +contentType+ is the media type the client SHOULD use when sending a request body to the server. This is an OPTIONAL element. Valid values for +contentType+ are +application/json+ and +application/x-www-form-urlencoded+. If the +contentType+ property is missing, is set to empty, or contains an unrecognized value, the client SHOULD act is if the +contentType+ is set to +application/json+. See <<encoding-request-bodies,Encoding Request Bodies>> for details.
@@ -61,12 +56,13 @@ The following is a summary of the HAL Forms media type:
 +property+::
   A JSON object that describes a state transition parameter. A +property+ object has the following elements:
   +
-  * +name+ : The parameter name. This is a valid JSON string.
-  * +prompt+ : The human-readable prompt for the parameter. This is a valid JSON string.
-  * +readOnly+ : A true/false flag to indicate whether the parameter is read-only. 
-  * +regex+ : A regular expression string to be applied to the value of the parameter. Rules for valid values are the same as the http://www.w3.org/TR/html5/forms.html#the-pattern-attribute[HTML5 pattern] attribute  
-  * +required+ : A true/false flag indicate whether the parameter is required.
-  * +value+ : The paramter value. This is a valid JSON string.
+  * +name+ : The parameter name. This is a valid JSON string. This is a REQUIRED element. If this attribute is missing or set to empty, the client SHOULD ignore this +property+ object completely.
+  * +prompt+ : The human-readable prompt for the parameter. This is a valid JSON string. This is an OPTIONAL element. If this element is missing, clients MAY act as if the +prompt+ values is set to the value in the +name+ attribute.
+  * +readOnly+ : A true/false flag to indicate whether the parameter is read-only. This is an OPTIONAL element. If this element is missing, empty or set to an unregnized value, it SHOULD be treated as if the +readOnly+ value is set to `false'. 
+  * +regex+ : A regular expression string to be applied to the value of the parameter. Rules for valid values are the same as the http://www.w3.org/TR/html5/forms.html#the-pattern-attribute[HTML5 pattern] attribute. This is an OPTIONAL element. If this attribute is set to empty or contains an invalid regular expression, it SHOULD be ignored.
+  * +required+ : A true/false flag indicate whether the parameter is required. If this attribute is missing, set to blank or contains an unrecognized value, it SHOULD be treated as if the value of +required+ is set to `false'.
+  * +templated+ : A true/false flag to indicate whether the +value+ element contains a https://tools.ietf.org/html/rfc6570[URITemplate] string for the client to resolve. This is an OPTIONAL element. If this element is missing, set to empty, or contains unrecognized content, it SHOULD be treated as if the +templated+ value is set to `false'.
+  * +value+ : The paramter value. This is a valid JSON string. This string MAY contain a URITtemplate (see +templated+) for details. This is an OPTIONAL element. If it does not exist, clients SHOULD act as if the +value+ property is set to an empty string.
 +self+::
   A string that represents the associated URL for this response. This is an OPTIONAL element.
 
@@ -103,12 +99,31 @@ While it is completely up to authors and consumers to determine how they wish to
  . When HAL Form is returned by the server, clients use this information to render an input UI for humans to deal with at the appropriate time.
  . Clients collect the completed user inputs and, based on +contentType+, craft a valid request to send to the server.
 
-=== Example Request/Response
-Below is a sample request and response when using the +application/prs.hal-forms+json+ media type.
+=== Starting With a Typcial HAL Response.
+A client application can start with a typical HAL response and use information in the representation to see if HAL Forms documents are available. Below is a HAL response w/ URLs for +rel+ values. These MAY point to HAL Form documents.
 
+.A Typical HAL Response with URLs for rel values
 ----
 **** REQUEST
-GET /forms/create HTTP/1.1
+GET /task-list/ HTTP/1.1
+Host: api.example.org
+Accept: application/vnd.hal+json
+
+**** RESPONSE
+HTTP/1.1 200 OK
+Content-Type: application/vnd.hal+json
+Date: Wed, 01 Jun 2016 14:50:30 GMT
+
+include::hal-response.json[]
+----
+
+=== Requesting a HAL Form Document
+After accepting and parsing the HAL response, a HAL Forms-compliant client app MAY use the +rel+ URLs to make requests for HAL Forms documents. In the case of this example, the +http://api.example.org/rels/create+ is used to see if there is a HAL Form document available.
+
+.Requesting a HAL Forms document
+----
+**** REQUEST
+GET /rels/create HTTP/1.1
 Host: api.example.org
 Accept: application/prs.hal-forms+json
 
@@ -117,19 +132,13 @@ HTTP/1.1 200 OK
 Content-Type: application/prs.hal-forms+json
 Date: Wed, 01 Jun 2016 14:59:30 GMT
 
-{
-  "self":"http://api.example.org/forms/create",
-  "method":"post",
-  "contentType":"application/json",
-  "properties": [
-    {"name":"title","required":true, "value":"", "prompt":"Title", "regex":""},
-    {"name":"completed","required":false,"value":"false", "prompt":"Completed", "regex":""}
-  ]
-}
+include::hal-forms-response.json[]
 ----
 
-After accepting the HAL Forms response and rendering the UI, the client application can -- once the user supplies inputs and executes the "submit" action, compose a request body and send it to the URL indicated in the HAL document response (as follows):
+=== Sending a HAL Form Body Request
+After receiving the HAL Forms response and rendering the UI, the client application can -- once the user supplies inputs and executes the "submit" action -- use the instructions in the HAL Forms document to compose a request body and send it to the URL indicated in the HAL document response (as follows):
 
+.Sending a HAL Forms body request
 ----
 **** REQUEST
 GET /task-list/ HTTP/1.1

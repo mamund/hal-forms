@@ -792,6 +792,12 @@ Github Repo
 <div class="sectionbody">
 <div class="paragraph"><p>The HAL media type is a popular format for representing API responses. One of the possible reasons for this popularity is that HAL does not include detailed information about state transitions like filtered requests (e.g. search, sort, etc.) or write operations (e.g. create, edit, delete, etc.) as part of the specification. This means one of the challenges of using HAL for APIs that support dynamic user inputs and/or varying workflow patterns is client applications must encode the detailed transition information (args, methods, workflow) directly in the client code. That means clients must be updated each time the input or workflow details change.</p></div>
 <div class="paragraph"><p>The HAL Forms media type is an attempt to meet this challenge by creating a format and processing pattern to support dynamic UI forms for HAL responses. This is a backward-compatible, non-standard extension. There is nothing in this format or process pattern that adds breaking changes to the HAL media type itself. Clients that implement this extension can still be valid HAL clients by degrading gracefully (e.g. not throwing errors when HAL Forms documents are not returned by the server.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_compliance">Compliance</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>An implementation (client or server) of this specification is not compliant if it fails to satisfy one or more of the MUST or REQUIRED elements. An implementation that satisfies all the MUST and REQUIRED elements as well as all the SHOULD and RECOMMENDED elements is said to be "unconditionally compliant"; one that satisfies all the MUST and REQUIRED elements but not all the SHOULD and RECOMMENDED elements is said to be "conditionally compliant."</p></div>
 <div class="admonitionblock">
 <table><tr>
 <td class="icon">
@@ -810,7 +816,7 @@ interpreted as described in <a href="http://tools.ietf.org/html/rfc2119">RFC2119
 <div class="sect1">
 <h2 id="_the_hal_forms_media_type">The HAL Forms Media Type</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>The HAL Forms media type is a simple JSON document that contains information on the HTTP method, and parameters to use when making a templated request to a HAL server. This media type can be used to return dynamic state transition descriptions at runtime for HAL servers.</p></div>
+<div class="paragraph"><p>The HAL Forms media type is a simple <a href="https://tools.ietf.org/html/rfc7159">JSON</a> document that contains information on the HTTP method, and parameters to use when making a templated request to a HAL server. This media type can be used to return dynamic state transition descriptions at runtime for HAL servers.</p></div>
 <div class="sect2">
 <h3 id="_example_hal_forms_document">Example HAL Forms document</h3>
 <div class="paragraph"><p>Here is a simple HAL Forms document example:</p></div>
@@ -818,11 +824,11 @@ interpreted as described in <a href="http://tools.ietf.org/html/rfc2119">RFC2119
 <div class="title">Example HAL Forms document.</div>
 <div class="content">
 <pre><code>{
-  "self":"/files/hal-todo-create",
+  "self":"http://api.example.org/rels/create",
   "method":"post",
   "contentType":"application/json",
   "properties": [
-    {"name":"title","required":true, "value":"", "prompt":"Title", "regex":""},
+    {"name":"title","required":true, "value":"", "prompt":"Title", "regex":"", "templated":false},
     {"name":"completed","required":false,"value":"false", "prompt":"Completed", "regex":""}
   ]
 }</code></pre>
@@ -833,7 +839,7 @@ interpreted as described in <a href="http://tools.ietf.org/html/rfc2119">RFC2119
 <div class="sect1">
 <h2 id="_properties_of_a_hal_forms_document">Properties of a HAL Forms Document</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>The following is a summary of the HAL Forms media type:</p></div>
+<div class="paragraph"><p>All HAL Forms documents MUST be valid <a href="https://tools.ietf.org/html/rfc7159">JSON</a> documents. The following is a summary of the structure of the HAL Forms media type:</p></div>
 <div class="dlist"><dl>
 <dt class="hdlist1">
 <code>contentType</code>
@@ -870,32 +876,37 @@ interpreted as described in <a href="http://tools.ietf.org/html/rfc2119">RFC2119
 <div class="ulist"><ul>
 <li>
 <p>
-<code>name</code> : The parameter name. This is a valid JSON string.
+<code>name</code> : The parameter name. This is a valid JSON string. This is a REQUIRED element. If this attribute is missing or set to empty, the client SHOULD ignore this <code>property</code> object completely.
 </p>
 </li>
 <li>
 <p>
-<code>prompt</code> : The human-readable prompt for the parameter. This is a valid JSON string.
+<code>prompt</code> : The human-readable prompt for the parameter. This is a valid JSON string. This is an OPTIONAL element. If this element is missing, clients MAY act as if the <code>prompt</code> values is set to the value in the <code>name</code> attribute.
 </p>
 </li>
 <li>
 <p>
-<code>readOnly</code> : A true/false flag to indicate whether the parameter is read-only.
+<code>readOnly</code> : A true/false flag to indicate whether the parameter is read-only. This is an OPTIONAL element. If this element is missing, empty or set to an unregnized value, it SHOULD be treated as if the <code>readOnly</code> value is set to &#8216;false&#8217;.
 </p>
 </li>
 <li>
 <p>
-<code>regex</code> : A regular expression string to be applied to the value of the parameter. Rules for valid values are the same as the <a href="http://www.w3.org/TR/html5/forms.html#the-pattern-attribute">HTML5 pattern</a> attribute
+<code>regex</code> : A regular expression string to be applied to the value of the parameter. Rules for valid values are the same as the <a href="http://www.w3.org/TR/html5/forms.html#the-pattern-attribute">HTML5 pattern</a> attribute. This is an OPTIONAL element. If this attribute is set to empty or contains an invalid regular expression, it SHOULD be ignored.
 </p>
 </li>
 <li>
 <p>
-<code>required</code> : A true/false flag indicate whether the parameter is required.
+<code>required</code> : A true/false flag indicate whether the parameter is required. If this attribute is missing, set to blank or contains an unrecognized value, it SHOULD be treated as if the value of <code>required</code> is set to &#8216;false&#8217;.
 </p>
 </li>
 <li>
 <p>
-<code>value</code> : The paramter value. This is a valid JSON string.
+<code>templated</code> : A true/false flag to indicate whether the <code>value</code> element contains a <a href="https://tools.ietf.org/html/rfc6570">URITemplate</a> string for the client to resolve. This is an OPTIONAL element. If this element is missing, set to empty, or contains unrecognized content, it SHOULD be treated as if the <code>templated</code> value is set to &#8216;false&#8217;.
+</p>
+</li>
+<li>
+<p>
+<code>value</code> : The paramter value. This is a valid JSON string. This string MAY contain a URITtemplate (see <code>templated</code>) for details. This is an OPTIONAL element. If it does not exist, clients SHOULD act as if the <code>value</code> property is set to an empty string.
 </p>
 </li>
 </ul></div>
@@ -967,12 +978,59 @@ Clients collect the completed user inputs and, based on <code>contentType</code>
 </li>
 </ol></div>
 <div class="sect2">
-<h3 id="_example_request_response">Example Request/Response</h3>
-<div class="paragraph"><p>Below is a sample request and response when using the <code>application/prs.hal-forms+json</code> media type.</p></div>
+<h3 id="_starting_with_a_typcial_hal_response">Starting With a Typcial HAL Response.</h3>
+<div class="paragraph"><p>A client application can start with a typical HAL response and use information in the representation to see if HAL Forms documents are available. Below is a HAL response w/ URLs for <code>rel</code> values. These MAY point to HAL Form documents.</p></div>
 <div class="listingblock">
+<div class="title">A Typical HAL Response with URLs for rel values</div>
 <div class="content">
 <pre><code>**** REQUEST
-GET /forms/create HTTP/1.1
+GET /task-list/ HTTP/1.1
+Host: api.example.org
+Accept: application/vnd.hal+json
+
+**** RESPONSE
+HTTP/1.1 200 OK
+Content-Type: application/vnd.hal+json
+Date: Wed, 01 Jun 2016 14:50:30 GMT
+
+{
+  "_links": {
+    "self": {
+      "href": "http://api.example.org/task-list/",
+      "title": "Reload",
+      "templated": false
+    },
+    "http://api.example.org/rels/create": {
+      "href": "http://api.example.org/task-list/",
+      "title": "Add Task",
+      "templated": false
+    },
+    "http://api.example.org/rels/tasks": [
+      {
+        "href": "http://localhost:8181/1a14qx7qc81",
+        "title": "Yard Work"
+      },
+      {
+        "href": "http://localhost:8181/1d4jwe1ewt7",
+        "title": "Home Work"
+      },
+      {
+        "href": "http://localhost:8181/1e2ll5wa383",
+        "title": "School Work"
+      }
+    ]
+  }
+}</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_requesting_a_hal_form_document">Requesting a HAL Form Document</h3>
+<div class="paragraph"><p>After accepting and parsing the HAL response, a HAL Forms-compliant client app MAY use the <code>rel</code> URLs to make requests for HAL Forms documents. In the case of this example, the <code>http://api.example.org/rels/create</code> is used to see if there is a HAL Form document available.</p></div>
+<div class="listingblock">
+<div class="title">Requesting a HAL Forms document</div>
+<div class="content">
+<pre><code>**** REQUEST
+GET /rels/create HTTP/1.1
 Host: api.example.org
 Accept: application/prs.hal-forms+json
 
@@ -982,17 +1040,21 @@ Content-Type: application/prs.hal-forms+json
 Date: Wed, 01 Jun 2016 14:59:30 GMT
 
 {
-  "self":"http://api.example.org/forms/create",
+  "self":"http://api.example.org/rels/create",
   "method":"post",
   "contentType":"application/json",
   "properties": [
-    {"name":"title","required":true, "value":"", "prompt":"Title", "regex":""},
+    {"name":"title","required":true, "value":"", "prompt":"Title", "regex":"", "templated":false},
     {"name":"completed","required":false,"value":"false", "prompt":"Completed", "regex":""}
   ]
 }</code></pre>
 </div></div>
-<div class="paragraph"><p>After accepting the HAL Forms response and rendering the UI, the client application can&#8201;&#8212;&#8201;once the user supplies inputs and executes the "submit" action, compose a request body and send it to the URL indicated in the HAL document response (as follows):</p></div>
+</div>
+<div class="sect2">
+<h3 id="_sending_a_hal_form_body_request">Sending a HAL Form Body Request</h3>
+<div class="paragraph"><p>After receiving the HAL Forms response and rendering the UI, the client application can&#8201;&#8212;&#8201;once the user supplies inputs and executes the "submit" action&#8201;&#8212;&#8201;use the instructions in the HAL Forms document to compose a request body and send it to the URL indicated in the HAL document response (as follows):</p></div>
 <div class="listingblock">
+<div class="title">Sending a HAL Forms body request</div>
 <div class="content">
 <pre><code>**** REQUEST
 GET /task-list/ HTTP/1.1
@@ -1059,7 +1121,7 @@ Dilip Krishnan.</p></div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-10-24 14:53:48 EDT
+Last updated 2015-10-24 15:57:51 EDT
 </div>
 </div>
 </body>
