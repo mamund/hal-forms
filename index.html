@@ -759,7 +759,7 @@ Last Updated
 </dt>
 <dd>
 <p>
-  2015-10-22
+  2015-10-24
 </p>
 </dd>
 <dt class="hdlist1">
@@ -817,7 +817,7 @@ interpreted as described in <a href="http://tools.ietf.org/html/rfc2119">RFC2119
 <div class="listingblock">
 <div class="content">
 <pre><code>{
-  "rel":"/files/hal-todo-create",
+  "self":"/files/hal-todo-create",
   "method":"post",
   "properties": [
     {"name":"title","required":true, "value":"", "prompt":"Title", "regex":""},
@@ -891,11 +891,11 @@ interpreted as described in <a href="http://tools.ietf.org/html/rfc2119">RFC2119
 </ul></div>
 </dd>
 <dt class="hdlist1">
-<code>rel</code>
+<code>self</code>
 </dt>
 <dd>
 <p>
-  A string that holds a single string representing the associated Link Relation Value for this form. This is an OPTIONAL element.
+  A string that represents the associated URL for this response. This is an OPTIONAL element.
 </p>
 </dd>
 </dl></div>
@@ -921,7 +921,7 @@ Content-Type: application/prs.hal-forms+json
 Date: Wed, 01 Jun 2016 14:59:30 GMT
 
 {
-  "rel":"http://api.example.org/forms/create",
+  "self":"http://api.example.org/forms/create",
   "method":"post",
   "properties": [
     {"name":"title","required":true, "value":"", "prompt":"Title", "regex":""},
@@ -997,7 +997,7 @@ All new properties or objets are treated as OPTIONAL (e.g. no new REQUIRED eleme
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-10-22 12:00:03 EDT
+Last updated 2015-10-24 12:50:21 EDT
 </div>
 </div>
 </body>
