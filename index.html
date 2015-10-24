@@ -790,7 +790,7 @@ Github Repo
 <div class="sect1">
 <h2 id="_motivation">Motivation</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>The HAL media type is a popular format for representing API responses. One of the possible reasons for this popularity is that HAL does not include detailed information about state transitions like filtered requests (e.g. search, sort, etc.) or write operations (e.g. create, edit, delete, etc.) as part of the specification. This means one of the challenges of using HAL for APIs that support dynamic user inputs and/or varying workflow patterns is client applications must encode the detailed transition information (args, methods, workflow) directly in the client code. That means clients must be updated each time the input or workflow details change.</p></div>
+<div class="paragraph"><p>The HAL media type is a popular format for representing API responses. One of the possible reasons for this popularity is that HAL does not include detailed information about state transitions like filtered requests (e.g. search, sort, etc.) or write operations (e.g. create, edit, delete, etc.) as part of the specification. This feature keeps the complexity of HAL responses relivately low and easy to deal with. However, this also means one of the challenges of using HAL for APIs that support dynamic user inputs and/or varying workflow patterns is client applications must encode the detailed transition information (args, methods, workflow) directly in the client code. That means clients must be updated each time the input or workflow details change.</p></div>
 <div class="paragraph"><p>The HAL Forms media type is an attempt to meet this challenge by creating a format and processing pattern to support dynamic UI forms for HAL responses. This is a backward-compatible, non-standard extension. There is nothing in this format or process pattern that adds breaking changes to the HAL media type itself. Clients that implement this extension can still be valid HAL clients by degrading gracefully (e.g. not throwing errors when HAL Forms documents are not returned by the server.</p></div>
 </div>
 </div>
@@ -1121,7 +1121,7 @@ Dilip Krishnan.</p></div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-10-24 15:57:51 EDT
+Last updated 2015-10-24 16:02:02 EDT
 </div>
 </div>
 </body>
