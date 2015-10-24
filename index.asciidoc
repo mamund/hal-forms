@@ -36,10 +36,12 @@ The HAL Forms media type is a simple JSON document that contains information on 
 === Example HAL Forms document
 Here is a simple HAL Forms document example:
 
+.Example HAL Forms document.
 ----
 {
   "self":"/files/hal-todo-create",
   "method":"post",
+  "contentType":"application/json",
   "properties": [
     {"name":"title","required":true, "value":"", "prompt":"Title", "regex":""},
     {"name":"completed","required":false,"value":"false", "prompt":"Completed", "regex":""}
@@ -50,6 +52,8 @@ Here is a simple HAL Forms document example:
 == Properties of a HAL Forms Document
 The following is a summary of the HAL Forms media type:
 
++contentType+::
+  The value of +contentType+ is the media type the client SHOULD use when sending a request body to the server. This is an OPTIONAL element. Valid values for +contentType+ are +application/json+ and +application/x-www-form-urlencoded+. If the +contentType+ property is missing, is set to empty, or contains an unrecognized value, the client SHOULD act is if the +contentType+ is set to +application/json+. See <<encoding-responses,Encoding Responses>> for details.
 +method+::
   The HTTP method the client SHOULD execute when making the service request. Any valid HTTP method is allowed. This is a REQUIRED element. If the value is empty or is not understood by the client, the value MUST be treated as an HTTP GET.
 +properties+::
@@ -66,7 +70,28 @@ The following is a summary of the HAL Forms media type:
 +self+::
   A string that represents the associated URL for this response. This is an OPTIONAL element.
 
-== The HAL Forms Media Type String
+[[encoding-resopnses]]
+=== Encoding Responses
+When clients are instructed to send a request with a body (e.g. PUT, POST, PATCH), there are two possible valid content-types: +application/json+ and +application/x_www-form-urlencoded+. Compliant client applciations MUST support sending bodies using +application/json+ and MAY support sending bodies using +application/x-www-urlencoded+. 
+
+==== Sending +application/json+ Bodies
+When sending bodies encoded as +application/json+, clients SHOULD construct a simple JSON dictionary object that contains a set of name-value pairs that match the +property+ objects in the HAL Forms document. For example, using the Example HAL Forms document above as a guide, a client would construct a JSON dictionary object that looks like the following:
+
+----
+{
+  "title" : "A Sample HAL Forms Response",
+  "completed" : false
+}
+----
+
+==== Sending +application/x-www-form-urlencoded+ Bodies
+When sending bodies encoded as +application/x-www-form-urlencoded+, clients SHOULD construct a body that is in compliance with the guidance in the http://www.w3.org/TR/html/forms.html#application/x-www-form-urlencoded-encoding-algorithm[W3C FORMS Encoding Algorithm]. A sample (using the Example HAL Forms document) follows:
+
+----
+title="A+Sample+HAL+Forms+Response"&completed="false"
+----
+
+== The HAL Forms Media Type Identifier String
 The media type identifier string for HAL Forms documents is: +application/prs.hal-forms+json+  This SHOULD be used as part of the HTTP +accept+ header when clients make a request for a HAL Forms document. It SHOULD appear as the HTTP +content-type+ header when servers return a HAL Forms document. 
 
 === Example Request/Response
@@ -86,6 +111,7 @@ Date: Wed, 01 Jun 2016 14:59:30 GMT
 {
   "self":"http://api.example.org/forms/create",
   "method":"post",
+  "contentType":"application/json",
   "properties": [
     {"name":"title","required":true, "value":"", "prompt":"Title", "regex":""},
     {"name":"completed","required":false,"value":"false", "prompt":"Completed", "regex":""}
@@ -99,7 +125,7 @@ While it is completely up to authors and consumers to determine how they wish to
  . Servers emit valid HAL responses that contain +rel+ values that are valid URLs which point to HAL Forms documents.
  . Clients parse the HAL response and (either on-demand or in pre-feftch mode) pull the HAL Forms as needed.
  . When HAL Form is returned by the server, clients use this information to render an input UI for humans to deal with at the appropriate time.
- . Clients collect the completed user inputs and craft a valid request to send to the server.
+ . Clients collect the completed user inputs and, based on +contentType+, craft a valid request to send to the server.
  
 == Extending the HAL Forms Document
 Authors can extend the HAL Forms media type as long as the following rules are followed:
