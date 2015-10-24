@@ -53,7 +53,7 @@ Here is a simple HAL Forms document example:
 The following is a summary of the HAL Forms media type:
 
 +contentType+::
-  The value of +contentType+ is the media type the client SHOULD use when sending a request body to the server. This is an OPTIONAL element. Valid values for +contentType+ are +application/json+ and +application/x-www-form-urlencoded+. If the +contentType+ property is missing, is set to empty, or contains an unrecognized value, the client SHOULD act is if the +contentType+ is set to +application/json+. See <<eencoding-request-bodies,Encoding Request Bodies>> for details.
+  The value of +contentType+ is the media type the client SHOULD use when sending a request body to the server. This is an OPTIONAL element. Valid values for +contentType+ are +application/json+ and +application/x-www-form-urlencoded+. If the +contentType+ property is missing, is set to empty, or contains an unrecognized value, the client SHOULD act is if the +contentType+ is set to +application/json+. See <<encoding-request-bodies,Encoding Request Bodies>> for details.
 +method+::
   The HTTP method the client SHOULD execute when making the service request. Any valid HTTP method is allowed. This is a REQUIRED element. If the value is empty or is not understood by the client, the value MUST be treated as an HTTP GET.
 +properties+::
