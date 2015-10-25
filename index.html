@@ -759,7 +759,7 @@ Last Updated
 </dt>
 <dd>
 <p>
-  2015-10-24
+  2015-10-25
 </p>
 </dd>
 <dt class="hdlist1">
@@ -798,7 +798,7 @@ Sample Implementation
 <div class="sect1">
 <h2 id="_motivation">Motivation</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>The HAL media type is a popular format for representing API responses. One of the possible reasons for this popularity is that HAL does not include detailed information about state transitions like filtered requests (e.g. search, sort, etc.) or write operations (e.g. create, edit, delete, etc.) as part of the specification. This feature keeps the complexity of HAL responses relivately low and easy to deal with. However, this also means one of the challenges of using HAL for APIs that support dynamic user inputs and/or varying workflow patterns is client applications must encode the detailed transition information (args, methods, workflow) directly in the client code. That means clients must be updated each time the input or workflow details change.</p></div>
+<div class="paragraph"><p>The HAL media type is a popular format for representing API responses. One of the possible reasons for this popularity is that HAL does not include detailed information about state transitions like filtered requests (e.g. search, sort, etc.) or write operations (e.g. create, edit, delete, etc.) as part of the specification. This feature keeps the complexity of HAL responses relatively low and easy to deal with. However, this also means one of the challenges of using HAL for APIs that support dynamic user inputs and/or varying work flow patterns is client applications must encode the detailed transition information (args, methods, work flow) directly in the client code. That means clients must be updated each time the input or work flow details change.</p></div>
 <div class="paragraph"><p>The HAL Forms media type is an attempt to meet this challenge by creating a format and processing pattern to support dynamic UI forms for HAL responses. This is a backward-compatible, non-standard extension. There is nothing in this format or process pattern that adds breaking changes to the HAL media type itself. Clients that implement this extension can still be valid HAL clients by degrading gracefully (e.g. not throwing errors when HAL Forms documents are not returned by the server.</p></div>
 </div>
 </div>
@@ -894,7 +894,7 @@ interpreted as described in <a href="http://tools.ietf.org/html/rfc2119">RFC2119
 </li>
 <li>
 <p>
-<code>readOnly</code> : A true/false flag to indicate whether the parameter is read-only. This is an OPTIONAL element. If this element is missing, empty or set to an unregnized value, it SHOULD be treated as if the <code>readOnly</code> value is set to &#8216;false&#8217;.
+<code>readOnly</code> : A true/false flag to indicate whether the parameter is read-only. This is an OPTIONAL element. If this element is missing, empty or set to an unrecognized value, it SHOULD be treated as if the <code>readOnly</code> value is set to &#8216;false&#8217;.
 </p>
 </li>
 <li>
@@ -914,7 +914,7 @@ interpreted as described in <a href="http://tools.ietf.org/html/rfc2119">RFC2119
 </li>
 <li>
 <p>
-<code>value</code> : The paramter value. This is a valid JSON string. This string MAY contain a URITtemplate (see <code>templated</code>) for details. This is an OPTIONAL element. If it does not exist, clients SHOULD act as if the <code>value</code> property is set to an empty string.
+<code>value</code> : The parameter value. This is a valid JSON string. This string MAY contain a URITtemplate (see <code>templated</code>) for details. This is an OPTIONAL element. If it does not exist, clients SHOULD act as if the <code>value</code> property is set to an empty string.
 </p>
 </li>
 </ul></div>
@@ -933,7 +933,7 @@ interpreted as described in <a href="http://tools.ietf.org/html/rfc2119">RFC2119
 <div class="sect1">
 <h2 id="_encoding_requests">Encoding Requests</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>Once the client application has used the HAL Forms document to render a UI for accepting inputs (and the user has supplied the inputs), that same document SHOULD be used to encode a request to send to the server to excecute the state transition described by the HAL Forms document. There are two ways in which HAL Forms documents can be used to construct parameterized requests. The first is by <a href="#encoding-request-urls">encoding request URLs</a> for HTTP GET, DELETE, and HEAD requests. The second is by <a href="#encoding-request-bodies">encoding request bodies</a> for HTTP PUT, POST, and PATCH requests.</p></div>
+<div class="paragraph"><p>Once the client application has used the HAL Forms document to render a UI for accepting inputs (and the user has supplied the inputs), that same document SHOULD be used to encode a request to send to the server to execute the state transition described by the HAL Forms document. There are two ways in which HAL Forms documents can be used to construct parameterized requests. The first is by <a href="#encoding-request-urls">encoding request URLs</a> for HTTP GET, DELETE, and HEAD requests. The second is by <a href="#encoding-request-bodies">encoding request bodies</a> for HTTP PUT, POST, and PATCH requests.</p></div>
 <div class="sect2">
 <h3 id="encoding-request-urls">Encoding Request URLs</h3>
 <div class="paragraph"><p>When clients are instructed to send a request without a body (e.g. GET, HEAD, DELETE), clients SHOULD use the list of <code>property</code> object&#8217;s <code>name</code> and <code>value</code> attributes to construct a valid URL using the <a href="http://www.w3.org/TR/html/forms.html#submit-mutate-action">W3C Mutate Action URL Algorithm</a> to produce a valid query string. Below is a simple HAL Forms document that uses the GET method and the resulting updated URL.</p></div>
@@ -974,14 +974,14 @@ http://api.example.org/task-list/?title=sample&amp;completed=false</code></pre>
 <div class="title">Note</div>
 </td>
 <td class="content">
-<div class="paragraph"><p>The HAL media type already defines support for paramterized HTTP GET queries using URITemplates. However, the HAL Form document can be treated as an alternate implementation for GET queries that include additional constraints including prompts, regular expression validators, etc.</p></div>
+<div class="paragraph"><p>The HAL media type already defines support for parameterized HTTP GET queries using URITemplates. However, the HAL Form document can be treated as an alternate implementation for GET queries that include additional constraints including prompts, regular expression validators, etc.</p></div>
 </td>
 </tr></table>
 </div>
 </div>
 <div class="sect2">
 <h3 id="encoding-request-bodies">Encoding Request Bodies</h3>
-<div class="paragraph"><p>When clients are instructed to send a request with a body (e.g. PUT, POST, PATCH), there are two possible valid content-types: <code>application/json</code> and <code>application/x_www-form-urlencoded</code>. Compliant client applciations MUST support sending bodies using <code>application/json</code> and MAY support sending bodies using <code>application/x-www-urlencoded</code>.</p></div>
+<div class="paragraph"><p>When clients are instructed to send a request with a body (e.g. PUT, POST, PATCH), there are two possible valid content-types: <code>application/json</code> and <code>application/x_www-form-urlencoded</code>. Compliant client applications MUST support sending bodies using <code>application/json</code> and MAY support sending bodies using <code>application/x-www-urlencoded</code>.</p></div>
 <div class="sect3">
 <h4 id="_sending_code_application_json_code_bodies">Sending <code>application/json</code> Bodies</h4>
 <div class="paragraph"><p>When sending bodies encoded as <code>application/json</code>, clients SHOULD construct a simple JSON dictionary object that contains a set of name-value pairs that match the <code>property</code> objects in the HAL Forms document. For example, using the Example HAL Forms document above as a guide, a client would construct a JSON dictionary object that looks like the following:</p></div>
@@ -1022,7 +1022,7 @@ Servers emit valid HAL responses that contain <code>rel</code> values that are v
 </li>
 <li>
 <p>
-Clients parse the HAL response and (either on-demand or in pre-feftch mode) pull the HAL Forms as needed.
+Clients parse the HAL response and (either on-demand or in pre-fetch mode) pull the HAL Forms as needed.
 </p>
 </li>
 <li>
@@ -1037,7 +1037,7 @@ Clients collect the completed user inputs and, based on <code>contentType</code>
 </li>
 </ol></div>
 <div class="sect2">
-<h3 id="_starting_with_a_typcial_hal_response">Starting With a Typcial HAL Response.</h3>
+<h3 id="_starting_with_a_typical_hal_response">Starting With a Typical HAL Response.</h3>
 <div class="paragraph"><p>A client application can start with a typical HAL response and use information in the representation to see if HAL Forms documents are available. Below is a HAL response w/ URLs for <code>rel</code> values. These MAY point to HAL Form documents.</p></div>
 <div class="listingblock">
 <div class="title">A Typical HAL Response with URLs for rel values</div>
@@ -1151,7 +1151,7 @@ No existing values, properties or objects are altered in a way that is non-backw
 </li>
 <li>
 <p>
-All new properties or objets are treated as OPTIONAL (e.g. no new REQUIRED elements are introduced in an extension).
+All new properties or objects are treated as OPTIONAL (e.g. no new REQUIRED elements are introduced in an extension).
 </p>
 </li>
 </ol></div>
@@ -1161,7 +1161,7 @@ All new properties or objets are treated as OPTIONAL (e.g. no new REQUIRED eleme
 <div class="title">Warning</div>
 </td>
 <td class="content">
-<div class="paragraph"><p>Authors should be aware that a future version of this specification MAY add new elements and should take care that any extensions are implemented in a way that reduces the likelihood that a future version of this speficiation is in conflict with your extension.</p></div>
+<div class="paragraph"><p>Authors should be aware that a future version of this specification MAY add new elements and should take care that any extensions are implemented in a way that reduces the likelihood that a future version of this specification is in conflict with your extension.</p></div>
 </td>
 </tr></table>
 </div>
@@ -1180,7 +1180,7 @@ Dilip Krishnan.</p></div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-10-24 19:18:09 EDT
+Last updated 2015-10-25 13:48:08 EDT
 </div>
 </div>
 </body>

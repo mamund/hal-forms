@@ -20,7 +20,7 @@ Sample Implementation::
 This document describes a simple media type designed to add runtime FORM support for the http://stateless.co/hal_specification.html[HAL] media type. This is an _independent backward-compatible_ extension of the HAL media type and MUST NOT be treated as standard HAL or as part of the https://tools.ietf.org/html/draft-kelly-json-hal-07[HAL specification].
 
 == Motivation
-The HAL media type is a popular format for representing API responses. One of the possible reasons for this popularity is that HAL does not include detailed information about state transitions like filtered requests (e.g. search, sort, etc.) or write operations (e.g. create, edit, delete, etc.) as part of the specification. This feature keeps the complexity of HAL responses relivately low and easy to deal with. However, this also means one of the challenges of using HAL for APIs that support dynamic user inputs and/or varying workflow patterns is client applications must encode the detailed transition information (args, methods, workflow) directly in the client code. That means clients must be updated each time the input or workflow details change. 
+The HAL media type is a popular format for representing API responses. One of the possible reasons for this popularity is that HAL does not include detailed information about state transitions like filtered requests (e.g. search, sort, etc.) or write operations (e.g. create, edit, delete, etc.) as part of the specification. This feature keeps the complexity of HAL responses relatively low and easy to deal with. However, this also means one of the challenges of using HAL for APIs that support dynamic user inputs and/or varying work flow patterns is client applications must encode the detailed transition information (args, methods, work flow) directly in the client code. That means clients must be updated each time the input or work flow details change. 
 
 The HAL Forms media type is an attempt to meet this challenge by creating a format and processing pattern to support dynamic UI forms for HAL responses. This is a backward-compatible, non-standard extension. There is nothing in this format or process pattern that adds breaking changes to the HAL media type itself. Clients that implement this extension can still be valid HAL clients by degrading gracefully (e.g. not throwing errors when HAL Forms documents are not returned by the server.
 
@@ -60,16 +60,16 @@ All HAL Forms documents MUST be valid https://tools.ietf.org/html/rfc7159[JSON] 
   +
   * +name+ : The parameter name. This is a valid JSON string. This is a REQUIRED element. If this attribute is missing or set to empty, the client SHOULD ignore this +property+ object completely.
   * +prompt+ : The human-readable prompt for the parameter. This is a valid JSON string. This is an OPTIONAL element. If this element is missing, clients MAY act as if the +prompt+ values is set to the value in the +name+ attribute.
-  * +readOnly+ : A true/false flag to indicate whether the parameter is read-only. This is an OPTIONAL element. If this element is missing, empty or set to an unregnized value, it SHOULD be treated as if the +readOnly+ value is set to `false'. 
+  * +readOnly+ : A true/false flag to indicate whether the parameter is read-only. This is an OPTIONAL element. If this element is missing, empty or set to an unrecognized value, it SHOULD be treated as if the +readOnly+ value is set to `false'. 
   * +regex+ : A regular expression string to be applied to the value of the parameter. Rules for valid values are the same as the http://www.w3.org/TR/html5/forms.html#the-pattern-attribute[HTML5 pattern] attribute. This is an OPTIONAL element. If this attribute is set to empty or contains an invalid regular expression, it SHOULD be ignored.
   * +required+ : A true/false flag indicate whether the parameter is required. If this attribute is missing, set to blank or contains an unrecognized value, it SHOULD be treated as if the value of +required+ is set to `false'.
   * +templated+ : A true/false flag to indicate whether the +value+ element contains a https://tools.ietf.org/html/rfc6570[URITemplate] string for the client to resolve. This is an OPTIONAL element. If this element is missing, set to empty, or contains unrecognized content, it SHOULD be treated as if the +templated+ value is set to `false'.
-  * +value+ : The paramter value. This is a valid JSON string. This string MAY contain a URITtemplate (see +templated+) for details. This is an OPTIONAL element. If it does not exist, clients SHOULD act as if the +value+ property is set to an empty string.
+  * +value+ : The parameter value. This is a valid JSON string. This string MAY contain a URITtemplate (see +templated+) for details. This is an OPTIONAL element. If it does not exist, clients SHOULD act as if the +value+ property is set to an empty string.
 +self+::
   A string that represents the associated URL for this response. This is an OPTIONAL element.
 
 == Encoding Requests
-Once the client application has used the HAL Forms document to render a UI for accepting inputs (and the user has supplied the inputs), that same document SHOULD be used to encode a request to send to the server to excecute the state transition described by the HAL Forms document. There are two ways in which HAL Forms documents can be used to construct parameterized requests. The first is by <<encoding-request-urls, encoding request URLs>> for HTTP GET, DELETE, and HEAD requests. The second is by <<encoding-request-bodies, encoding request bodies>> for HTTP PUT, POST, and PATCH requests. 
+Once the client application has used the HAL Forms document to render a UI for accepting inputs (and the user has supplied the inputs), that same document SHOULD be used to encode a request to send to the server to execute the state transition described by the HAL Forms document. There are two ways in which HAL Forms documents can be used to construct parameterized requests. The first is by <<encoding-request-urls, encoding request URLs>> for HTTP GET, DELETE, and HEAD requests. The second is by <<encoding-request-bodies, encoding request bodies>> for HTTP PUT, POST, and PATCH requests. 
 
 [[encoding-request-urls]]
 === Encoding Request URLs
@@ -81,12 +81,12 @@ include::get-hal-forms-example.json[]
 
 [NOTE]
 ====
-The HAL media type already defines support for paramterized HTTP GET queries using URITemplates. However, the HAL Form document can be treated as an alternate implementation for GET queries that include additional constraints including prompts, regular expression validators, etc.
+The HAL media type already defines support for parameterized HTTP GET queries using URITemplates. However, the HAL Form document can be treated as an alternate implementation for GET queries that include additional constraints including prompts, regular expression validators, etc.
 ====
 
 [[encoding-request-bodies]]
 === Encoding Request Bodies
-When clients are instructed to send a request with a body (e.g. PUT, POST, PATCH), there are two possible valid content-types: +application/json+ and +application/x_www-form-urlencoded+. Compliant client applciations MUST support sending bodies using +application/json+ and MAY support sending bodies using +application/x-www-urlencoded+. 
+When clients are instructed to send a request with a body (e.g. PUT, POST, PATCH), there are two possible valid content-types: +application/json+ and +application/x_www-form-urlencoded+. Compliant client applications MUST support sending bodies using +application/json+ and MAY support sending bodies using +application/x-www-urlencoded+. 
 
 ==== Sending +application/json+ Bodies
 When sending bodies encoded as +application/json+, clients SHOULD construct a simple JSON dictionary object that contains a set of name-value pairs that match the +property+ objects in the HAL Forms document. For example, using the Example HAL Forms document above as a guide, a client would construct a JSON dictionary object that looks like the following:
@@ -113,11 +113,11 @@ The media type identifier string for HAL Forms documents is: +application/prs.ha
 While it is completely up to authors and consumers to determine how they wish to use the HAL Forms media type, the following is a suggested process flow for runtime use of HAL Forms documents on the Web.
 
  . Servers emit valid HAL responses that contain +rel+ values that are valid URLs which point to HAL Forms documents.
- . Clients parse the HAL response and (either on-demand or in pre-feftch mode) pull the HAL Forms as needed.
+ . Clients parse the HAL response and (either on-demand or in pre-fetch mode) pull the HAL Forms as needed.
  . When HAL Form is returned by the server, clients use this information to render an input UI for humans to deal with at the appropriate time.
  . Clients collect the completed user inputs and, based on +contentType+, craft a valid request to send to the server.
 
-=== Starting With a Typcial HAL Response.
+=== Starting With a Typical HAL Response.
 A client application can start with a typical HAL response and use information in the representation to see if HAL Forms documents are available. Below is a HAL response w/ URLs for +rel+ values. These MAY point to HAL Form documents.
 
 .A Typical HAL Response with URLs for rel values
@@ -180,11 +180,11 @@ Authors can extend the HAL Forms media type as long as the following rules are o
 
  . No existing properties or objects are removed.
  . No existing values, properties or objects are altered in a way that is non-backward compatible (e.g. changes MUST NOT break existing implementations that adhere to this specification).
- . All new properties or objets are treated as OPTIONAL (e.g. no new REQUIRED elements are introduced in an extension).
+ . All new properties or objects are treated as OPTIONAL (e.g. no new REQUIRED elements are introduced in an extension).
  
 [WARNING]
 ==== 
-Authors should be aware that a future version of this specification MAY add new elements and should take care that any extensions are implemented in a way that reduces the likelihood that a future version of this speficiation is in conflict with your extension.
+Authors should be aware that a future version of this specification MAY add new elements and should take care that any extensions are implemented in a way that reduces the likelihood that a future version of this specification is in conflict with your extension.
 ====
 
 == Acknowledgements
