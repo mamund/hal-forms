@@ -1,0 +1,30 @@
+// HAL RESPONSE
+{
+  "_links": {
+    "self": {
+      "href": "http://api.example.org/task-list/",
+      "title": "Reload",
+      "templated": false
+    },
+    "http://api.example.org/rels/filter": {
+      "href": "http://api.example.org/task-list/",
+      "title": "Filter Tasks",
+      "templated": false
+    },
+  }
+}
+
+// HAL FORMS DOCUMENT
+{
+  "self":"http://api.example.org/rels/filter",
+  "method":"get",
+  "properties": [
+    {"name":"title", "value":"", "prompt":"Title"},
+    {"name":"completed", "value":"", "prompt":"Completed", "regex":"^(true|false)$"}
+  ]
+}
+
+// RESULTING URL
+http://api.example.org/task-list/?title=sample&completed=false
+
+

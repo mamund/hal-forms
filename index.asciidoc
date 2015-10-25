@@ -68,6 +68,22 @@ All HAL Forms documents MUST be valid https://tools.ietf.org/html/rfc7159[JSON] 
 +self+::
   A string that represents the associated URL for this response. This is an OPTIONAL element.
 
+== Encoding Requests
+Once the client application has used the HAL Forms document to render a UI for accepting inputs (and the user has supplied the inputs), that same document SHOULD be used to encode a request to send to the server to excecute the state transition described by the HAL Forms document. There are two ways in which HAL Forms documents can be used to construct parameterized requests. The first is by <<encoding-request-urls, encoding request URLs>> for HTTP GET, DELETE, and HEAD requests. The second is by <<encoding-request-bodies, encoding request bodies>> for HTTP PUT, POST, and PATCH requests. 
+
+[[encoding-request-urls]]
+=== Encoding Request URLs
+When clients are instructed to send a request without a body (e.g. GET, HEAD, DELETE), clients SHOULD use the list of +property+ object's +name+ and +value+ attributes to construct a valid URL using the http://www.w3.org/TR/html/forms.html#submit-mutate-action[W3C Mutate Action URL Algorithm] to produce a valid query string. Below is a simple HAL Forms document that uses the GET method and the resulting updated URL.
+
+----
+include::get-hal-forms-example.json[]
+----
+
+[NOTE]
+====
+The HAL media type already defines support for paramterized HTTP GET queries using URITemplates. However, the HAL Form document can be treated as an alternate implementation for GET queries that include additional constraints including prompts, regular expression validators, etc.
+====
+
 [[encoding-request-bodies]]
 === Encoding Request Bodies
 When clients are instructed to send a request with a body (e.g. PUT, POST, PATCH), there are two possible valid content-types: +application/json+ and +application/x_www-form-urlencoded+. Compliant client applciations MUST support sending bodies using +application/json+ and MAY support sending bodies using +application/x-www-urlencoded+. 
