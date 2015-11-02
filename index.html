@@ -759,7 +759,7 @@ Last Updated
 </dt>
 <dd>
 <p>
-  2015-10-31
+  2015-11-02
 </p>
 </dd>
 <dt class="hdlist1">
@@ -848,7 +848,7 @@ interpreted as described in <a href="http://tools.ietf.org/html/rfc2119">RFC2119
     }
  },
   "_templates" : {
-    "http://api.example.org/rels/create" : {
+    "default" : {
       "title" : "Create",
       "method" : "post",
       "contentType" : "application/json",
@@ -890,7 +890,7 @@ interpreted as described in <a href="http://tools.ietf.org/html/rfc2119">RFC2119
 <div class="ulist"><ul>
 <li>
 <p>
-<code>key</code> : The unique identifier of the <code>link</code> object. This is a REQUIRED element. If this is missing, this <code>link</code> object SHOULD be ignored. For this release, the only valid valud for the <code>key</code> element is <code>self</code>.
+<code>key</code> : The unique identifier of the <code>link</code> object. This is a REQUIRED element. For this release, the only valid valid for the <code>key</code> element is <code>"self"</code>. If this element is missing, is set to an unrecognized value, or cannot be parsed, this <code>link</code> object SHOULD be ignored.
 </p>
 </li>
 <li>
@@ -920,7 +920,7 @@ interpreted as described in <a href="http://tools.ietf.org/html/rfc2119">RFC2119
 </dt>
 <dd>
 <p>
-  The unqiue identifier for this <code>template</code> object. This is a REQUIRED element. If this is missing, set to empty or unparsable, this <code>template</code> object SHOULD be ignored. The value of this <code>key</code> SHOULD match the <code>rel</code> value in the associated HAL document that was used to retrive this HAL-FORMS document.
+  The unqiue identifier for this <code>template</code> object. This is a REQUIRED element. For this release, the only valid value for <code>key</code> is <code>"default"</code>.  If this element is missing, set to empty or is unparsable, this <code>template</code> object SHOULD be ignored.
 </p>
 </dd>
 <dt class="hdlist1">
@@ -1030,7 +1030,7 @@ A human-readable string that can be used to identify this template. This is a va
     }
   },
   "_templates" : {
-    "http://api.example.org/rels/filter" : {
+    "default" : {
       "title" : "Filter",
       "method":"get",
       "properties": [
@@ -1074,7 +1074,7 @@ http://api.example.org/task-list/?title=sample&amp;completed=false</code></pre>
 <div class="paragraph"><p>When sending bodies encoded as <code>application/x-www-form-urlencoded</code>, clients SHOULD construct a body that is in compliance with the guidance in the <a href="http://www.w3.org/TR/html/forms.html#application/x-www-form-urlencoded-encoding-algorithm">W3C FORMS Encoding Algorithm</a>. A sample (using the Example HAL-FORMS document) follows:</p></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>title="A+Sample+HAL+Forms+Response"&amp;completed="false"</code></pre>
+<pre><code>title=A+Sample+HAL+Forms+Response&amp;completed=false</code></pre>
 </div></div>
 </div>
 </div>
@@ -1181,7 +1181,7 @@ Date: Wed, 01 Jun 2016 14:59:30 GMT
     }
  },
   "_templates" : {
-    "http://api.example.org/rels/create" : {
+    "default" : {
       "title" : "Create",
       "method" : "post",
       "contentType" : "application/json",
@@ -1201,7 +1201,7 @@ Date: Wed, 01 Jun 2016 14:59:30 GMT
 <div class="title">Sending a HAL-FORMS body request</div>
 <div class="content">
 <pre><code>**** REQUEST
-GET /task-list/ HTTP/1.1
+POST /task-list/ HTTP/1.1
 Host: api.example.org
 Accept: application/json
 
@@ -1255,7 +1255,8 @@ All new properties or objects are treated as OPTIONAL (e.g. no new REQUIRED elem
 <div class="sect1">
 <h2 id="_acknowledgements">Acknowledgements</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>I thank the following people who offered advice, comment, and contributions to this spec:
+<div class="paragraph"><p>I thank the everyone who helped contribute to this specification including:
+Josh Cohen,
 Pete Johanson,
 Mike Kelly,
 Dilip Krishnan.</p></div>
@@ -1265,7 +1266,7 @@ Dilip Krishnan.</p></div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-10-31 09:42:54 Eastern Daylight Time
+Last updated 2015-11-02 11:43:27 EST
 </div>
 </div>
 </body>

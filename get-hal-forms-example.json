@@ -22,7 +22,7 @@
     }
   },
   "_templates" : {
-    "http://api.example.org/rels/filter" : {
+    "default" : {
       "title" : "Filter",
       "method":"get",
       "properties": [

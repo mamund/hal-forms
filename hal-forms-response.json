@@ -5,7 +5,7 @@
     }
  },
   "_templates" : {
-    "http://api.example.org/rels/create" : {
+    "default" : {
       "title" : "Create",
       "method" : "post",
       "contentType" : "application/json",

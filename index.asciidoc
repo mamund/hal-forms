@@ -62,7 +62,7 @@ The +_links+ element contains any links associated with the HAL-FORMS document. 
 +link+::
   The +link+ element consists of a key and a set of properties. 
   +
-  * +key+ : The unique identifier of the +link+ object. This is a REQUIRED element. If this is missing, this +link+ object SHOULD be ignored. For this release, the only valid valud for the +key+ element is +self+. 
+  * +key+ : The unique identifier of the +link+ object. This is a REQUIRED element. For this release, the only valid valid for the +key+ element is +"self"+. If this element is missing, is set to an unrecognized value, or cannot be parsed, this +link+ object SHOULD be ignored.
   * +href+ : The URL associated with the +key+. This is a REQUIRED element. If this is missing, set to empty or unparsable, this +link+ object SHOULD be ignored.
 
 === The +_templates+ Element
@@ -73,7 +73,7 @@ The +_templates+ element contains a list of valid +template+ objects. Each +temp
 +contentType+ ::
   The value of +contentType+ is the media type the client SHOULD use when sending a request body to the server. This is an OPTIONAL element. Valid values for +contentType+ are +application/json+ and +application/x-www-form-urlencoded+. If the +contentType+ property is missing, is set to empty, or contains an unrecognized value, the client SHOULD act is if the +contentType+ is set to +application/json+. See <<encoding-request-bodies,Encoding Request Bodies>> for details.
 +key+ :: 
-  The unqiue identifier for this +template+ object. This is a REQUIRED element. If this is missing, set to empty or unparsable, this +template+ object SHOULD be ignored. The value of this +key+ SHOULD match the +rel+ value in the associated HAL document that was used to retrive this HAL-FORMS document.
+  The unqiue identifier for this +template+ object. This is a REQUIRED element. For this release, the only valid value for +key+ is +"default"+.  If this element is missing, set to empty or is unparsable, this +template+ object SHOULD be ignored.
 +method+ ::
   The HTTP method the client SHOULD execute when making the service request. Any valid HTTP method is allowed. This is a REQUIRED element. If the value is empty or is not understood by the client, the value MUST be treated as an HTTP GET.
 +properties+ ::
@@ -125,7 +125,7 @@ When sending bodies encoded as +application/json+, clients SHOULD construct a si
 When sending bodies encoded as +application/x-www-form-urlencoded+, clients SHOULD construct a body that is in compliance with the guidance in the http://www.w3.org/TR/html/forms.html#application/x-www-form-urlencoded-encoding-algorithm[W3C FORMS Encoding Algorithm]. A sample (using the Example HAL-FORMS document) follows:
 
 ----
-title="A+Sample+HAL+Forms+Response"&completed="false"
+title=A+Sample+HAL+Forms+Response&completed=false
 ----
 
 == The HAL-FORMS Media Type Identifier String
@@ -182,7 +182,7 @@ After receiving the HAL-FORMS response and rendering the UI, the client applicat
 .Sending a HAL-FORMS body request
 ----
 **** REQUEST
-GET /task-list/ HTTP/1.1
+POST /task-list/ HTTP/1.1
 Host: api.example.org
 Accept: application/json
 
@@ -211,7 +211,8 @@ Authors should be aware that a future version of this specification MAY add new 
 ====
 
 == Acknowledgements
-I thank the following people who offered advice, comment, and contributions to this spec: 
+I thank the everyone who helped contribute to this specification including: 
+Josh Cohen,
 Pete Johanson,
 Mike Kelly,
 Dilip Krishnan.
