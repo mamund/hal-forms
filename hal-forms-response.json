@@ -1,10 +1,19 @@
 {
-  "self":"http://api.example.org/rels/create",
-  "method":"post",
-  "contentType":"application/json",
-  "properties": [
-    {"name":"title","required":true, "value":"", "prompt":"Title", "regex":"", "templated":false},
-    {"name":"completed","required":false,"value":"false", "prompt":"Completed", "regex":""}
-  ]
+  "_links" : {
+     "self" : {
+      "href" : "http://api.example.org/rels/create"
+    }
+ },
+  "_templates" : {
+    "default" : {
+      "title" : "Create",
+      "method" : "post",
+      "contentType" : "application/json",
+      "properties" : [
+        {"name" : "title", "required" : true, "value" : "", "prompt" : "Title", "regex" : "", "templated" : false},
+        {"name" : "completed", "required" : false, "value" : "false", "prompt" : "Completed", "regex" : ""}
+      ]
+    }
+  }
 }
 

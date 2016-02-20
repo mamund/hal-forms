@@ -16,12 +16,21 @@
 
 // HAL FORMS DOCUMENT
 {
-  "self":"http://api.example.org/rels/filter",
-  "method":"get",
-  "properties": [
-    {"name":"title", "value":"", "prompt":"Title"},
-    {"name":"completed", "value":"", "prompt":"Completed", "regex":"^(true|false)$"}
-  ]
+  "_links" : {
+    "self" : {
+      "href" : "http://api.example.org/rels/filter"
+    }
+  },
+  "_templates" : {
+    "default" : {
+      "title" : "Filter",
+      "method":"get",
+      "properties": [
+        {"name":"title", "value":"", "prompt":"Title"},
+        {"name":"completed", "value":"", "prompt":"Completed", "regex":"^(true|false)$"}
+      ]      
+    }
+  }
 }
 
 // RESULTING URL
