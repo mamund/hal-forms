@@ -109,7 +109,7 @@ The HAL media type already defines support for parameterized HTTP GET queries us
 
 [[encoding-request-bodies]]
 === Encoding Request Bodies
-When clients are instructed to send a request with a body (e.g. PUT, POST, PATCH), there are two possible content-types to use when encoding arguments: +application/json+ and +application/x_www-form-urlencoded+. Compliant client applications MUST support sending bodies using +application/json+ and SHOULD support sending bodies using +application/x-www-urlencoded+. 
+When clients are instructed to send a request with a body (e.g. PUT, POST, PATCH), there are two possible content-types to use when encoding arguments: +application/json+ and +application/x-www-form-urlencoded+. Compliant client applications MUST support sending bodies using +application/json+ and SHOULD support sending bodies using +application/x-www-form-urlencoded+. 
 
 ==== Sending +application/json+ Bodies
 When sending bodies encoded as +application/json+, clients SHOULD construct a simple JSON dictionary object that contains a set of name-value pairs that match the +property+ objects in the HAL-FORMS document. For example, using the Example HAL-FORMS document (see above) as a guide, a client would construct a JSON dictionary object that looks like the following:
