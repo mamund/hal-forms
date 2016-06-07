@@ -73,7 +73,7 @@ The +_templates+ element contains a collection of +template+ objects. Each +temp
 +contentType+ ::
   The value of +contentType+ is the media type the client SHOULD use when sending a request body to the server. This is an OPTIONAL element. Valid values for this release are +"application/json"+ and +"application/x-www-form-urlencoded"+. If the +contentType+ property is missing, is set to empty, or contains an unrecognized value, the client SHOULD act is if the +contentType+ is set to +"application/json"+. See <<encoding-request-bodies,Encoding Request Bodies>> for details.
 +key+ :: 
-  The unique identifier for this +template+ object. This is a REQUIRED element. For this release, the only valid value for +key+ is +"default"+.  If this element is missing, set to empty or is unparsable, this +template+ object SHOULD be ignored.
+  The unique identifier for this +template+ object. This is a REQUIRED element. At least one +key+ per halforms document should be called +"default"+. When more than one +template+ are present, the remaining keys in the +_templates+ object are meant to be domain-specific.  If this element is missing, set to empty or is unparsable, this +template+ object SHOULD be ignored.
 +method+ ::
   The HTTP method the client SHOULD use when the service request. Any valid HTTP method is allowed. This is a REQUIRED element. If the value is empty or is not understood by the client, the value MUST be treated as an HTTP GET.
 +properties+ ::
@@ -88,8 +88,59 @@ The +_templates+ element contains a collection of +template+ objects. Each +temp
   * +required+ : Indicates whether the parameter is required. This is a valid JSON boolean. This is an OPTIONAL element. If this attribute is missing, set to blank or contains an unrecognized value, it SHOULD be treated as if the value of +required+ is set to `false'.
   * +templated+ : Indicates whether the +value+ element is a string containing https://tools.ietf.org/html/rfc6570[URITemplate] variable expressions for the client to resolve. . This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, set to empty, or contains unrecognized content, it SHOULD be treated as if the value of +templated+ is set to `false'.
   * +value+ : The parameter value. This is a valid JSON string. This string MAY contain a URITtemplate (see +templated+ for details). This is an OPTIONAL element. If it does not exist, clients SHOULD act as if the +value+ property is set to an empty string.
+  * +suggest+ : Indicates the definition of the suggested values for this property. Three different formats are supported. This is an OPTIONAL element. If this attribute is missing, no values will be suggested.
+  * +multi+ : Indicates whether the selection is multiple or not. This is a valid JSON boolean. This is an OPTIONAL element. If this attribute is missing, set to blank or contains an unrecognized value, it SHOULD be treated as if the value of *multi* is set to false.
+  * +render+ : A field that provides hints on how to render a property. This is a valid JSON string. This is an OPTIONAL element. The following values are suggested for this field:
+      * select
+      * multiSelect
+      * radio
+      * suggest (autosearchable)
+      * text
+      * number
+      * hidden
+      * color
+      * date
+      * datetime
+      * email
+      * telephone
+      * time
+      * range (slider)
+      * url
+      * password
+      * ....
+        
+  
+  
 
 +title+:: A human-readable string that can be used to identify this template. This is a valid JSON string. This is an OPTIONAL element. If it does not exist or is unparsable, consumers MAY use the +key+ value of the template as the value for +title+.
+
+[[suggest-field-format]]
+Suggest field allows the client to choose between several options for one particular property. Three different formats are defined:
+ * Supplying the possible values directly (Direct Suggest).
+ * Pointing to a data list in the same resource (Embedded Suggest).
+ * Provide a Url (Remote Suggest).
+ 
+----
+include::suggest-examples.json[]
+----
+
++Direct Suggest+ object has the following elements:
+
++value+ : This is the value of the "direct" suggest. This is a valid JSON string. This is a REQUIRED element. If this attribute is missing or set to empty, the client SHOULD ignore this +property+ object completely.
++prompt+ : The human-readable prompt for the parameter. This is a valid JSON string. This is an OPTIONAL element". If this element is missing, clients MAY act as if the <code>prompt</code> value is set to the value in the +value+ attribute.
+
++Embedded Suggest+ object has the following elements:
+
++embedded+ : This is the name of the embedded property which values are inserted in this suggest. This is a valid JSON string. This is a REQUIRED element. If this attribute is missing or set to empty, the client SHOULD ignore this +property+ object completely.
++value-field+ : This is the value field name in the embedded property. This is a valid JSON string. This is a OPTIONAL element. If this attribute is missing the client SHOULD consider that the value is the embedded object itself.
++prompt-field+ : The human-readable prompt field in the embedded property. This is a valid JSON string. This is an REQUIRED element".
+
++Remote Suggest+ object has the following elements:
+
++href+ : This is the url of the data which values are inserted in this suggest. This is a valid JSON string. This is a REQUIRED element. If this attribute is missing or set to empty, the client SHOULD ignore this +property+ object completely.
++value-field+ : This is the value field name in the embedded property. This is a valid JSON string. This is a OPTIONAL element. If this attribute is missing the client SHOULD consider that the value is the embedded object itself.
++prompt-field+ : The human-readable prompt field in the embedded property. This is a valid JSON string. This is an REQUIRED element".
+
 
 == Encoding Requests
 Once the client application has used the HAL-FORMS document to render a UI for accepting inputs (and the user has supplied the inputs), that same document SHOULD be used to encode a request to send to the server to execute the state transition described by the HAL-FORMS document. There are two ways in which HAL-FORMS documents can be used to construct parameterized requests. The first is by <<encoding-request-urls, encoding request URLs>> for HTTP GET, DELETE, and HEAD requests. The second is by <<encoding-request-bodies, encoding request bodies>> for HTTP PUT, POST, and PATCH requests. 
@@ -177,6 +228,24 @@ Date: Wed, 01 Jun 2016 14:59:30 GMT
 
 include::hal-forms-response.json[]
 ----
+
+.Requesting priorities Suggest
+----
+**** REQUEST
+GET /priorities HTTP/1.1
+Host: api.example.org
+Accept: application/json
+
+**** RESPONSE
+HTTP/1.1 200 OK
+Content-Type: application/json
+Date: Wed, 01 Jun 2016 14:59:30 GMT
+
+[
+    {"id":"low", "desc":"Low", "longdesc": "Low priority..."}, 
+    {"id":"med", "desc":"Medium", "longdesc": "Medium priority..."}, 
+    {"id":"high", "desc":"High", "longdesc": "High priority..."}
+]
 
 === Sending a HAL-FORMS Body Request
 After receiving the HAL-FORMS response and rendering the UI, the client application can -- once the user supplies inputs and executes the "submit" action -- use the instructions in the HAL-FORMS document to compose a request and send it to the URL indicated in the HAL document response (as follows):

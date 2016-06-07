@@ -4,6 +4,13 @@
       "href" : "http://api.example.org/rels/create"
     }
  },
+ "_embedded": {
+    "types": [
+      {"id":"low", "tdesc":"Low", "longdesc": "Low desc..."}, 
+      {"id":"med", "tdesc":"Medium", "longdesc": "Medium desc..."}, 
+      {"id":"high", "tdesc":"High", "longdesc": "High desc..."}
+    ]
+  },
   "_templates" : {
     "default" : {
       "title" : "Create",
@@ -12,6 +19,33 @@
       "properties" : [
         {"name" : "title", "required" : true, "value" : "", "prompt" : "Title", "regex" : "", "templated" : false},
         {"name" : "completed", "required" : false, "value" : "false", "prompt" : "Completed", "regex" : ""}
+        {"name": "options", "readOnly": false, "value": "OPTION1",
+          "suggest": [
+            {
+              "value": "OPTION1",
+              "prompt": "Option 1"
+            },
+            {
+              "value": "OPTION2",
+              "prompt": "Option 2"
+            }
+          ]
+        }
+        {"name":"priority", "value":"low", "prompt":"Priority", 
+            "suggest": {
+                "href" : “http://api.example.org/priorities”,
+                "prompt-field":"desc",
+                "value-field":"id"
+            }
+        }
+        {"name":"types", "value":"low", "prompt":"Type", 
+            "suggest": {
+                “embedded” : "types",
+                "prompt-field":"tdesc",
+                "value-field":"id"
+            }
+        }
+        
       ]
     }
   }
