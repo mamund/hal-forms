@@ -142,8 +142,7 @@ When sending bodies encoded as +application/json+, clients SHOULD construct a JS
 ----
 
 ==== Sending +application/x-www-form-urlencoded+ Bodies
-
-Assuming that the model to encode corresponds to the +property+ objects in the HAL-FORMS document, the client traverses the model object to construct a form data set as follows:
+Assuming that the form model to encode corresponds to the +property+ objects in the HAL-FORMS document, the client traverses the model object to construct a form data set as follows:
 
 * Let there be a parent property path, initialized with an empty string
 * For each model attribute with a scalar value, add a key=value pair to the form data set. Build the key by appending the current model attribute name to the parent property path, separated by a dot.
