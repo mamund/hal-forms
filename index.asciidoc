@@ -150,9 +150,7 @@ Assuming that the form model to encode corresponds to the +property+ objects in 
 * For each model attribute with an object value, append the model attribute name as dot-separated path segment to the current parent property path. Descend into the object and iterate over the object attributes, treating scalar, collection and object values recursively as described above.
 * For each model attribute with a collection containing object values, append the model attribute name as dot-separated path segment to the parent property path. Iterate over the collection with an index. For each item, append the current index in square brackets to the end of the parent property path and descend into the object. Iterate over the object attributes, treating scalar, collection and object values recursively as described above.
 
-When sending bodies encoded as +application/x-www-form-urlencoded+, clients SHOULD construct a body from the form data set that is in compliance with the guidance in the https://www.w3.org/TR/html5/forms.html#url-encoded-form-data[W3C FORMS Encoding Algorithm].
-
-A sample (using the Example HAL-FORMS document) follows:
+When sending bodies encoded as +application/x-www-form-urlencoded+, clients SHOULD construct a body from the form data set that is in compliance with the guidance in the https://www.w3.org/TR/html5/forms.html#url-encoded-form-data[W3C FORMS Encoding Algorithm]. A sample (using the Example HAL-FORMS document) follows:
 
 ----
 title=A+Sample+HAL+Forms+Request&completed=false&contact.fullName=Ann+Arbuckle&contact.email=aa@example.com&subtasks[0].title=prepare+meeting&subtasks[0].completed=true&subtasks[1].title=write+minutes&reminders=15&reminders=1440
