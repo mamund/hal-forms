@@ -11,7 +11,27 @@
       "contentType" : "application/json",
       "properties" : [
         {"name" : "title", "required" : true, "value" : "", "prompt" : "Title", "regex" : "", "templated" : false},
-        {"name" : "completed", "required" : false, "value" : "false", "prompt" : "Completed", "regex" : ""}
+        {"name" : "completed", "required" : false, "value" : "false", "prompt" : "Completed", "regex" : ""},
+        {
+          "name" : "contact",
+          "prompt": "Contact",
+          "properties" : [{"name": "fullName"}, {"name": "email"}]
+        },
+        {
+          "name" : "subtasks",
+          "prompt" : "Sub-Tasks",
+          "multi" : true,
+          "properties" : [
+            {"name" : "title", "required" : true, "value" : "", "prompt" : "Title", "regex" : "", "templated" : false},
+            {"name" : "completed", "required" : false, "value" : "false", "prompt" : "Completed", "regex" : ""}
+          ]
+        },
+        { "name": "reminders",
+          "prompt" : "Remind me (minutes)",
+          "regex" : "%d",
+          "multi" : true,
+          "value" : ["15"]
+        }
       ]
     }
   }

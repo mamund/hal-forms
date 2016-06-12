@@ -83,13 +83,24 @@ The +_templates+ element contains a collection of +template+ objects. Each +temp
   +
   * +name+ : The parameter name. This is a valid JSON string. This is a REQUIRED element. If this attribute is missing or set to empty, the client SHOULD ignore this +property+ object completely.
   * +prompt+ : The human-readable prompt for the parameter. This is a valid JSON string. This is an OPTIONAL element. If this element is missing, clients MAY act as if the +prompt+ value is set to the value in the +name+ attribute.
-  * +readOnly+ : Indicates whether the parameter is read-only. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, empty, or set to an unrecognized value, it SHOULD be treated as if the value of +readOnly+ is set to `false'. 
+  * +readOnly+ : Indicates whether the parameter is read-only. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, empty, or set to an unrecognized value, it SHOULD be treated as if the value of +readOnly+ is set to `false`.
   * +regex+ : A regular expression string to be applied to the value of the parameter. Rules for valid values are the same as the http://www.w3.org/TR/html5/forms.html#the-pattern-attribute[HTML5 pattern] attribute. This is an OPTIONAL element. If this attribute missing, is set to empty, or is unparseable , it SHOULD be ignored.
-  * +required+ : Indicates whether the parameter is required. This is a valid JSON boolean. This is an OPTIONAL element. If this attribute is missing, set to blank or contains an unrecognized value, it SHOULD be treated as if the value of +required+ is set to `false'.
-  * +templated+ : Indicates whether the +value+ element is a string containing https://tools.ietf.org/html/rfc6570[URITemplate] variable expressions for the client to resolve. . This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, set to empty, or contains unrecognized content, it SHOULD be treated as if the value of +templated+ is set to `false'.
-  * +value+ : The parameter value. This is a valid JSON string. This string MAY contain a URITtemplate (see +templated+ for details). This is an OPTIONAL element. If it does not exist, clients SHOULD act as if the +value+ property is set to an empty string.
+  * +required+ : Indicates whether the parameter is required. This is a valid JSON boolean. This is an OPTIONAL element. If this attribute is missing, set to blank or contains an unrecognized value, it SHOULD be treated as if the value of +required+ is set to `false`.
+  * +templated+ : Indicates whether the +value+ element is a string containing https://tools.ietf.org/html/rfc6570[URITemplate] variable expressions for the client to resolve. . This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, set to empty, or contains unrecognized content, it SHOULD be treated as if the value of +templated+ is set to `false`.
+  * +value+ : The default parameter value, in case that the property is expected to have a JSON string or an array of strings as value, or if it is +templated+. This is a valid JSON string or array of strings. The value MAY contain a URITtemplate string (see +templated+ for details). This is an OPTIONAL element. If it does not exist, clients SHOULD act as if the +value+ property is set to an empty string.
+  * +properties+ : An array of one or more anonymous +property+ objects, that each describe a scoped attribute of the expected property value. This is an OPTIONAL element. If this element is present, clients SHOULD ignore the +value+ element.
+  * +multi+ : Indicates whether the parameter is a collection. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, empty or set to an unrecognized value, it SHOULD be treated as if the value of +multi+ is set to `false`.
 
 +title+:: A human-readable string that can be used to identify this template. This is a valid JSON string. This is an OPTIONAL element. If it does not exist or is unparsable, consumers MAY use the +key+ value of the template as the value for +title+.
+
+== Building a form model
+When encountering a HAL-FORM template, clients are RECOMMENDED to create form model data matching the template properties dynamically, and provide input for that model using additional information from the HAL-FORM, like prompt strings or input constraints. One way to provide input can be to bind the model data to input elements in a view with a model-view technology, or to prompt for input via a CLI or a function callback. It is RECOMMENDED that the model data are structured in such a way that it is easy to construct a request body from the model later. The actual UI flow to fill the model MAY be independent from the API flow.
+
+- For each encountered property object without a +properties+ element and with a +multi+ element which resolves to `false` after applying defaults, the client creates a simple name-value attribute in the model, populates it with the +property+ value and uses prompt strings and input constraints to allow for input as described above. An example for this is the `"title"` attribute in the HAL-FORMS document, which could be bound to an HTML input field with a label `"Title"`.
+- For each property object without a +properties+ element and with a +multi+ element set to `true`, the client creates a model attribute with the name of the property and a collection of scalar values in the model, populates it with the +property+ value and uses prompt strings and input constraints to allow for collection input. An example for this is the `"reminders"` attribute in the HAL-FORMS document, which could be represented as an HTML fieldset with legend "Remind me (minutes)". The fieldset could have a repeatable div bound to the collection that has an input field with pattern `%d`. The client could provide delete and add controls to remove and append collection items.
+- For each property object with a +properties+ element and with a +multi+ element set to `true`, the client creates a model attribute with the name of the property and a collection value and uses the +properties+ array to populate the collection with one item. An example for this is the `"subtasks"` attribute in the HAL-FORMS document, which could be represented as an HTML fieldset with legend "Sub-Tasks". The field set could contain a repeatable fieldset bound to the collection with inputs for the subtask data. The client could provide delete and add controls to remove and append collection items.
+- For each property object with a +properties+ element and with a +multi+ element which resolves to `false` after applying defaults, the client creates a model attribute with the name of the property and an object value and uses the +properties+ array to fill the object. An example is the `"contact"` attribute in the HAL-FORMS document, which could be represented as an HTML fieldset with legend "Contact" containing inputs for the contact data.
+- A property object in a +properties+ array may have a +properties+ element in turn, i.e. the algorithm described above is recursive.
 
 == Encoding Requests
 Once the client application has used the HAL-FORMS document to render a UI for accepting inputs (and the user has supplied the inputs), that same document SHOULD be used to encode a request to send to the server to execute the state transition described by the HAL-FORMS document. There are two ways in which HAL-FORMS documents can be used to construct parameterized requests. The first is by <<encoding-request-urls, encoding request URLs>> for HTTP GET, DELETE, and HEAD requests. The second is by <<encoding-request-bodies, encoding request bodies>> for HTTP PUT, POST, and PATCH requests. 
@@ -112,20 +123,42 @@ The HAL media type already defines support for parameterized HTTP GET queries us
 When clients are instructed to send a request with a body (e.g. PUT, POST, PATCH), there are two possible content-types to use when encoding arguments: +application/json+ and +application/x_www-form-urlencoded+. Compliant client applications MUST support sending bodies using +application/json+ and SHOULD support sending bodies using +application/x-www-urlencoded+. 
 
 ==== Sending +application/json+ Bodies
-When sending bodies encoded as +application/json+, clients SHOULD construct a simple JSON dictionary object that contains a set of name-value pairs that match the +property+ objects in the HAL-FORMS document. For example, using the Example HAL-FORMS document (see above) as a guide, a client would construct a JSON dictionary object that looks like the following:
+When sending bodies encoded as +application/json+, clients SHOULD construct a JSON object that matches the +property+ objects in the HAL-FORMS document.
+
+For example, using the Example HAL-FORMS document (see above) as a guide, a client would construct a JSON object that looks like the following:
 
 ----
 {
-  "title" : "A Sample HAL Forms Response",
-  "completed" : false
+  "title" : "A Sample HAL Forms Request",
+  "completed" : false,
+  "reminders": [ "15", "1440" ],
+  "subtasks": [
+    { "title" : "prepare meeting", "completed": true },
+    { "title" : "write minutes" }
+  ],
+  "contact" : {
+    "fullName": "Ann Arbuckle",
+    "email": "aa@example.com"
+  }
 }
 ----
 
 ==== Sending +application/x-www-form-urlencoded+ Bodies
-When sending bodies encoded as +application/x-www-form-urlencoded+, clients SHOULD construct a body that is in compliance with the guidance in the http://www.w3.org/TR/html/forms.html#application/x-www-form-urlencoded-encoding-algorithm[W3C FORMS Encoding Algorithm]. A sample (using the Example HAL-FORMS document) follows:
+
+Assuming that the model to encode corresponds to the +property+ objects in the HAL-FORMS document, the client traverses the model object to construct a form data set as follows:
+
+* Let there be a parent property path, initialized with an empty string
+* For each model attribute with a scalar value, add a key=value pair to the form data set. Build the key by appending the current model attribute name to the parent property path, separated by a dot.
+* For each model attribute with a collection containing scalars, add one key=value pair for each collection item to the form data set. Build the key by appending the current model attribute name to the parent property path, separated by a dot.
+* For each model attribute with an object value, append the model attribute name as dot-separated path segment to the current parent property path. Descend into the object and iterate over the object attributes, treating scalar, collection and object values recursively as described above.
+* For each model attribute with a collection containing object values, append the model attribute name as dot-separated path segment to the parent property path. Iterate over the collection with an index. For each item, append the current index in square brackets to the end of the parent property path and descend into the object. Iterate over the object attributes, treating scalar, collection and object values recursively as described above.
+
+When sending bodies encoded as +application/x-www-form-urlencoded+, clients SHOULD construct a body from the form data set that is in compliance with the guidance in the https://www.w3.org/TR/html5/forms.html#url-encoded-form-data[W3C FORMS Encoding Algorithm].
+
+A sample (using the Example HAL-FORMS document) follows:
 
 ----
-title=A+Sample+HAL+Forms+Response&completed=false
+title=A+Sample+HAL+Forms+Request&completed=false&contact.fullName=Ann+Arbuckle&contact.email=aa@example.com&subtasks[0].title=prepare+meeting&subtasks[0].completed=true&subtasks[1].title=write+minutes&reminders=15&reminders=1440
 ----
 
 == The HAL-FORMS Media Type Identifier String
