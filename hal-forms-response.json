@@ -20,16 +20,19 @@
         {"name" : "title", "required" : true, "value" : "", "prompt" : "Title", "regex" : "", "templated" : false},
         {"name" : "completed", "required" : false, "value" : "false", "prompt" : "Completed", "regex" : ""}
         {"name": "options", "readOnly": false, "value": "OPTION1",
-          "suggest": [
-            {
-              "value": "OPTION1",
-              "prompt": "Option 1"
-            },
-            {
-              "value": "OPTION2",
-              "prompt": "Option 2"
-            }
-          ]
+          "suggest": 
+            "values": [
+	            {
+	              "id": "OPTION1",
+	              "desc": "Option 1"
+	            },
+	            {
+	              "id": "OPTION2",
+	              "desc": "Option 2"
+	            }
+	        ]
+	        "prompt-field":"desc",
+            "value-field":"id"
         }
         {"name":"priority", "value":"low", "prompt":"Priority", 
             "suggest": {

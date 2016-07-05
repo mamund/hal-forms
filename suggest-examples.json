@@ -2,9 +2,11 @@
 
 {"name":"priority", "value":"low", "prompt":"Priority", 
     "suggest": [
-            {"value":"low", "prompt":"Low"}, 
-            {"value":"med", "prompt":"Medium"}, 
-            {"value":"high","prompt":"High"}
+        "values": [{"id":"low", "desc":"Low", "longdesc": "Low priority..."}, 
+        {"id":"med", "desc":"Medium", "longdesc": "Medium priority..."}, 
+        {"id":"high", "desc":"High", "longdesc": "High priority..."}]
+        "prompt-field":"desc",
+        "value-field":"id"
         ]
     }
 }

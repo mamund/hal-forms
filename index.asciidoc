@@ -126,8 +126,9 @@ include::suggest-examples.json[]
 
 +Direct Suggest+ object has the following elements:
 
-+value+ : This is the value of the "direct" suggest. This is a valid JSON string. This is a REQUIRED element. If this attribute is missing or set to empty, the client SHOULD ignore this +property+ object completely.
-+prompt+ : The human-readable prompt for the parameter. This is a valid JSON string. This is an OPTIONAL element". If this element is missing, clients MAY act as if the <code>prompt</code> value is set to the value in the +value+ attribute.
++values+ : This are the valid values for this field. This is a valid JSON array. This is a REQUIRED element. If this attribute is missing or set to empty, the client SHOULD ignore this +property+ object completely.
++value-field+ : This is the value field name in the embedded property. This is a valid JSON string. This is a OPTIONAL element. If this attribute is missing the client SHOULD consider that the value is the embedded object itself.
++prompt-field+ : The human-readable prompt field in the embedded property. This is a valid JSON string. This is an REQUIRED element".
 
 +Embedded Suggest+ object has the following elements:
 
