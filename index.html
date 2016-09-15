@@ -759,7 +759,7 @@ Last Updated
 </dt>
 <dd>
 <p>
-  2015-11-03
+  2016-09-15
 </p>
 </dd>
 <dt class="hdlist1">
@@ -975,7 +975,7 @@ interpreted as described in <a href="http://tools.ietf.org/html/rfc2119">RFC2119
 </li>
 <li>
 <p>
-<code>templated</code> : Indicate whether the <code>value</code> element contains a <a href="https://tools.ietf.org/html/rfc6570">URITemplate</a> string for the client to resolve. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, set to empty, or contains unrecognized content, it SHOULD be treated as if the value of <code>templated</code> is set to &#8216;false&#8217;.
+<code>templated</code> : Indicates whether the <code>value</code> element is a string containing <a href="https://tools.ietf.org/html/rfc6570">URITemplate</a> variable expressions for the client to resolve. . This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, set to empty, or contains unrecognized content, it SHOULD be treated as if the value of <code>templated</code> is set to &#8216;false&#8217;.
 </p>
 </li>
 <li>
@@ -1071,7 +1071,7 @@ http://api.example.org/task-list/?title=sample&amp;completed=false</code></pre>
 </div>
 <div class="sect3">
 <h4 id="_sending_code_application_x_www_form_urlencoded_code_bodies">Sending <code>application/x-www-form-urlencoded</code> Bodies</h4>
-<div class="paragraph"><p>When sending bodies encoded as <code>application/x-www-form-urlencoded</code>, clients SHOULD construct a body that is in compliance with the guidance in the <a href="http://www.w3.org/TR/html/forms.html#application/x-www-form-urlencoded-encoding-algorithm">W3C FORMS Encoding Algorithm</a>. A sample (using the Example HAL-FORMS document) follows:</p></div>
+<div class="paragraph"><p>When sending bodies encoded as <code>application/x-www-form-urlencoded</code>, clients SHOULD construct a body that is in compliance with the guidance in the <a href="https://www.w3.org/TR/html5/forms.html#url-encoded-form-data">W3C FORMS Encoding Algorithm</a>. A sample (using the Example HAL-FORMS document) follows:</p></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>title=A+Sample+HAL+Forms+Response&amp;completed=false</code></pre>
@@ -1267,7 +1267,7 @@ Dilip Krishnan.</p></div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-11-03 14:32:01 EST
+Last updated 2016-09-15 15:36:51 Eastern Daylight Time
 </div>
 </div>
 </body>

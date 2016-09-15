@@ -122,7 +122,7 @@ When sending bodies encoded as +application/json+, clients SHOULD construct a si
 ----
 
 ==== Sending +application/x-www-form-urlencoded+ Bodies
-When sending bodies encoded as +application/x-www-form-urlencoded+, clients SHOULD construct a body that is in compliance with the guidance in the http://www.w3.org/TR/html/forms.html#application/x-www-form-urlencoded-encoding-algorithm[W3C FORMS Encoding Algorithm]. A sample (using the Example HAL-FORMS document) follows:
+When sending bodies encoded as +application/x-www-form-urlencoded+, clients SHOULD construct a body that is in compliance with the guidance in the https://www.w3.org/TR/html5/forms.html#url-encoded-form-data[W3C FORMS Encoding Algorithm]. A sample (using the Example HAL-FORMS document) follows:
 
 ----
 title=A+Sample+HAL+Forms+Response&completed=false
