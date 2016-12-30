@@ -6,15 +6,14 @@
 == Status
 Doc Status:: 
   *[white red-background]#Working Draft#* -- _Only experimental and `proof-of-concept' apps should be built on this unstable draft._
-Last Updated::
-  {docdate}
 Proposed IANA Registrations::
   +application/prs.hal-forms+json+
-Github Repo::
-  https://github.com/mamund/hal-forms
+Repository::
+  https://github.com/rwcbook/hal-forms
 Sample Implementation::
   https://github.com/apiacademy/ndcoslo2015/tree/hal-forms
-
+Last Updated::
+  {docdate}
 
 == Summary
 This document describes a simple media type designed to add runtime FORM support for the http://stateless.co/hal_specification.html[HAL] media type. This is an _independent backward-compatible_ extension of the HAL media type and MUST NOT be treated as standard HAL or as part of the https://tools.ietf.org/html/draft-kelly-json-hal-07[HAL specification].
