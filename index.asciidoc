@@ -1,4 +1,4 @@
-= The *HAL-FORMS* Media Type
+= The HAL-FORMS Media Type
 :author: Mike Amundsen
 :email: mca@amundsen.com
 :toc: 
@@ -93,8 +93,43 @@ The +_templates+ element contains a collection of +template+ objects. Each +temp
 
 +title+:: A human-readable string that can be used to identify this template. This is a valid JSON string. This is an OPTIONAL element. If it does not exist or is unparsable, consumers MAY use the +key+ value of the template as the value for +title+.
 
-== Query String Registry
-The *HAL-FORMS*
+=== The HAL-FORMS Query String Registry
+The *HAL-FORMS* media type supports a set of OPTIONAL query string parameters. These can be passed when requesting *HAL-FORMS* documents in order to provide additional information (e.g. document identifiers, etc.) to the server when a client requests a *HAL-FORMS* document. For example, the server can use these parameter values to validate the *HAL-FORMS* request and/or use them to determine how to pre-populate the *HAL-FORMS* document before returning it to the client.
+
+Below is the list of query string values defined for this release of the specification. One or more of these parameters MAY appear in the URLs used to request *HAL-FORMS* documents. They can appear in the query string in any order. One or more (possibly all) these parameters MAY be ignored by servers receiving the *HAL-FORMS* request. 
+
++_hdoc+::
+Contains the identifier (usually a URL) of the HAL document from which this request was derived. For example if the HAL document had a URL of +http://api.example.org/users/123+ then the +_hdoc+ query parameter would be +_hdoc=http%3A%2F%2Fapi.example.org%2Fusers%2F123+. 
+
++_hkey+::
+Contains the +key+ value of the *HAL-FORMS* template the client wishes to receive. For example, if the *HAL-FORMS* template +key+ is +default+ then the +_hkey+ parameter would be +_hkey=default+.
+
++_hmethod+::
+Contains the HTTP method to be used when populating the *HAL-FORMS* +method+ value in the +_template+. For example, if the client wishes to execute an HTTP POST with the template, the +_hmethod+ parameter would be: +_hmethod=post+.
+
++_hrel+::
+Contains the +key+ of the HAL +_link+ element that identified the URL for the *HAL-FORMS* document. For example, if the HAL document had a +_link+ element that looked like this:
++
+----
+"http://api.example.org/rels/filter": {
+  "href": "http://api.example.org/task-list/",
+  "title": "Filter Tasks",
+  "templated": false
+}
+----
++ 
+...then the +_hrel+ parameter would be +_hkey=http%3A%2F%2Fapi.example.org%2Frels%2Ffilter+. 
+
++_hsource+::
+Contains the identifier of the source record to use when pre-populating the *HAL-FORMS* document. For example, if the client wishes to edit the resource identified by the URL +http://api.example.org/users/123+ then the +_hsource+ parameter would be +_hsource=http%3A%2F%2Fapi.example.org%2Fusers%2F123+.
+
++_htarget+::
+Contains the identifier of the target URL for the client to use when submitting the completed *HAL-FORMS* template. For example, if the client should submit the completed template to the following URL: +http://api.example.org/jobs/+ then the +_htarget+ parameter would be +_htarget=http%3A%2F%2Fapi.example.org%2Fjobs%2F+.
+
+[NOTE]
+====
+Additional *HAL-FORMS* query string parameters MAY be added over time. Implementers are also allowed to create their own *HAL-FORMS* query string parameters for local use as long as they do not overwrite or redefine existing query string parameters. Implementers are encouraged to use their own unique prefix value to reduce the chance their custom query parameters will conflict with other existing or future parameter names.
+====
 
 == Encoding Requests
 Once the client application has used the *HAL-FORMS* document to render a UI for accepting inputs (and the user has supplied the inputs), that same document SHOULD be used to encode a request to send to the server to execute the state transition described by the *HAL-FORMS* document. There are two ways in which *HAL-FORMS* documents can be used to construct parameterized requests. The first is by <<encoding-request-urls, encoding request URLs>> for HTTP GET, DELETE, and HEAD requests. The second is by <<encoding-request-bodies, encoding request bodies>> for HTTP PUT, POST, and PATCH requests. 

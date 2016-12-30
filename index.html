@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
 <meta name="generator" content="AsciiDoc 8.6.9" />
-<title>The <strong>HAL-FORMS</strong> Media Type</title>
+<title>The HAL-FORMS Media Type</title>
 <style type="text/css">
 /* Shared CSS for AsciiDoc xhtml11 and html5 backends */
 
@@ -733,7 +733,7 @@ asciidoc.install(2);
 </head>
 <body class="article">
 <div id="header">
-<h1>The <strong>HAL-FORMS</strong> Media Type</h1>
+<h1>The HAL-FORMS Media Type</h1>
 <span id="author">Mike Amundsen</span><br />
 <span id="email"><code>&lt;<a href="mailto:mca@amundsen.com">mca@amundsen.com</a>&gt;</code></span><br />
 <div id="toc">
@@ -995,12 +995,80 @@ A human-readable string that can be used to identify this template. This is a va
 </dd>
 </dl></div>
 </div>
+<div class="sect2">
+<h3 id="_the_hal_forms_query_string_registry">The HAL-FORMS Query String Registry</h3>
+<div class="paragraph"><p>The <strong>HAL-FORMS</strong> media type supports a set of OPTIONAL query string parameters. These can be passed when requesting <strong>HAL-FORMS</strong> documents in order to provide additional information (e.g. document identifiers, etc.) to the server when a client requests a <strong>HAL-FORMS</strong> document. For example, the server can use these parameter values to validate the <strong>HAL-FORMS</strong> request and/or use them to determine how to pre-populate the <strong>HAL-FORMS</strong> document before returning it to the client.</p></div>
+<div class="paragraph"><p>Below is the list of query string values defined for this release of the specification. One or more of these parameters MAY appear in the URLs used to request <strong>HAL-FORMS</strong> documents. They can appear in the query string in any order. One or more (possibly all) these parameters MAY be ignored by servers receiving the <strong>HAL-FORMS</strong> request.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<code>_hdoc</code>
+</dt>
+<dd>
+<p>
+Contains the identifier (usually a URL) of the HAL document from which this request was derived. For example if the HAL document had a URL of <code>http://api.example.org/users/123</code> then the <code>_hdoc</code> query parameter would be <code>_hdoc=http%3A%2F%2Fapi.example.org%2Fusers%2F123</code>.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>_hkey</code>
+</dt>
+<dd>
+<p>
+Contains the <code>key</code> value of the <strong>HAL-FORMS</strong> template the client wishes to receive. For example, if the <strong>HAL-FORMS</strong> template <code>key</code> is <code>default</code> then the <code>_hkey</code> parameter would be <code>_hkey=default</code>.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>_hmethod</code>
+</dt>
+<dd>
+<p>
+Contains the HTTP method to be used when populating the <strong>HAL-FORMS</strong> <code>method</code> value in the <code>_template</code>. For example, if the client wishes to execute an HTTP POST with the template, the <code>_hmethod</code> parameter would be: <code>_hmethod=post</code>.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>_hrel</code>
+</dt>
+<dd>
+<p>
+Contains the <code>key</code> of the HAL <code>_link</code> element that identified the URL for the <strong>HAL-FORMS</strong> document. For example, if the HAL document had a <code>_link</code> element that looked like this:
+</p>
+<div class="listingblock">
+<div class="content">
+<pre><code>"http://api.example.org/rels/filter": {
+  "href": "http://api.example.org/task-list/",
+  "title": "Filter Tasks",
+  "templated": false
+}</code></pre>
+</div></div>
+<div class="paragraph"><p>&#8230;then the <code>_hrel</code> parameter would be <code>_hkey=http%3A%2F%2Fapi.example.org%2Frels%2Ffilter</code>.</p></div>
+</dd>
+<dt class="hdlist1">
+<code>_hsource</code>
+</dt>
+<dd>
+<p>
+Contains the identifier of the source record to use when pre-populating the <strong>HAL-FORMS</strong> document. For example, if the client wishes to edit the resource identified by the URL <code>http://api.example.org/users/123</code> then the <code>_hsource</code> parameter would be <code>_hsource=http%3A%2F%2Fapi.example.org%2Fusers%2F123</code>.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>_htarget</code>
+</dt>
+<dd>
+<p>
+Contains the identifier of the target URL for the client to use when submitting the completed <strong>HAL-FORMS</strong> template. For example, if the client should submit the completed template to the following URL: <code>http://api.example.org/jobs/</code> then the <code>_htarget</code> parameter would be <code>_htarget=http%3A%2F%2Fapi.example.org%2Fjobs%2F</code>.
+</p>
+</dd>
+</dl></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph"><p>Additional <strong>HAL-FORMS</strong> query string parameters MAY be added over time. Implementers are also allowed to create their own <strong>HAL-FORMS</strong> query string parameters for local use as long as they do not overwrite or redefine existing query string parameters. Implementers are encouraged to use their own unique prefix value to reduce the chance their custom query parameters will conflict with other existing or future parameter names.</p></div>
+</td>
+</tr></table>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_query_string_registry">Query String Registry</h2>
-<div class="sectionbody">
-<div class="paragraph"><p>The <strong>HAL-FORMS</strong></p></div>
 </div>
 </div>
 <div class="sect1">
@@ -1330,7 +1398,7 @@ Dilip Krishnan.</p></div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-29 21:58:55 EST
+Last updated 2016-12-29 22:31:46 EST
 </div>
 </div>
 </body>
