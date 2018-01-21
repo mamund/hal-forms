@@ -75,7 +75,7 @@ The +_templates+ element contains a collection of +template+ objects. Each +temp
 +contentType+ ::
   The value of +contentType+ is the media type the client SHOULD use when sending a request body to the server. This is an OPTIONAL element. Valid values for this release are +"application/json"+ <<rfc7159,[RFC7159]>> and +"application/x-www-form-urlencoded"+ <<html401,[HTML401]>>. If the +contentType+ property is missing, is set to empty, or contains an unrecognized value, the client SHOULD act is if the +contentType+ is set to +"application/json"+. See <<encoding-request-bodies,Encoding Request Bodies>> for details.
 +key+ :: 
-  The unique identifier for this +template+ object. This is a REQUIRED element. For this release, the only valid value for +key+ is +"default"+.  If this element is missing, set to empty or is unparsable, this +template+ object SHOULD be ignored.
+  The unique identifier for this +template+ object. This is a REQUIRED element. If there is only one element in the collection, the key value MUST be set to +"default"+.  If this element is missing, set to empty or is unparsable, this +template+ object SHOULD be ignored.
 +method+ ::
   The HTTP method the client SHOULD use when the service request. Any valid HTTP method is allowed. This is a REQUIRED element. If the value is empty or is not understood by the client, the value MUST be treated as an HTTP GET.
 +properties+ ::
