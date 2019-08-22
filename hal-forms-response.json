@@ -7,7 +7,7 @@
   "_templates" : {
     "default" : {
       "title" : "Create",
-      "method" : "post",
+      "method" : "POST",
       "contentType" : "application/json",
       "properties" : [
         {"name" : "title", "required" : true, "value" : "", "prompt" : "Title", "regex" : "", "templated" : false},

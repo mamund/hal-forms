@@ -24,7 +24,7 @@
   "_templates" : {
     "default" : {
       "title" : "Filter",
-      "method":"get",
+      "method":"GET",
       "properties": [
         {"name":"title", "value":"", "prompt":"Title"},
         {"name":"completed", "value":"", "prompt":"Completed", "regex":"^(true|false)$"}

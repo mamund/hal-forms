@@ -850,7 +850,7 @@ interpreted as described in <a href="http://tools.ietf.org/html/rfc2119">RFC2119
   "_templates" : {
     "default" : {
       "title" : "Create",
-      "method" : "post",
+      "method" : "POST",
       "contentType" : "application/json",
       "properties" : [
         {"name" : "title", "required" : true, "value" : "", "prompt" : "Title", "regex" : "", "templated" : false},
@@ -1032,7 +1032,7 @@ A human-readable string that can be used to identify this template. This is a va
   "_templates" : {
     "default" : {
       "title" : "Filter",
-      "method":"get",
+      "method":"GET",
       "properties": [
         {"name":"title", "value":"", "prompt":"Title"},
         {"name":"completed", "value":"", "prompt":"Completed", "regex":"^(true|false)$"}
