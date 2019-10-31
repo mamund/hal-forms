@@ -71,7 +71,7 @@ The +_templates+ element describes the available state transition details includ
 The +_templates+ element contains a collection of +template+ objects. Each +template+ object contains the following possible properties: 
 
 +contentType+ ::
-  The value of +contentType+ is the media type the client SHOULD use when sending a request body to the server. This is an OPTIONAL element. Valid values for this release are +"application/json"+ and +"application/x-www-form-urlencoded"+. If the +contentType+ property is missing, is set to empty, or contains an unrecognized value, the client SHOULD act is if the +contentType+ is set to +"application/json"+. See <<encoding-request-bodies,Encoding Request Bodies>> for details.
+  The value of +contentType+ is the media type the client SHOULD use when sending a request body to the server. This is an OPTIONAL element. The value of this property SHOULD be set to +"application/json"+ or +"application/x-www-form-urlencoded"+. It MAY be set to other valid media-type values. If the +contentType+ property is missing, is set to empty, or contains an unrecognized value, the client SHOULD act is if the +contentType+ is set to +"application/json"+. See <<encoding-request-bodies,Encoding Request Bodies>> for details.
 +key+ :: 
   The unique identifier for this +template+ object. This is a REQUIRED element. For this release, the only valid value for +key+ is +"default"+.  If this element is missing, set to empty or is unparsable, this +template+ object SHOULD be ignored.
 +method+ ::
@@ -109,7 +109,7 @@ The HAL media type already defines support for parameterized HTTP GET queries us
 
 [[encoding-request-bodies]]
 === Encoding Request Bodies
-When clients are instructed to send a request with a body (e.g. PUT, POST, PATCH), there are two possible content-types to use when encoding arguments: +application/json+ and +application/x_www-form-urlencoded+. Compliant client applications MUST support sending bodies using +application/json+ and SHOULD support sending bodies using +application/x-www-urlencoded+. 
+When clients are instructed to send a request with a body (e.g. PUT, POST, PATCH), there are several possible content-types to use. Compliant applications MUST support encoding bodies using +application/json+ and SHOULD support encoding bodies using +application/x_www-form-urlencoded+. Clients MAY support other content-types not listed in this document. 
 
 ==== Sending +application/json+ Bodies
 When sending bodies encoded as +application/json+, clients SHOULD construct a simple JSON dictionary object that contains a set of name-value pairs that match the +property+ objects in the HAL-FORMS document. For example, using the Example HAL-FORMS document (see above) as a guide, a client would construct a JSON dictionary object that looks like the following:
@@ -127,6 +127,9 @@ When sending bodies encoded as +application/x-www-form-urlencoded+, clients SHOU
 ----
 title=A+Sample+HAL+Forms+Response&completed=false
 ----
+
+==== Sending Bodies for Other Media Types
+Providers who supply responses that contain +contentType+ values not covered in this specification SHOULD publish documentation instructing clients on the proper way to construct request bodies from HAL-FORMS documents.
 
 == The HAL-FORMS Media Type Identifier String
 The media type identifier string for HAL-FORMS documents is: +application/prs.hal-forms+json+  This SHOULD be used as part of the HTTP +accept+ header when making a request for a HAL-FORMS document. It SHOULD appear as the HTTP +content-type+ header when sending a response that contains a HAL-FORMS document. 
