@@ -1,0 +1,1409 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>The HAL-FORMS Media Type</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+.monospaced, code, pre {
+  font-family: "Courier New", Courier, monospace;
+  font-size: inherit;
+  color: navy;
+  padding: 0;
+  margin: 0;
+}
+pre {
+  white-space: pre-wrap;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; vertical-align: text-bottom; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+div.unbreakable { page-break-inside: avoid; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install(2);
+/*]]>*/
+</script>
+</head>
+<body class="article">
+<div id="header">
+<h1>The HAL-FORMS Media Type</h1>
+<span id="author">Mike Amundsen</span><br />
+<span id="email"><code>&lt;<a href="mailto:mca@amundsen.com">mca@amundsen.com</a>&gt;</code></span><br />
+<div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_status">Status</h2>
+<div class="sectionbody">
+<div class="dlist"><dl>
+<dt class="hdlist1">
+Doc Status
+</dt>
+<dd>
+<p>
+  <strong><span class="white red-background">Working Draft</span></strong>&#8201;&#8212;&#8201;<em>Only experimental and &#8216;proof-of-concept&#8217; apps should be built on this unstable draft.</em>
+</p>
+</dd>
+<dt class="hdlist1">
+Proposed IANA Registrations
+</dt>
+<dd>
+<p>
+  <code>application/prs.hal-forms+json</code>
+</p>
+</dd>
+<dt class="hdlist1">
+Repository
+</dt>
+<dd>
+<p>
+  <a href="https://github.com/rwcbook/hal-forms">https://github.com/rwcbook/hal-forms</a>
+</p>
+</dd>
+<dt class="hdlist1">
+Sample Implementation
+</dt>
+<dd>
+<p>
+  <a href="https://github.com/apiacademy/ndcoslo2015/tree/hal-forms">https://github.com/apiacademy/ndcoslo2015/tree/hal-forms</a>
+</p>
+</dd>
+<dt class="hdlist1">
+Last Updated
+</dt>
+<dd>
+<p>
+  2019-10-31
+</p>
+</dd>
+</dl></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_summary">Summary</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>This document describes a simple media type designed to add runtime FORM support for the <a href="#hal">[HAL]</a> media type. This is an <em>independent backward-compatible</em> extension of the HAL media type and MUST NOT be treated as standard HAL or as part of the HAL specification <a href="#hal-spec">[HALSPEC]</a>.</p></div>
+<div class="sect2">
+<h3 id="_motivation">Motivation</h3>
+<div class="paragraph"><p>The HAL media type is a popular format for representing API responses. One of the possible reasons for this popularity is that HAL does not include detailed information about state transitions like filtered requests (e.g. search, sort, etc.) or write operations (e.g. create, edit, delete, etc.) as part of the specification. This feature keeps the complexity of HAL responses relatively low and easy to deal with. However, this also means one of the challenges of using HAL for APIs that support dynamic user inputs and/or varying work flow patterns is client applications must encode the detailed transition information (args, methods, work flow) directly in the client code. That means clients must be updated each time the input or work flow details change.</p></div>
+<div class="paragraph"><p>The <strong>HAL-FORMS</strong> media type is an attempt to meet this challenge by creating a format and processing pattern to support dynamic UI forms for HAL responses. This is a backward-compatible, non-standard extension. There is nothing in this format or process pattern that adds breaking changes to the HAL media type itself. Clients that implement this extension can still be valid HAL clients by degrading gracefully (e.g. not throwing errors) when <strong>HAL-FORMS</strong> documents are not returned by the server.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph"><p>The <strong>HAL-FORMS</strong> media type design follows many of the HAL media type conventions. For this reason, <strong>HAL-FORMS</strong> "looks like HAL." However, it is important to keep in mind that <strong>HAL-FORMS</strong> is not the same as HAL&#8201;&#8212;&#8201;the two should not be thought of as interchangeable in any way. Finally, <strong>HAL-FORMS</strong> documents SHOULD always be sent over HTTP using the <code>application/prs.hal-forms+json</code> media type identifer.</p></div>
+</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">Updates</h3>
+<div class="paragraph"><p>There is an open source repository <a href="#repo">[REPO]</a> for this specification. Readers are encouraged to submit updates via the repository any time.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_compliance">Compliance</h3>
+<div class="paragraph"><p>An implementation (client or server) of this specification is not compliant if it fails to satisfy one or more of the MUST or REQUIRED elements. An implementation that satisfies all the MUST and REQUIRED elements as well as all the SHOULD and RECOMMENDED elements is said to be "unconditionally compliant"; one that satisfies all the MUST and REQUIRED elements but not all the SHOULD and RECOMMENDED elements is said to be "conditionally compliant."</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="title">RFC2119 Words</div>
+<div class="paragraph"><p>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
+"SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
+interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_hal_forms_media_type">The HAL-FORMS Media Type</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The <strong>HAL-FORMS</strong> media type is a simple JSON <a href="#rfc7159">[RFC7159]</a> document that contains information on the HTTP method, message content-type, and parameters to use when making a templated request to a HAL server. This media type can be used to provide dynamic state transition descriptions at runtime.</p></div>
+<div class="sect2">
+<h3 id="_example_hal_forms_document">Example HAL-FORMS document</h3>
+<div class="paragraph"><p>Here is a simple <strong>HAL-FORMS</strong> document example:</p></div>
+<div class="listingblock">
+<div class="title">Example <strong>HAL-FORMS</strong> document.</div>
+<div class="content">
+<pre><code>{
+  "_links" : {
+     "self" : {
+      "href" : "http://api.example.org/rels/create"
+    }
+ },
+  "_templates" : {
+    "default" : {
+      "title" : "Create",
+      "method" : "POST",
+      "contentType" : "application/json",
+      "properties" : [
+        {"name" : "title", "required" : true, "value" : "", "prompt" : "Title", "regex" : "", "templated" : false},
+        {"name" : "completed", "required" : false, "value" : "false", "prompt" : "Completed", "regex" : ""}
+      ]
+    }
+  }
+}</code></pre>
+</div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_properties_of_a_hal_forms_document">Properties of a HAL-FORMS Document</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>All <strong>HAL-FORMS</strong> documents MUST be valid JSON documents. A well-formed <strong>HAL-FORMS</strong> document has two top-level objects: <code>_links</code> and <code>_templates</code>. The following is a summary of the structure of the <strong>HAL-FORMS</strong> media type.</p></div>
+<div class="sect2">
+<h3 id="_the_code__links_code_element">The <code>_links</code> Element</h3>
+<div class="paragraph"><p>The <code>_links</code> element contains any links associated with the <strong>HAL-FORMS</strong> document. For this release, the only valid <code>link</code> object is the <code>self</code> link object.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<code>_links</code>
+</dt>
+<dd>
+<p>
+  Contains the collection of valid <code>link</code> objects in the <strong>HAL-FORMS</strong> document. This is a RECOMMENDED element. If this element is missing or if the contents is unrecognized, it SHOULD be treated as if it contains a single <code>link</code> element with the key of <code>self</code> and the value of the URL used to request this <strong>HAL-FORMS</strong> document.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>link</code>
+</dt>
+<dd>
+<p>
+  The <code>link</code> element consists of a key and a set of properties.
+ <br />
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>key</code> : The unique identifier of the <code>link</code> object. This is a REQUIRED element for each _link+ object. For this release, the only valid value for the <code>key</code> element is <code>"self"</code>. If this element is missing, is set to an unrecognized value, or cannot be parsed, the associated <code>link</code> object SHOULD be ignored.
+</p>
+</li>
+<li>
+<p>
+<code>href</code> : The URL associated with the <code>key</code>. This is a REQUIRED element. If this is missing, set to empty or unparsable, the associated <code>link</code> object SHOULD be ignored.
+</p>
+</li>
+</ul></div>
+</dd>
+</dl></div>
+</div>
+<div class="sect2">
+<h3 id="_the_code__templates_code_element">The <code>_templates</code> Element</h3>
+<div class="paragraph"><p>The <code>_templates</code> element describes the available state transition details including the HTTP method, message content-type, and arguments for the transition. This is a REQUIRED element. If the <strong>HAL-FORMS</strong> document does not contain this element or the contents are unrecognized or unparsable, the <strong>HAL-FORMS</strong> document SHOULD be ignored.</p></div>
+<div class="paragraph"><p>The <code>_templates</code> element contains a collection of <code>template</code> objects. Each <code>template</code> object contains the following possible properties:</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<code>contentType</code> 
+</dt>
+<dd>
+<p>
+  The value of <code>contentType</code> is the media type the client SHOULD use when sending a request body to the server. This is an OPTIONAL element. The value of this property SHOULD be set to <code>"application/json"</code> or <code>"application/x-www-form-urlencoded"</code>. It MAY be set to other valid media-type values. If the <code>contentType</code> property is missing, is set to empty, or contains an unrecognized value, the client SHOULD act is if the <code>contentType</code> is set to <code>"application/json"</code>. See <a href="#encoding-request-bodies">Encoding Request Bodies</a> for details.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>key</code> 
+</dt>
+<dd>
+<p>
+  The unique identifier for this <code>template</code> object. This is a REQUIRED element. For this release, the only valid value for <code>key</code> is <code>"default"</code>.  If this element is missing, set to empty or is unparsable, this <code>template</code> object SHOULD be ignored.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>method</code> 
+</dt>
+<dd>
+<p>
+  The HTTP method the client SHOULD use when the service request. Any valid HTTP method is allowed. This is a REQUIRED element. If the value is empty or is not understood by the client, the value MUST be treated as an HTTP GET.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>properties</code> 
+</dt>
+<dd>
+<p>
+  An array of one or more anonymous <code>property</code> objects (see <a href="#property-object"><code>property</code></a>) that each describe a parameter for the associated state transition. This is an OPTIONAL element. If the array is missing or empty, the <code>properties</code> collection MUST be treated as an empty set of parameters&#8201;&#8212;&#8201;meaning that the transition is meant to be executed without passing any parameters.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>property</code> 
+</dt>
+<dd>
+<p>
+  A JSON object that describes a state transition parameter. A <code>property</code> object has the following elements:
+ <br />
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>name</code> : The parameter name. This is a valid JSON string. This is a REQUIRED element. If this attribute is missing or set to empty, the client SHOULD ignore this <code>property</code> object completely.
+</p>
+</li>
+<li>
+<p>
+<code>prompt</code> : The human-readable prompt for the parameter. This is a valid JSON string. This is an OPTIONAL element. If this element is missing, clients MAY act as if the <code>prompt</code> value is set to the value in the <code>name</code> attribute.
+</p>
+</li>
+<li>
+<p>
+<code>readOnly</code> : Indicates whether the parameter is read-only. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, empty, or set to an unrecognized value, it SHOULD be treated as if the value of <code>readOnly</code> is set to &#8216;false&#8217;.
+</p>
+</li>
+<li>
+<p>
+<code>regex</code> : A regular expression string to be applied to the value of the parameter. Rules for valid values are the same as the HTML5 pattern attribute <a href="#html5pat">[HTML5PAT]</a>. This is an OPTIONAL element. If this attribute missing, is set to empty, or is unparseable , it SHOULD be ignored.
+</p>
+</li>
+<li>
+<p>
+<code>required</code> : Indicates whether the parameter is required. This is a valid JSON boolean. This is an OPTIONAL element. If this attribute is missing, set to blank or contains an unrecognized value, it SHOULD be treated as if the value of <code>required</code> is set to &#8216;false&#8217;.
+</p>
+</li>
+<li>
+<p>
+<code>templated</code> : Indicate whether the <code>value</code> element contains a URI Template <a href="#rfc6570">[RFC6570]</a> string for the client to resolve. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, set to empty, or contains unrecognized content, it SHOULD be treated as if the value of <code>templated</code> is set to &#8216;false&#8217;.
+</p>
+</li>
+<li>
+<p>
+<code>value</code> : The parameter value. This is a valid JSON string. This string MAY contain a URI Template (see <code>templated</code> for details). This is an OPTIONAL element. If it does not exist, clients SHOULD act as if the <code>value</code> property is set to an empty string.
+</p>
+</li>
+</ul></div>
+</dd>
+<dt class="hdlist1">
+<code>title</code>
+</dt>
+<dd>
+<p>
+A human-readable string that can be used to identify this template. This is a valid JSON string. This is an OPTIONAL element. If it does not exist or is unparsable, consumers MAY use the <code>key</code> value of the template as the value for <code>title</code>.
+</p>
+</dd>
+</dl></div>
+</div>
+<div class="sect2">
+<h3 id="_the_hal_forms_query_string_registry">The HAL-FORMS Query String Registry</h3>
+<div class="paragraph"><p>The <strong>HAL-FORMS</strong> media type supports a set of OPTIONAL query string parameters. These can be passed when requesting <strong>HAL-FORMS</strong> documents in order to provide additional information (e.g. document identifiers, etc.) to the server when a client requests a <strong>HAL-FORMS</strong> document. For example, the server can use these parameter values to validate the <strong>HAL-FORMS</strong> request and/or use them to determine how to pre-populate the <strong>HAL-FORMS</strong> document before returning it to the client.</p></div>
+<div class="paragraph"><p>Below is the list of query string values defined for this release of the specification. One or more of these parameters MAY appear in the URLs used to request <strong>HAL-FORMS</strong> documents. They can appear in the query string in any order. One or more (possibly all) these parameters MAY be ignored by servers receiving the <strong>HAL-FORMS</strong> request.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<code>_hdoc</code>
+</dt>
+<dd>
+<p>
+Contains the identifier (usually a URL) of the HAL document from which this request was derived. For example if the HAL document had a URL of <code>http://api.example.org/users/123</code> then the <code>_hdoc</code> query parameter would be <code>_hdoc=http%3A%2F%2Fapi.example.org%2Fusers%2F123</code>.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>_hkey</code>
+</dt>
+<dd>
+<p>
+Contains the <code>key</code> value of the <strong>HAL-FORMS</strong> template the client wishes to receive. For example, if the <strong>HAL-FORMS</strong> template <code>key</code> is <code>default</code> then the <code>_hkey</code> parameter would be <code>_hkey=default</code>.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>_hmethod</code>
+</dt>
+<dd>
+<p>
+Contains the HTTP method to be used when populating the <strong>HAL-FORMS</strong> <code>method</code> value in the <code>_template</code>. For example, if the client wishes to execute an HTTP POST with the template, the <code>_hmethod</code> parameter would be: <code>_hmethod=post</code>.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>_hrel</code>
+</dt>
+<dd>
+<p>
+Contains the <code>key</code> of the HAL <code>_link</code> element that identified the URL for the <strong>HAL-FORMS</strong> document. For example, if the HAL document had a <code>_link</code> element that looked like this:
+</p>
+<div class="listingblock">
+<div class="content">
+<pre><code>"http://api.example.org/rels/filter": {
+  "href": "http://api.example.org/task-list/",
+  "title": "Filter Tasks",
+  "templated": false
+}</code></pre>
+</div></div>
+<div class="paragraph"><p>&#8230;then the <code>_hrel</code> parameter would be <code>_hkey=http%3A%2F%2Fapi.example.org%2Frels%2Ffilter</code>.</p></div>
+</dd>
+<dt class="hdlist1">
+<code>_hsource</code>
+</dt>
+<dd>
+<p>
+Contains the identifier of the source record to use when pre-populating the <strong>HAL-FORMS</strong> document. For example, if the client wishes to edit the resource identified by the URL <code>http://api.example.org/users/123</code> then the <code>_hsource</code> parameter would be <code>_hsource=http%3A%2F%2Fapi.example.org%2Fusers%2F123</code>.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>_htarget</code>
+</dt>
+<dd>
+<p>
+Contains the identifier of the target URL for the client to use when submitting the completed <strong>HAL-FORMS</strong> template. For example, if the client should submit the completed template to the following URL: <code>http://api.example.org/jobs/</code> then the <code>_htarget</code> parameter would be <code>_htarget=http%3A%2F%2Fapi.example.org%2Fjobs%2F</code>.
+</p>
+</dd>
+</dl></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph"><p>Additional <strong>HAL-FORMS</strong> query string parameters MAY be added over time. Implementers are also allowed to create their own <strong>HAL-FORMS</strong> query string parameters for local use as long as they do not overwrite or redefine existing query string parameters. Implementers are encouraged to use their own unique prefix value to reduce the chance their custom query parameters will conflict with other existing or future parameter names.</p></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_encoding_requests">Encoding Requests</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Once the client application has used the <strong>HAL-FORMS</strong> document to render a UI for accepting inputs (and the user has supplied the inputs), that same document SHOULD be used to encode a request to send to the server to execute the state transition described by the <strong>HAL-FORMS</strong> document. There are two ways in which <strong>HAL-FORMS</strong> documents can be used to construct parameterized requests. The first is by <a href="#encoding-request-urls">encoding request URLs</a> for HTTP GET, DELETE, and HEAD requests. The second is by <a href="#encoding-request-bodies">encoding request bodies</a> for HTTP PUT, POST, and PATCH requests.</p></div>
+<div class="sect2">
+<h3 id="encoding-request-urls">Encoding Request URLs</h3>
+<div class="paragraph"><p>When clients are instructed to send a request without a body (e.g. GET, HEAD, DELETE), clients SHOULD use the list of <code>property</code> object&#8217;s <code>name</code> and <code>value</code> attributes to construct a valid URL using the W3C Mutate Action URL Algorithm <a href="#html5mut">[HTML5MUT]</a> to produce a valid query string. Below is a simple <strong>HAL-FORMS</strong> document that uses the GET method and the resulting updated URL.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>// HAL RESPONSE
+{
+  "_links": {
+    "self": {
+      "href": "http://api.example.org/task-list/",
+      "title": "Reload",
+      "templated": false
+    },
+    "http://api.example.org/rels/filter": {
+      "href": "http://api.example.org/task-list/",
+      "title": "Filter Tasks",
+      "templated": false
+    },
+  }
+}
+
+// HAL FORMS DOCUMENT
+{
+  "_links" : {
+    "self" : {
+      "href" : "http://api.example.org/rels/filter"
+    }
+  },
+  "_templates" : {
+    "default" : {
+      "title" : "Filter",
+      "method":"GET",
+      "properties": [
+        {"name":"title", "value":"", "prompt":"Title"},
+        {"name":"completed", "value":"", "prompt":"Completed", "regex":"^(true|false)$"}
+      ]
+    }
+  }
+}
+
+// RESULTING URL
+http://api.example.org/task-list/?title=sample&amp;completed=false</code></pre>
+</div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph"><p>The HAL media type already defines support for parameterized HTTP GET queries using URITemplates. However, the <strong>HAL-FORMS</strong> document can be treated as an alternate implementation for GET queries that include additional constraints such as prompts, regular expression validators, etc.</p></div>
+</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="encoding-request-bodies">Encoding Request Bodies</h3>
+<div class="paragraph"><p>When clients are instructed to send a request with a body (e.g. PUT, POST, PATCH), there are several possible content-types to use. Compliant applications MUST support encoding bodies using <code>application/json</code> and SHOULD support encoding bodies using <code>application/x_www-form-urlencoded</code>. Clients MAY support other content-types not listed in this document.</p></div>
+<div class="sect3">
+<h4 id="_sending_code_application_json_code_bodies">Sending <code>application/json</code> Bodies</h4>
+<div class="paragraph"><p>When sending bodies encoded as <code>application/json</code>, clients SHOULD construct a simple JSON dictionary object that contains a set of name-value pairs that match the <code>property</code> objects in the <strong>HAL-FORMS</strong> document. For example, using the Example <strong>HAL-FORMS</strong> document (see above) as a guide, a client would construct a JSON dictionary object that looks like the following:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>{
+  "title" : "A Sample HAL Forms Response",
+  "completed" : false
+}</code></pre>
+</div></div>
+</div>
+<div class="sect3">
+<h4 id="_sending_code_application_x_www_form_urlencoded_code_bodies">Sending <code>application/x-www-form-urlencoded</code> Bodies</h4>
+<div class="paragraph"><p>When sending bodies encoded as <code>application/x-www-form-urlencoded</code>, clients SHOULD construct a body that is in compliance with the guidance in the W3C FORMS Encoding Algorithm <a href="#html5enc">[HTML5ENC]</a>. A sample (using the Example <strong>HAL-FORMS</strong> document) follows:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>title=A+Sample+HAL+Forms+Response&amp;completed=false</code></pre>
+</div></div>
+</div>
+<div class="sect3">
+<h4 id="_sending_bodies_for_other_media_types">Sending Bodies for Other Media Types</h4>
+<div class="paragraph"><p>Providers who supply responses that contain <code>contentType</code> values not covered in this specification SHOULD publish documentation instructing clients on the proper way to construct request bodies from HAL-FORMS documents.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_hal_forms_media_type_identifier_string">The HAL-FORMS Media Type Identifier String</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The media type identifier string for <strong>HAL-FORMS</strong> documents is: <code>application/prs.hal-forms+json</code>  This SHOULD be used as part of the HTTP <code>accept</code> header when making a request for a <strong>HAL-FORMS</strong> document. It SHOULD appear as the HTTP <code>content-type</code> header when sending a response that contains a <strong>HAL-FORMS</strong> document.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_suggested_process_flow_for_hal_forms_documents">Suggested Process Flow for HAL-FORMS Documents</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>While it is completely up to providers and consumers to determine how they wish to use the <strong>HAL-FORMS</strong> media type, the following is a suggested process flow for runtime use of <strong>HAL-FORMS</strong> documents on the Web.</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Servers emit HAL responses that contain <code>rel</code> values which are valid URLs that return <strong>HAL-FORMS</strong> documents.
+</p>
+</li>
+<li>
+<p>
+Clients parse the HAL response and (either on-demand or in pre-fetch mode) request the <strong>HAL-FORMS</strong> documents.
+</p>
+</li>
+<li>
+<p>
+When a <strong>HAL-FORMS</strong> document is returned by the server, clients use this information to render an input UI for humans when needed.
+</p>
+</li>
+<li>
+<p>
+Clients collect the completed user inputs and, based on the value of <code>contentType</code>, craft a valid request to send to the server and execute that request.
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>What follows is an illustrated example of this process flow.</p></div>
+<div class="sect2">
+<h3 id="_starting_with_a_typical_hal_response">Starting With a Typical HAL Response.</h3>
+<div class="paragraph"><p>A client application can start with a typical HAL response and use information in the representation to see if <strong>HAL-FORMS</strong> documents are available. Below is a HAL response w/ URLs for <code>rel</code> values. These MAY point to <strong>HAL-FORMS</strong> documents.</p></div>
+<div class="listingblock">
+<div class="title">A Typical HAL Response with URLs for rel values</div>
+<div class="content">
+<pre><code>**** REQUEST
+GET /task-list/ HTTP/1.1
+Host: api.example.org
+Accept: application/vnd.hal+json
+
+**** RESPONSE
+HTTP/1.1 200 OK
+Content-Type: application/vnd.hal+json
+Date: Wed, 01 Jun 2016 14:50:30 GMT
+
+{
+  "_links": {
+    "self": {
+      "href": "http://api.example.org/task-list/",
+      "title": "Reload",
+      "templated": false
+    },
+    "http://api.example.org/rels/create": {
+      "href": "http://api.example.org/task-list/",
+      "title": "Add Task",
+      "templated": false
+    },
+    "http://api.example.org/rels/tasks": [
+      {
+        "href": "http://localhost:8181/1a14qx7qc81",
+        "title": "Yard Work"
+      },
+      {
+        "href": "http://localhost:8181/1d4jwe1ewt7",
+        "title": "Home Work"
+      },
+      {
+        "href": "http://localhost:8181/1e2ll5wa383",
+        "title": "School Work"
+      }
+    ]
+  }
+}</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_requesting_a_hal_forms_document">Requesting a HAL-FORMS Document</h3>
+<div class="paragraph"><p>After parsing the HAL response, a <strong>HAL-FORMS</strong> compliant client app MAY use the <code>rel</code> URLs to make requests for <strong>HAL-FORMS</strong> documents. In the case of this example, the <code>http://api.example.org/rels/create</code> is used to see if there is a <strong>HAL-FORMS</strong> document available.</p></div>
+<div class="listingblock">
+<div class="title">Requesting a HAL-FORMS document</div>
+<div class="content">
+<pre><code>**** REQUEST
+GET /rels/create HTTP/1.1
+Host: api.example.org
+Accept: application/prs.hal-forms+json
+
+**** RESPONSE
+HTTP/1.1 200 OK
+Content-Type: application/prs.hal-forms+json
+Date: Wed, 01 Jun 2016 14:59:30 GMT
+
+{
+  "_links" : {
+     "self" : {
+      "href" : "http://api.example.org/rels/create"
+    }
+ },
+  "_templates" : {
+    "default" : {
+      "title" : "Create",
+      "method" : "POST",
+      "contentType" : "application/json",
+      "properties" : [
+        {"name" : "title", "required" : true, "value" : "", "prompt" : "Title", "regex" : "", "templated" : false},
+        {"name" : "completed", "required" : false, "value" : "false", "prompt" : "Completed", "regex" : ""}
+      ]
+    }
+  }
+}</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_sending_a_hal_forms_body_request">Sending a HAL-FORMS Body Request</h3>
+<div class="paragraph"><p>After receiving the <strong>HAL-FORMS</strong> response and rendering the UI, the client application can&#8201;&#8212;&#8201;once the user supplies inputs and executes the "submit" action&#8201;&#8212;&#8201;use the instructions in the <strong>HAL-FORMS</strong> document to compose a request and send it to the URL indicated in the HAL document response (as follows):</p></div>
+<div class="listingblock">
+<div class="title">Sending a <strong>HAL-FORMS</strong> body request</div>
+<div class="content">
+<pre><code>**** REQUEST
+POST /task-list/ HTTP/1.1
+Host: api.example.org
+Accept: application/json
+
+{
+  "title" : "A Sample HAL-FORMS Response",
+  "completed" : false
+}
+
+**** RESPONSE
+HTTP/1.1 201 OK
+Content-Type: application/vnd.hal+json
+Date: Wed, 01 Jun 2016 15:03:30 GMT
+...</code></pre>
+</div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_extending_the_hal_forms_document">Extending the HAL-FORMS Document</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Authors can extend the <strong>HAL-FORMS</strong> media type as long as the following rules are observed:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+No existing properties or objects are removed.
+</p>
+</li>
+<li>
+<p>
+No existing properties or objects or the list of valid values are altered in a way that is non-backward compatible (e.g. changes MUST NOT break existing implementations that adhere to this specification).
+</p>
+</li>
+<li>
+<p>
+All new properties or objects are treated as OPTIONAL (e.g. no new REQUIRED elements are introduced in an extension).
+</p>
+</li>
+</ol></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">
+<div class="paragraph"><p>Authors should be aware that a future version of this specification MAY add new elements and should take care that any extensions are implemented in a way that reduces the likelihood that a future version of this specification is in conflict with your extension.</p></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_references">References</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+<a id="hal"></a> [HAL] Kelly, M. "HAL - Hypertext Application Language", September 2013, <a href="http://stateless.co/hal_specification.html">http://stateless.co/hal_specification.html</a>
+</p>
+</li>
+<li>
+<p>
+<a id="hal-spec"></a> [HALSPEC] Kelly, M. "JSON Hypertext Application Language" (Draft), July 2015 <a href="https://tools.ietf.org/html/draft-kelly-json-hal-07">https://tools.ietf.org/html/draft-kelly-json-hal-07</a>
+</p>
+</li>
+<li>
+<p>
+<a id="repo"></a> [REPO] Github, "HAL-FORMS", <a href="https://github.com/RWCBook/hal-forms">https://github.com/RWCBook/hal-forms</a>
+</p>
+</li>
+<li>
+<p>
+<a id="rfc2119"></a> [RFC2119] Bradner, S.,"Key words for use in RFCs to Indicate Requirement Levels", March 1997, <a href="http://tools.ietf.org/html/rfc2119">http://tools.ietf.org/html/rfc2119</a>
+</p>
+</li>
+<li>
+<p>
+<a id="rfc7159"></a> [RFC7159] Bray, T. "The JavaScript Object Notation (JSON) Data Interchange Format", March 2014, <a href="https://tools.ietf.org/html/rfc7159">https://tools.ietf.org/html/rfc7159</a>
+</p>
+</li>
+<li>
+<p>
+<a id="html401"></a> [HTML401] Raggett, D., Ed. et al", "HTML 4.01 Specification", December 1999, <a href="https://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.1">https://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.1</a>
+</p>
+</li>
+<li>
+<p>
+<a id="html5pat"></a> [HTML5PAT] Hickson, I., Ed. et al, "HTML5 (The Pattern Attribute)", October 2014, <a href="http://www.w3.org/TR/html5/forms.html#the-pattern-attribute">http://www.w3.org/TR/html5/forms.html#the-pattern-attribute</a>
+</p>
+</li>
+<li>
+<p>
+<a id="rfc6570"></a> [RFC6570] Gregorio, J., et al, "URI Template", March 2012, <a href="https://tools.ietf.org/html/rfc6570">https://tools.ietf.org/html/rfc6570</a>
+</p>
+</li>
+<li>
+<p>
+<a id="html5mut"></a> [HTML5MUT] Hickson, I., Ed. et al, "HTML5 (Mutate Action URL)", October 2014, <a href="http://www.w3.org/TR/html5/forms.html#submit-mutate-action">http://www.w3.org/TR/html5/forms.html#submit-mutate-action</a>
+</p>
+</li>
+<li>
+<p>
+<a id="html5enc"></a> [HTML5ENC] Hickson, I., Ed. et al, "HTML5 (Encoding Algorithm)", October 2014, <a href="http://www.w3.org/TR/html5/forms.html#application/x-www-form-urlencoded-encoding-algorithm">http://www.w3.org/TR/html5/forms.html#application/x-www-form-urlencoded-encoding-algorithm</a>
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_acknowledgements">Acknowledgements</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>I thank the everyone who helped contribute to this specification including:
+Josh Cohen,
+Pete Johanson,
+Mike Kelly,
+Dilip Krishnan.</p></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2019-10-31 17:34:40 EDT
+</div>
+</div>
+</body>
+</html>
