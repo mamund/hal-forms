@@ -6,30 +6,32 @@
 == Status
 Doc Status:: 
   *[white red-background]#Working Draft#* -- _Only experimental and `proof-of-concept' apps should be built on this unstable draft._
-Last Updated::
-  {docdate}
 Proposed IANA Registrations::
   +application/prs.hal-forms+json+
-Github Repo::
-  https://github.com/mamund/hal-forms
+Repository::
+  https://github.com/rwcbook/hal-forms
 Sample Implementation::
   https://github.com/apiacademy/ndcoslo2015/tree/hal-forms
-
+Last Updated::
+  {docdate}
 
 == Summary
-This document describes a simple media type designed to add runtime FORM support for the http://stateless.co/hal_specification.html[HAL] media type. This is an _independent backward-compatible_ extension of the HAL media type and MUST NOT be treated as standard HAL or as part of the https://tools.ietf.org/html/draft-kelly-json-hal-07[HAL specification].
+This document describes a simple media type designed to add runtime FORM support for the <<hal,[HAL]>> media type. This is an _independent backward-compatible_ extension of the HAL media type and MUST NOT be treated as standard HAL or as part of the HAL specification <<hal-spec,[HALSPEC]>>.
 
-== Motivation
+=== Motivation
 The HAL media type is a popular format for representing API responses. One of the possible reasons for this popularity is that HAL does not include detailed information about state transitions like filtered requests (e.g. search, sort, etc.) or write operations (e.g. create, edit, delete, etc.) as part of the specification. This feature keeps the complexity of HAL responses relatively low and easy to deal with. However, this also means one of the challenges of using HAL for APIs that support dynamic user inputs and/or varying work flow patterns is client applications must encode the detailed transition information (args, methods, work flow) directly in the client code. That means clients must be updated each time the input or work flow details change. 
 
-The HAL-FORMS media type is an attempt to meet this challenge by creating a format and processing pattern to support dynamic UI forms for HAL responses. This is a backward-compatible, non-standard extension. There is nothing in this format or process pattern that adds breaking changes to the HAL media type itself. Clients that implement this extension can still be valid HAL clients by degrading gracefully (e.g. not throwing errors) when HAL-FORMS documents are not returned by the server.
+The *HAL-FORMS* media type is an attempt to meet this challenge by creating a format and processing pattern to support dynamic UI forms for HAL responses. This is a backward-compatible, non-standard extension. There is nothing in this format or process pattern that adds breaking changes to the HAL media type itself. Clients that implement this extension can still be valid HAL clients by degrading gracefully (e.g. not throwing errors) when *HAL-FORMS* documents are not returned by the server.
 
 [NOTE]
 ====
-The HAL-FORMS media type design follows many of the HAL media type conventions. For this reason, HAL-FORMS "looks like HAL." However, it is important to keep in mind that HAL-FORMS is not the same as HAL -- the two should not be thought of as interchangeable in any way. Finally, HAL-FORMS documents SHOULD always be send over HTTP using the +application/prs.hal-forms+json+ media type identifer.
+The *HAL-FORMS* media type design follows many of the HAL media type conventions. For this reason, *HAL-FORMS* "looks like HAL." However, it is important to keep in mind that *HAL-FORMS* is not the same as HAL -- the two should not be thought of as interchangeable in any way. Finally, *HAL-FORMS* documents SHOULD always be sent over HTTP using the +application/prs.hal-forms+json+ media type identifer.
 ====
 
-== Compliance
+=== Updates
+There is an open source repository <<repo,[REPO]>> for this specification. Readers are encouraged to submit updates via the repository any time.
+
+=== Compliance
 An implementation (client or server) of this specification is not compliant if it fails to satisfy one or more of the MUST or REQUIRED elements. An implementation that satisfies all the MUST and REQUIRED elements as well as all the SHOULD and RECOMMENDED elements is said to be "unconditionally compliant"; one that satisfies all the MUST and REQUIRED elements but not all the SHOULD and RECOMMENDED elements is said to be "conditionally compliant."
 
 [NOTE]
@@ -37,28 +39,28 @@ An implementation (client or server) of this specification is not compliant if i
 ====
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", 
 "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be 
-interpreted as described in link:http://tools.ietf.org/html/rfc2119[RFC2119].
+interpreted as described in <<rfc2119,[RFC2119]>>.
 ====
 
 == The HAL-FORMS Media Type
-The HAL-FORMS media type is a simple https://tools.ietf.org/html/rfc7159[JSON] document that contains information on the HTTP method, message content-type, and parameters to use when making a templated request to a HAL server. This media type can be used to provide dynamic state transition descriptions at runtime.
+The *HAL-FORMS* media type is a simple JSON <<rfc7159,[RFC7159]>> document that contains information on the HTTP method, message content-type, and parameters to use when making a templated request to a HAL server. This media type can be used to provide dynamic state transition descriptions at runtime.
 
 === Example HAL-FORMS document
-Here is a simple HAL-FORMS document example:
+Here is a simple *HAL-FORMS* document example:
 
-.Example HAL-FORMS document.
+.Example *HAL-FORMS* document.
 ----
 include::hal-forms-response.json[]
 ----
 
 == Properties of a HAL-FORMS Document
-All HAL-FORMS documents MUST be valid https://tools.ietf.org/html/rfc7159[JSON] documents. A well-formed HAL-FORMS document has two top-level objects: +_links+ and +_templates+. The following is a summary of the structure of the HAL-FORMS media type.
+All *HAL-FORMS* documents MUST be valid JSON documents. A well-formed *HAL-FORMS* document has two top-level objects: +_links+ and +_templates+. The following is a summary of the structure of the *HAL-FORMS* media type.
 
 === The +_links+ Element
-The +_links+ element contains any links associated with the HAL-FORMS document. For this release, the only valid +link+ object is the +self+ link object.
+The +_links+ element contains any links associated with the *HAL-FORMS* document. For this release, the only valid +link+ object is the +self+ link object.
 
 +_links+::
-  Contains the collection of valid +link+ objects in the HAL-FORMS document. This is a RECOMMENDED element. If this element is missing or if the contents is unrecognized, it SHOULD be treated as if it contains a single +link+ element with the key of +self+ and the value of the URL used to request this HAL-FORMS document.
+  Contains the collection of valid +link+ objects in the *HAL-FORMS* document. This is a RECOMMENDED element. If this element is missing or if the contents is unrecognized, it SHOULD be treated as if it contains a single +link+ element with the key of +self+ and the value of the URL used to request this *HAL-FORMS* document.
 +link+::
   The +link+ element consists of a key and a set of properties. 
   +
@@ -66,7 +68,7 @@ The +_links+ element contains any links associated with the HAL-FORMS document. 
   * +href+ : The URL associated with the +key+. This is a REQUIRED element. If this is missing, set to empty or unparsable, the associated +link+ object SHOULD be ignored.
 
 === The +_templates+ Element
-The +_templates+ element describes the available state transition details including the HTTP method, message content-type, and arguments for the transition. This is a REQUIRED element. If the HAL-FORMS document does not contain this element or the contents are unrecognized or unparsable, the HAL-FORMS document SHOULD be ignored.
+The +_templates+ element describes the available state transition details including the HTTP method, message content-type, and arguments for the transition. This is a REQUIRED element. If the *HAL-FORMS* document does not contain this element or the contents are unrecognized or unparsable, the *HAL-FORMS* document SHOULD be ignored.
 
 The +_templates+ element contains a collection of +template+ objects. Each +template+ object contains the following possible properties: 
 
@@ -84,19 +86,57 @@ The +_templates+ element contains a collection of +template+ objects. Each +temp
   * +name+ : The parameter name. This is a valid JSON string. This is a REQUIRED element. If this attribute is missing or set to empty, the client SHOULD ignore this +property+ object completely.
   * +prompt+ : The human-readable prompt for the parameter. This is a valid JSON string. This is an OPTIONAL element. If this element is missing, clients MAY act as if the +prompt+ value is set to the value in the +name+ attribute.
   * +readOnly+ : Indicates whether the parameter is read-only. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, empty, or set to an unrecognized value, it SHOULD be treated as if the value of +readOnly+ is set to `false'. 
-  * +regex+ : A regular expression string to be applied to the value of the parameter. Rules for valid values are the same as the http://www.w3.org/TR/html5/forms.html#the-pattern-attribute[HTML5 pattern] attribute. This is an OPTIONAL element. If this attribute missing, is set to empty, or is unparseable , it SHOULD be ignored.
+  * +regex+ : A regular expression string to be applied to the value of the parameter. Rules for valid values are the same as the HTML5 pattern attribute <<html5pat,[HTML5PAT]>>. This is an OPTIONAL element. If this attribute missing, is set to empty, or is unparseable , it SHOULD be ignored.
   * +required+ : Indicates whether the parameter is required. This is a valid JSON boolean. This is an OPTIONAL element. If this attribute is missing, set to blank or contains an unrecognized value, it SHOULD be treated as if the value of +required+ is set to `false'.
-  * +templated+ : Indicates whether the +value+ element is a string containing https://tools.ietf.org/html/rfc6570[URITemplate] variable expressions for the client to resolve. . This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, set to empty, or contains unrecognized content, it SHOULD be treated as if the value of +templated+ is set to `false'.
-  * +value+ : The parameter value. This is a valid JSON string. This string MAY contain a URITtemplate (see +templated+ for details). This is an OPTIONAL element. If it does not exist, clients SHOULD act as if the +value+ property is set to an empty string.
+  * +templated+ : Indicate whether the +value+ element contains a URI Template <<rfc6570, [RFC6570]>> string for the client to resolve. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, set to empty, or contains unrecognized content, it SHOULD be treated as if the value of +templated+ is set to `false'.
+  * +value+ : The parameter value. This is a valid JSON string. This string MAY contain a URI Template (see +templated+ for details). This is an OPTIONAL element. If it does not exist, clients SHOULD act as if the +value+ property is set to an empty string.
 
 +title+:: A human-readable string that can be used to identify this template. This is a valid JSON string. This is an OPTIONAL element. If it does not exist or is unparsable, consumers MAY use the +key+ value of the template as the value for +title+.
 
+=== The HAL-FORMS Query String Registry
+The *HAL-FORMS* media type supports a set of OPTIONAL query string parameters. These can be passed when requesting *HAL-FORMS* documents in order to provide additional information (e.g. document identifiers, etc.) to the server when a client requests a *HAL-FORMS* document. For example, the server can use these parameter values to validate the *HAL-FORMS* request and/or use them to determine how to pre-populate the *HAL-FORMS* document before returning it to the client.
+
+Below is the list of query string values defined for this release of the specification. One or more of these parameters MAY appear in the URLs used to request *HAL-FORMS* documents. They can appear in the query string in any order. One or more (possibly all) these parameters MAY be ignored by servers receiving the *HAL-FORMS* request. 
+
++_hdoc+::
+Contains the identifier (usually a URL) of the HAL document from which this request was derived. For example if the HAL document had a URL of +http://api.example.org/users/123+ then the +_hdoc+ query parameter would be +_hdoc=http%3A%2F%2Fapi.example.org%2Fusers%2F123+. 
+
++_hkey+::
+Contains the +key+ value of the *HAL-FORMS* template the client wishes to receive. For example, if the *HAL-FORMS* template +key+ is +default+ then the +_hkey+ parameter would be +_hkey=default+.
+
++_hmethod+::
+Contains the HTTP method to be used when populating the *HAL-FORMS* +method+ value in the +_template+. For example, if the client wishes to execute an HTTP POST with the template, the +_hmethod+ parameter would be: +_hmethod=post+.
+
++_hrel+::
+Contains the +key+ of the HAL +_link+ element that identified the URL for the *HAL-FORMS* document. For example, if the HAL document had a +_link+ element that looked like this:
++
+----
+"http://api.example.org/rels/filter": {
+  "href": "http://api.example.org/task-list/",
+  "title": "Filter Tasks",
+  "templated": false
+}
+----
++ 
+...then the +_hrel+ parameter would be +_hkey=http%3A%2F%2Fapi.example.org%2Frels%2Ffilter+. 
+
++_hsource+::
+Contains the identifier of the source record to use when pre-populating the *HAL-FORMS* document. For example, if the client wishes to edit the resource identified by the URL +http://api.example.org/users/123+ then the +_hsource+ parameter would be +_hsource=http%3A%2F%2Fapi.example.org%2Fusers%2F123+.
+
++_htarget+::
+Contains the identifier of the target URL for the client to use when submitting the completed *HAL-FORMS* template. For example, if the client should submit the completed template to the following URL: +http://api.example.org/jobs/+ then the +_htarget+ parameter would be +_htarget=http%3A%2F%2Fapi.example.org%2Fjobs%2F+.
+
+[NOTE]
+====
+Additional *HAL-FORMS* query string parameters MAY be added over time. Implementers are also allowed to create their own *HAL-FORMS* query string parameters for local use as long as they do not overwrite or redefine existing query string parameters. Implementers are encouraged to use their own unique prefix value to reduce the chance their custom query parameters will conflict with other existing or future parameter names.
+====
+
 == Encoding Requests
-Once the client application has used the HAL-FORMS document to render a UI for accepting inputs (and the user has supplied the inputs), that same document SHOULD be used to encode a request to send to the server to execute the state transition described by the HAL-FORMS document. There are two ways in which HAL-FORMS documents can be used to construct parameterized requests. The first is by <<encoding-request-urls, encoding request URLs>> for HTTP GET, DELETE, and HEAD requests. The second is by <<encoding-request-bodies, encoding request bodies>> for HTTP PUT, POST, and PATCH requests. 
+Once the client application has used the *HAL-FORMS* document to render a UI for accepting inputs (and the user has supplied the inputs), that same document SHOULD be used to encode a request to send to the server to execute the state transition described by the *HAL-FORMS* document. There are two ways in which *HAL-FORMS* documents can be used to construct parameterized requests. The first is by <<encoding-request-urls, encoding request URLs>> for HTTP GET, DELETE, and HEAD requests. The second is by <<encoding-request-bodies, encoding request bodies>> for HTTP PUT, POST, and PATCH requests. 
 
 [[encoding-request-urls]]
 === Encoding Request URLs
-When clients are instructed to send a request without a body (e.g. GET, HEAD, DELETE), clients SHOULD use the list of +property+ object's +name+ and +value+ attributes to construct a valid URL using the http://www.w3.org/TR/html/forms.html#submit-mutate-action[W3C Mutate Action URL Algorithm] to produce a valid query string. Below is a simple HAL-FORMS document that uses the GET method and the resulting updated URL.
+When clients are instructed to send a request without a body (e.g. GET, HEAD, DELETE), clients SHOULD use the list of +property+ object's +name+ and +value+ attributes to construct a valid URL using the W3C Mutate Action URL Algorithm <<html5mut,[HTML5MUT]>> to produce a valid query string. Below is a simple *HAL-FORMS* document that uses the GET method and the resulting updated URL.
 
 ----
 include::get-hal-forms-example.json[]
@@ -104,7 +144,7 @@ include::get-hal-forms-example.json[]
 
 [NOTE]
 ====
-The HAL media type already defines support for parameterized HTTP GET queries using URITemplates. However, the HAL-FORMS document can be treated as an alternate implementation for GET queries that include additional constraints such as prompts, regular expression validators, etc.
+The HAL media type already defines support for parameterized HTTP GET queries using URITemplates. However, the *HAL-FORMS* document can be treated as an alternate implementation for GET queries that include additional constraints such as prompts, regular expression validators, etc.
 ====
 
 [[encoding-request-bodies]]
@@ -112,7 +152,7 @@ The HAL media type already defines support for parameterized HTTP GET queries us
 When clients are instructed to send a request with a body (e.g. PUT, POST, PATCH), there are several possible content-types to use. Compliant applications MUST support encoding bodies using +application/json+ and SHOULD support encoding bodies using +application/x_www-form-urlencoded+. Clients MAY support other content-types not listed in this document. 
 
 ==== Sending +application/json+ Bodies
-When sending bodies encoded as +application/json+, clients SHOULD construct a simple JSON dictionary object that contains a set of name-value pairs that match the +property+ objects in the HAL-FORMS document. For example, using the Example HAL-FORMS document (see above) as a guide, a client would construct a JSON dictionary object that looks like the following:
+When sending bodies encoded as +application/json+, clients SHOULD construct a simple JSON dictionary object that contains a set of name-value pairs that match the +property+ objects in the *HAL-FORMS* document. For example, using the Example *HAL-FORMS* document (see above) as a guide, a client would construct a JSON dictionary object that looks like the following:
 
 ----
 {
@@ -122,7 +162,7 @@ When sending bodies encoded as +application/json+, clients SHOULD construct a si
 ----
 
 ==== Sending +application/x-www-form-urlencoded+ Bodies
-When sending bodies encoded as +application/x-www-form-urlencoded+, clients SHOULD construct a body that is in compliance with the guidance in the https://www.w3.org/TR/html5/forms.html#url-encoded-form-data[W3C FORMS Encoding Algorithm]. A sample (using the Example HAL-FORMS document) follows:
+When sending bodies encoded as +application/x-www-form-urlencoded+, clients SHOULD construct a body that is in compliance with the guidance in the W3C FORMS Encoding Algorithm <<html5enc,[HTML5ENC]>>. A sample (using the Example *HAL-FORMS* document) follows:
 
 ----
 title=A+Sample+HAL+Forms+Response&completed=false
@@ -132,21 +172,21 @@ title=A+Sample+HAL+Forms+Response&completed=false
 Providers who supply responses that contain +contentType+ values not covered in this specification SHOULD publish documentation instructing clients on the proper way to construct request bodies from HAL-FORMS documents.
 
 == The HAL-FORMS Media Type Identifier String
-The media type identifier string for HAL-FORMS documents is: +application/prs.hal-forms+json+  This SHOULD be used as part of the HTTP +accept+ header when making a request for a HAL-FORMS document. It SHOULD appear as the HTTP +content-type+ header when sending a response that contains a HAL-FORMS document. 
+The media type identifier string for *HAL-FORMS* documents is: +application/prs.hal-forms+json+  This SHOULD be used as part of the HTTP +accept+ header when making a request for a *HAL-FORMS* document. It SHOULD appear as the HTTP +content-type+ header when sending a response that contains a *HAL-FORMS* document. 
 
 
 == Suggested Process Flow for HAL-FORMS Documents
-While it is completely up to providers and consumers to determine how they wish to use the HAL-FORMS media type, the following is a suggested process flow for runtime use of HAL-FORMS documents on the Web.
+While it is completely up to providers and consumers to determine how they wish to use the *HAL-FORMS* media type, the following is a suggested process flow for runtime use of *HAL-FORMS* documents on the Web.
 
- . Servers emit HAL responses that contain +rel+ values which are valid URLs that return HAL-FORMS documents.
- . Clients parse the HAL response and (either on-demand or in pre-fetch mode) request the HAL-FORMS documents.
- . When a HAL-FORMS document is returned by the server, clients use this information to render an input UI for humans when needed.
+ . Servers emit HAL responses that contain +rel+ values which are valid URLs that return *HAL-FORMS* documents.
+ . Clients parse the HAL response and (either on-demand or in pre-fetch mode) request the *HAL-FORMS* documents.
+ . When a *HAL-FORMS* document is returned by the server, clients use this information to render an input UI for humans when needed.
  . Clients collect the completed user inputs and, based on the value of +contentType+, craft a valid request to send to the server and execute that request.
 
 What follows is an illustrated example of this process flow.
 
 === Starting With a Typical HAL Response.
-A client application can start with a typical HAL response and use information in the representation to see if HAL-FORMS documents are available. Below is a HAL response w/ URLs for +rel+ values. These MAY point to HAL-FORMS documents.
+A client application can start with a typical HAL response and use information in the representation to see if *HAL-FORMS* documents are available. Below is a HAL response w/ URLs for +rel+ values. These MAY point to *HAL-FORMS* documents.
 
 .A Typical HAL Response with URLs for rel values
 ----
@@ -164,7 +204,7 @@ include::hal-response.json[]
 ----
 
 === Requesting a HAL-FORMS Document
-After parsing the HAL response, a HAL-FORMS compliant client app MAY use the +rel+ URLs to make requests for HAL-FORMS documents. In the case of this example, the +http://api.example.org/rels/create+ is used to see if there is a HAL-FORMS document available.
+After parsing the HAL response, a *HAL-FORMS* compliant client app MAY use the +rel+ URLs to make requests for *HAL-FORMS* documents. In the case of this example, the +http://api.example.org/rels/create+ is used to see if there is a *HAL-FORMS* document available.
 
 .Requesting a HAL-FORMS document
 ----
@@ -182,9 +222,9 @@ include::hal-forms-response.json[]
 ----
 
 === Sending a HAL-FORMS Body Request
-After receiving the HAL-FORMS response and rendering the UI, the client application can -- once the user supplies inputs and executes the "submit" action -- use the instructions in the HAL-FORMS document to compose a request and send it to the URL indicated in the HAL document response (as follows):
+After receiving the *HAL-FORMS* response and rendering the UI, the client application can -- once the user supplies inputs and executes the "submit" action -- use the instructions in the *HAL-FORMS* document to compose a request and send it to the URL indicated in the HAL document response (as follows):
 
-.Sending a HAL-FORMS body request
+.Sending a *HAL-FORMS* body request
 ----
 **** REQUEST
 POST /task-list/ HTTP/1.1
@@ -204,7 +244,7 @@ Date: Wed, 01 Jun 2016 15:03:30 GMT
 ----
  
 == Extending the HAL-FORMS Document
-Authors can extend the HAL-FORMS media type as long as the following rules are observed:
+Authors can extend the *HAL-FORMS* media type as long as the following rules are observed:
 
  . No existing properties or objects are removed.
  . No existing properties or objects or the list of valid values are altered in a way that is non-backward compatible (e.g. changes MUST NOT break existing implementations that adhere to this specification).
@@ -215,6 +255,18 @@ Authors can extend the HAL-FORMS media type as long as the following rules are o
 Authors should be aware that a future version of this specification MAY add new elements and should take care that any extensions are implemented in a way that reduces the likelihood that a future version of this specification is in conflict with your extension.
 ====
 
+== References
+ * [[hal]] [HAL] Kelly, M. "HAL - Hypertext Application Language", September 2013, http://stateless.co/hal_specification.html
+ * [[hal-spec]] [HALSPEC] Kelly, M. "JSON Hypertext Application Language" (Draft), July 2015 https://tools.ietf.org/html/draft-kelly-json-hal-07
+ * [[repo]] [REPO] Github, "HAL-FORMS", https://github.com/RWCBook/hal-forms
+ * [[rfc2119]] [RFC2119] Bradner, S.,"Key words for use in RFCs to Indicate Requirement Levels", March 1997, http://tools.ietf.org/html/rfc2119
+ * [[rfc7159]] [RFC7159] Bray, T. "The JavaScript Object Notation (JSON) Data Interchange Format", March 2014, https://tools.ietf.org/html/rfc7159
+ * [[html401]] [HTML401] Raggett, D., Ed. et al", "HTML 4.01 Specification", December 1999, https://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.1
+ * [[html5pat]] [HTML5PAT] Hickson, I., Ed. et al, "HTML5 (The Pattern Attribute)", October 2014, http://www.w3.org/TR/html5/forms.html#the-pattern-attribute
+ * [[rfc6570]] [RFC6570] Gregorio, J., et al, "URI Template", March 2012, https://tools.ietf.org/html/rfc6570
+ * [[html5mut]] [HTML5MUT] Hickson, I., Ed. et al, "HTML5 (Mutate Action URL)", October 2014, http://www.w3.org/TR/html5/forms.html#submit-mutate-action
+ * [[html5enc]] [HTML5ENC] Hickson, I., Ed. et al, "HTML5 (Encoding Algorithm)", October 2014, http://www.w3.org/TR/html5/forms.html#application/x-www-form-urlencoded-encoding-algorithm
+ 
 == Acknowledgements
 I thank the everyone who helped contribute to this specification including: 
 Josh Cohen,
