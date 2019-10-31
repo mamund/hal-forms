@@ -270,9 +270,11 @@ Authors should be aware that a future version of this specification MAY add new 
 == Acknowledgements
 I thank the everyone who helped contribute to this specification including: 
 Josh Cohen,
+Oliver Drotbohm,
 Pete Johanson,
 Mike Kelly,
-Dilip Krishnan.
+Dilip Krishnan,
+Greg Turnquist.
 
 
 
