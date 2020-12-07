@@ -91,6 +91,12 @@ The +_templates+ element contains a collection of +template+ objects. Each +temp
   * +templated+ : Indicate whether the +value+ element contains a URI Template <<rfc6570, [RFC6570]>> string for the client to resolve. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, set to empty, or contains unrecognized content, it SHOULD be treated as if the value of +templated+ is set to `false'.
   * +value+ : The parameter value. This is a valid JSON string. This string MAY contain a URI Template (see +templated+ for details). This is an OPTIONAL element. If it does not exist, clients SHOULD act as if the +value+ property is set to an empty string.
 
++target+:: Contains the identifier of the target URL for the client to use when submitting the completed HAL-FORMS template. For example, if the client should submit the completed template to the following URL: +http://api.example.org/jobs/+ then the +target+ proprety would be +target="http://api.example.org/jobs/"+. 
++
+This is an OPTIONAL property. If this property is not understood by the recipient, left blank, or contains an invalid URL string, it SHOULD be ignored.
++
+The +target+ property holds the same information as the <<htarget-query-string, +_htarget+>> query string property. If both the +target+ prorperty and the +_htarget+ query string value appear in the same message, the +_htarget+ query string SHOULD be used and the +target+ property SHOULD be ignored.
+
 +title+:: A human-readable string that can be used to identify this template. This is a valid JSON string. This is an OPTIONAL element. If it does not exist or is unparsable, consumers MAY use the +key+ value of the template as the value for +title+.
 
 === The HAL-FORMS Query String Registry
@@ -123,6 +129,7 @@ Contains the +key+ of the HAL +_link+ element that identified the URL for the *H
 +_hsource+::
 Contains the identifier of the source record to use when pre-populating the *HAL-FORMS* document. For example, if the client wishes to edit the resource identified by the URL +http://api.example.org/users/123+ then the +_hsource+ parameter would be +_hsource=http%3A%2F%2Fapi.example.org%2Fusers%2F123+.
 
+[[htarget-query-string]]
 +_htarget+::
 Contains the identifier of the target URL for the client to use when submitting the completed *HAL-FORMS* template. For example, if the client should submit the completed template to the following URL: +http://api.example.org/jobs/+ then the +_htarget+ parameter would be +_htarget=http%3A%2F%2Fapi.example.org%2Fjobs%2F+.
 
@@ -274,6 +281,7 @@ Oliver Drotbohm,
 Pete Johanson,
 Mike Kelly,
 Dilip Krishnan,
+Evert Pot,
 Greg Turnquist.
 
 
