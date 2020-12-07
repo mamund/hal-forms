@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
     "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
-<meta name="generator" content="AsciiDoc 8.6.9" />
+<meta name="generator" content="AsciiDoc 9.0.0rc1" />
 <title>The HAL-FORMS Media Type</title>
 <style type="text/css">
 /* Shared CSS for AsciiDoc xhtml11 and html5 backends */
@@ -435,7 +436,7 @@ thead, p.table.header {
 p.table {
   margin-top: 0;
 }
-/* Because the table frame attribute is overriden by CSS in most browsers. */
+/* Because the table frame attribute is overridden by CSS in most browsers. */
 div.tableblock > table[frame="void"] {
   border-style: none;
 }
@@ -783,7 +784,7 @@ Last Updated
 </dt>
 <dd>
 <p>
-  2019-10-31
+  2020-12-06
 </p>
 </dd>
 </dl></div>
@@ -986,6 +987,16 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </ul></div>
 </dd>
 <dt class="hdlist1">
+<code>target</code>
+</dt>
+<dd>
+<p>
+Contains the identifier of the target URL for the client to use when submitting the completed HAL-FORMS template. For example, if the client should submit the completed template to the following URL: <code>http://api.example.org/jobs/</code> then the <code>target</code> proprety would be <code>target="http://api.example.org/jobs/"</code>.
+</p>
+<div class="paragraph"><p>This is an OPTIONAL property. If this property is not understood by the recipient, left blank, or contains an invalid URL string, it SHOULD be ignored.</p></div>
+<div class="paragraph"><p>The <code>target</code> property holds the same information as the <a href="#htarget-query-string"><code>_htarget</code></a> query string property. If both the <code>target</code> prorperty and the <code>_htarget</code> query string value appear in the same message, the <code>_htarget</code> query string SHOULD be used and the <code>target</code> property SHOULD be ignored.</p></div>
+</dd>
+<dt class="hdlist1">
 <code>title</code>
 </dt>
 <dd>
@@ -1058,7 +1069,7 @@ Contains the identifier of the target URL for the client to use when submitting 
 </p>
 </dd>
 </dl></div>
-<div class="admonitionblock">
+<div class="admonitionblock" id="htarget-query-string">
 <table><tr>
 <td class="icon">
 <div class="title">Note</div>
@@ -1397,6 +1408,7 @@ Oliver Drotbohm,
 Pete Johanson,
 Mike Kelly,
 Dilip Krishnan,
+Evert Pot,
 Greg Turnquist.</p></div>
 </div>
 </div>
@@ -1404,7 +1416,8 @@ Greg Turnquist.</p></div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-10-31 17:48:03 EDT
+Last updated
+ 2020-12-06 19:38:38 EST
 </div>
 </div>
 </body>
