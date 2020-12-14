@@ -784,7 +784,7 @@ Last Updated
 </dt>
 <dd>
 <p>
-  2020-12-06
+  2020-12-13
 </p>
 </dd>
 </dl></div>
@@ -951,7 +951,32 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 <div class="ulist"><ul>
 <li>
 <p>
+<code>max</code> : The <code>max</code> attribute specifies the maximum value for the <code>value</code> setting of a <code>property</code>  element. This is an OPTIONAL property and it MAY be ignored.
+</p>
+</li>
+<li>
+<p>
+<code>maxLength</code> : The <code>maxLength</code> attribute specifies the maximum number of characters allowed in the <code>value</code> property. This is an OPTIONAL property and it MAY be ignored.
+</p>
+</li>
+<li>
+<p>
+<code>min</code> : The <code>min</code> attribute specifies the minimum value for an <code>value</code> setting of a <code>property</code> element. This is an OPTIONAL property and it MAY be ignored.
+</p>
+</li>
+<li>
+<p>
+<code>minLength</code> : The <code>minlength</code> attribute specifies the minimum number of characters required in a <code>value</code> property. This is an OPTIONAL property and it MAY be ignored.
+</p>
+</li>
+<li>
+<p>
 <code>name</code> : The parameter name. This is a valid JSON string. This is a REQUIRED element. If this attribute is missing or set to empty, the client SHOULD ignore this <code>property</code> object completely.
+</p>
+</li>
+<li>
+<p>
+<code>placeholder</code> : The <code>placeholder</code> attribute specifies a short hint that describes the expected value of an input field (e.g. a sample value or a short description of the expected format). This is an OPTIONAL field and MAY be ignored.
 </p>
 </li>
 <li>
@@ -972,6 +997,11 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 <li>
 <p>
 <code>required</code> : Indicates whether the parameter is required. This is a valid JSON boolean. This is an OPTIONAL element. If this attribute is missing, set to blank or contains an unrecognized value, it SHOULD be treated as if the value of <code>required</code> is set to &#8216;false&#8217;.
+</p>
+</li>
+<li>
+<p>
+<code>step</code> : The <code>step</code> attribute specifies the interval between legal numbers in a <code>value</code> property. For example, if <code>step="3"</code>, legal numbers could be -3, 0, 3, 6, etc.
 </p>
 </li>
 <li>
@@ -1417,7 +1447,7 @@ Greg Turnquist.</p></div>
 <div id="footer">
 <div id="footer-text">
 Last updated
- 2020-12-06 19:38:38 EST
+ 2020-12-13 19:57:54 EST
 </div>
 </div>
 </body>
