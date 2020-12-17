@@ -784,7 +784,7 @@ Last Updated
 </dt>
 <dd>
 <p>
-  2020-12-13
+  2020-12-17
 </p>
 </dd>
 </dl></div>
@@ -1011,7 +1011,33 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </li>
 <li>
 <p>
-<code>value</code> : The parameter value. This is a valid JSON string. This string MAY contain a URI Template (see <code>templated</code> for details). This is an OPTIONAL element. If it does not exist, clients SHOULD act as if the <code>value</code> property is set to an empty string.
+<code>type</code> : The <code>type</code> attribute controls the data type of the <code>property</code> value. It is an enumerated attribute. The <code>type</code> can also used to determine the interface control to display for user input. This is an OPTIONAL element. If the <code>type</code> value is not supported by the document consumer, contains a value not understood by the consumer, and/or is missing, the the document consumer SHOULD assume the <code>type</code> attribute is set to the default value: <code>"text"</code> and render the display input as a simple text box.
+ <br />
+ <br />
+  Possible settings for the <code>type</code> value in this release are:
+  <code>hidden</code>,
+  <code>text</code>,
+  <code>search</code>,
+  <code>tel</code>,
+  <code>url</code>,
+  <code>email</code>,
+  <code>password</code>,
+  <code>date</code>,
+  <code>month</code>,
+  <code>week</code>,
+  <code>time</code>,
+  <code>datetime-local</code>,
+  <code>number</code>,
+  <code>range</code>,
+  <code>color</code>.
+ <br />
+ <br />
+  For hints on how to render and process various <code>type</code> values, see <a href="#html5type">[HTML5TYPE]</a>.
+</p>
+</li>
+<li>
+<p>
+<code>value</code> : The <code>property</code> value. This is a valid JSON string. This string MAY contain a URI Template (see <code>templated</code> for details). This is an OPTIONAL element. If it does not exist, clients SHOULD act as if the <code>value</code> property is set to an empty string.
 </p>
 </li>
 </ul></div>
@@ -1426,6 +1452,11 @@ All new properties or objects are treated as OPTIONAL (e.g. no new REQUIRED elem
 <a id="html5enc"></a> [HTML5ENC] Hickson, I., Ed. et al, "HTML5 (Encoding Algorithm)", October 2014, <a href="http://www.w3.org/TR/html5/forms.html#application/x-www-form-urlencoded-encoding-algorithm">http://www.w3.org/TR/html5/forms.html#application/x-www-form-urlencoded-encoding-algorithm</a>
 </p>
 </li>
+<li>
+<p>
+<a id="html5type"></a> [HTML5TYPE] "HTML 5.2 FORMS", December 2017, <a href="https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-input-type">https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-input-type</a>
+</p>
+</li>
 </ul></div>
 </div>
 </div>
@@ -1447,7 +1478,7 @@ Greg Turnquist.</p></div>
 <div id="footer">
 <div id="footer-text">
 Last updated
- 2020-12-13 19:57:54 EST
+ 2020-12-17 17:22:35 EST
 </div>
 </div>
 </body>
