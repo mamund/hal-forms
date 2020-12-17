@@ -119,7 +119,7 @@ The +_templates+ element contains a collection of +template+ objects. Each +temp
   +
   +
   For hints on how to render and process various +type+ values, see <<html5type, [HTML5TYPE]>>.
-  * +value+ : The +proprety+ value. This is a valid JSON string. This string MAY contain a URI Template (see +templated+ for details). This is an OPTIONAL element. If it does not exist, clients SHOULD act as if the +value+ property is set to an empty string.
+  * +value+ : The +property+ value. This is a valid JSON string. This string MAY contain a URI Template (see +templated+ for details). This is an OPTIONAL element. If it does not exist, clients SHOULD act as if the +value+ property is set to an empty string.
 
 +target+:: Contains the identifier of the target URL for the client to use when submitting the completed HAL-FORMS template. For example, if the client should submit the completed template to the following URL: +http://api.example.org/jobs/+ then the +target+ proprety would be +target="http://api.example.org/jobs/"+. 
 +
