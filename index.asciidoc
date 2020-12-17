@@ -100,7 +100,7 @@ The +_templates+ element contains a collection of +template+ objects. Each +temp
   +
   Possible settings for the +type+ value in this release are: 
   +hidden+, 
-  +text,
+  +text+,
   +search+,
   +tel+,
   +url+,
