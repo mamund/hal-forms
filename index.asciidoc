@@ -113,9 +113,7 @@ The +_templates+ element contains a collection of +template+ objects. Each +temp
   +datetime-local+,
   +number+,
   +range+,
-  +color+,
-  +checkbox+,
-  +radio+.
+  +color+.
   +
   +
   For hints on how to render and process various +type+ values, see <<html5type, [HTML5TYPE]>>.
