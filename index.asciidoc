@@ -95,19 +95,19 @@ The +target+ property holds the same information as the <<htarget-query-string, 
 === The +property+ Element
 A +property+ element describes the details of the state transition element (+name+, +required+, +readOnly+, etc.). It appears as an array of +properties+ as a child of the +_templates+ element (See <<templates-object, The +_templates+ Element>>). Most attributes of a +property+ object are optional. Some attributes of a property are dependent on others and/or will appear in groups. For example, the +min+ attribute is expected to appear along with the +max+ attribute.  Below is a list of all the possible attributes of a +property+ object.
 
-  * +max+ : The +max+ attribute specifies the maximum numeric value for the +value+ setting of a +property+  element. This attribute SHOULD appear along with the +min+ attribute. This is an OPTIONAL property and it MAY be ignored.
-  * +maxLength+ : The +maxLength+ attribute specifies the maximum number of characters allowed in the +value+ property. This attribute SHOULD appear along with the +minLength+ attribute. This is an OPTIONAL property and it MAY be ignored.
-  * +min+ : The +min+ attribute specifies the minimum numeric value for an +value+ setting of a +property+ element. This attribute SHOULD appear along with the +max+ attribute. This is an OPTIONAL property and it MAY be ignored.
-  * +minLength+ : The +minlength+ attribute specifies the minimum number of characters required in a +value+ property. this attribute SHOULD appear along with the +maxLength+ attribute. This is an OPTIONAL property and it MAY be ignored.
-  * +name+ : The +property+ name. This is a valid JSON string. This is a REQUIRED element. If this attribute is missing or set to empty, the client SHOULD ignore this +property+ object completely.
-  * +placeholder+ : The +placeholder+ attribute specifies a short hint that describes the expected value of an input field (e.g. a sample value or a short description of the expected format). This is an OPTIONAL field and MAY be ignored.
-  * +prompt+ : The human-readable prompt for the parameter. This is a valid JSON string. This is an OPTIONAL element. If this element is missing, clients MAY act as if the +prompt+ value is set to the value in the +name+ attribute.
-  * +readOnly+ : Indicates whether the parameter is read-only. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, empty, or set to an unrecognized value, it SHOULD be treated as if the value of +readOnly+ is set to `false'. 
-  * +regex+ : A regular expression string to be applied to the value of the parameter. Rules for valid values are the same as the HTML5 pattern attribute <<html5pat,[HTML5PAT]>>. This is an OPTIONAL element. If this attribute missing, is set to empty, or is unparseable , it SHOULD be ignored.
-  * +required+ : Indicates whether the parameter is required. This is a valid JSON boolean. This is an OPTIONAL element. If this attribute is missing, set to blank or contains an unrecognized value, it SHOULD be treated as if the value of +required+ is set to `false'.
-  * +step+ : The +step+ attribute specifies the interval between legal numbers in a +value+ property. For example, if +step="3"+, legal numbers could be -3, 0, 3, 6, etc.
-  * +templated+ : Indicate whether the +value+ element contains a URI Template <<rfc6570, [RFC6570]>> string for the client to resolve. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, set to empty, or contains unrecognized content, it SHOULD be treated as if the value of +templated+ is set to `false'.
-  * +type+ : The +type+ attribute controls the data type of the +property+ value. It is an enumerated attribute. The +type+ can also used to determine the interface control to display for user input. This is an OPTIONAL element. If the +type+ value is not supported by the document consumer, contains a value not understood by the consumer, and/or is missing, the the document consumer SHOULD assume the +type+ attribute is set to the default value: +"text"+ and render the display input as a simple text box. 
++max+:: The +max+ attribute specifies the maximum numeric value for the +value+ setting of a +property+  element. This attribute SHOULD appear along with the +min+ attribute. This is an OPTIONAL property and it MAY be ignored.
++maxLength+:: The +maxLength+ attribute specifies the maximum number of characters allowed in the +value+ property. This attribute SHOULD appear along with the +minLength+ attribute. This is an OPTIONAL property and it MAY be ignored.
++min+:: The +min+ attribute specifies the minimum numeric value for an +value+ setting of a +property+ element. This attribute SHOULD appear along with the +max+ attribute. This is an OPTIONAL property and it MAY be ignored.
++minLength+:: The +minlength+ attribute specifies the minimum number of characters required in a +value+ property. this attribute SHOULD appear along with the +maxLength+ attribute. This is an OPTIONAL property and it MAY be ignored.
++name+:: The +property+ name. This is a valid JSON string. This is a REQUIRED element. If this attribute is missing or set to empty, the client SHOULD ignore this +property+ object completely.
++placeholder+:: The +placeholder+ attribute specifies a short hint that describes the expected value of an input field (e.g. a sample value or a short description of the expected format). This is an OPTIONAL field and MAY be ignored.
++prompt+:: The human-readable prompt for the parameter. This is a valid JSON string. This is an OPTIONAL element. If this element is missing, clients MAY act as if the +prompt+ value is set to the value in the +name+ attribute.
++readOnly+:: Indicates whether the parameter is read-only. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, empty, or set to an unrecognized value, it SHOULD be treated as if the value of +readOnly+ is set to `false'. 
++regex+:: A regular expression string to be applied to the value of the parameter. Rules for valid values are the same as the HTML5 pattern attribute <<html5pat,[HTML5PAT]>>. This is an OPTIONAL element. If this attribute missing, is set to empty, or is unparseable , it SHOULD be ignored.
++required+:: Indicates whether the parameter is required. This is a valid JSON boolean. This is an OPTIONAL element. If this attribute is missing, set to blank or contains an unrecognized value, it SHOULD be treated as if the value of +required+ is set to `false'.
++step+:: The +step+ attribute specifies the interval between legal numbers in a +value+ property. For example, if +step="3"+, legal numbers could be -3, 0, 3, 6, etc.
++templated+:: Indicate whether the +value+ element contains a URI Template <<rfc6570, [RFC6570]>> string for the client to resolve. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, set to empty, or contains unrecognized content, it SHOULD be treated as if the value of +templated+ is set to `false'.
++type+:: The +type+ attribute controls the data type of the +property+ value. It is an enumerated attribute. The +type+ can also used to determine the interface control to display for user input. This is an OPTIONAL element. If the +type+ value is not supported by the document consumer, contains a value not understood by the consumer, and/or is missing, the the document consumer SHOULD assume the +type+ attribute is set to the default value: +"text"+ and render the display input as a simple text box. 
   +
   +
   Possible settings for the +type+ value in this release are: 
@@ -129,7 +129,7 @@ A +property+ element describes the details of the state transition element (+nam
   +
   +
   For hints on how to render and process various +type+ values, see <<html5type, [HTML5TYPE]>>.
-  * +value+ : The +property+ value. This is a valid JSON string. This string MAY contain a URI Template (see +templated+ for details). This is an OPTIONAL element. If it does not exist, clients SHOULD act as if the +value+ property is set to an empty string.
++value+:: The +property+ value. This is a valid JSON string. This string MAY contain a URI Template (see +templated+ for details). This is an OPTIONAL element. If it does not exist, clients SHOULD act as if the +value+ property is set to an empty string.
 
 
 === The HAL-FORMS Query String Registry
