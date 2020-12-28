@@ -971,10 +971,10 @@ A human-readable string that can be used to identify this template. This is a va
 <div class="sect2">
 <h3 id="property-element">4.3. The <code>property</code> Element</h3>
 <div class="paragraph"><p>A <code>property</code> element describes the details of the state transition element (<code>name</code>, <code>required</code>, <code>readOnly</code>, etc.). It appears as an array of <code>properties</code> as a child of the <code>_templates</code> element (See <a href="#templates-element">The <code>_templates</code> Element</a>). Most attributes of a <code>property</code> object are optional. Some attributes of a property are dependent on others and/or will appear in groups. For example, the <code>min</code> attribute is expected to appear along with the <code>max</code> attribute.</p></div>
-<div class="paragraph"><p>There is a small set of attributes that are considered <em>core</em> attributes. There are a larger group that are considered <em>additional</em> attributes. Any library supporting the <strong>HAL-FORMS</strong> specification SHOULD support all of the <em>core</em> attributes and MAY support some or all of the <em>additional</em> attributes.</p></div>
+<div class="paragraph"><p>There is a set of <code>property</code> attributes that are considered <em>core</em> attributes. There are is also group of <code>property</code> attributes that are considered <em>additional</em> attributes. Any library supporting the <strong>HAL-FORMS</strong> specification SHOULD support all of the <em>core</em> attributes and MAY support some or all of the <em>additional</em> attributes.</p></div>
 <div class="sect3">
 <h4 id="_core_code_property_code_attribbutes">4.3.1. Core <code>property</code> Attribbutes</h4>
-<div class="paragraph"><p>Below is a list of all the <em>core</em> attributes of a <code>property</code> object.</p></div>
+<div class="paragraph"><p>Below is a list of all the <em>core</em> <code>property</code> attributes.</p></div>
 <div class="dlist"><dl>
 <dt class="hdlist1">
 <code>name</code>
@@ -1036,6 +1036,7 @@ The <code>property</code> value. This is a valid JSON string. This string MAY co
 </div>
 <div class="sect3">
 <h4 id="_additional_code_property_code_attributes">4.3.2. Additional <code>property</code> Attributes</h4>
+<div class="paragraph"><p>Below is a list of all the <em>additional</em> <code>property</code> attributes.</p></div>
 <div class="dlist"><dl>
 <dt class="hdlist1">
 <code>max</code>
@@ -1533,7 +1534,7 @@ Greg Turnquist.</p></div>
 <div id="footer">
 <div id="footer-text">
 Last updated
- 2020-12-28 14:03:27 EST
+ 2020-12-28 14:05:43 EST
 </div>
 </div>
 </body>
