@@ -80,9 +80,9 @@ The +_templates+ element contains a collection of +template+ objects. Each +temp
 +method+ ::
   The HTTP method the client SHOULD use when the service request. Any valid HTTP method is allowed. This is a REQUIRED element. If the value is empty or is not understood by the client, the value MUST be treated as an HTTP GET.
 +properties+ ::
-  An array of one or more anonymous +property+ objects (see <<property-object, +property+>>) that each describe a parameter for the associated state transition. This is an OPTIONAL element. If the array is missing or empty, the +properties+ collection MUST be treated as an empty set of parameters -- meaning that the transition is meant to be executed without passing any parameters.
+  An array of one or more anonymous +property+ objects (see <<property-object, The +property+ Object>>) that each describe a parameter for the associated state transition. This is an OPTIONAL element. If the array is missing or empty, the +properties+ collection MUST be treated as an empty set of parameters -- meaning that the transition is meant to be executed without passing any parameters.
 +property+ ::
-  A JSON object that describes a state transition element. See <<property-object, +property+>> for details.
+  A JSON object that describes a state transition element. See <<property-object, The +property+ Object>> for details.
 +target+:: Contains the identifier of the target URL for the client to use when submitting the completed HAL-FORMS template. For example, if the client should submit the completed template to the following URL: +http://api.example.org/jobs/+ then the +target+ proprety would be +target="http://api.example.org/jobs/"+. 
 +
 This is an OPTIONAL property. If this property is not understood by the recipient, left blank, or contains an invalid URL string, it SHOULD be ignored.
