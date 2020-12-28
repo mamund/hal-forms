@@ -68,6 +68,7 @@ The +_links+ element contains any links associated with the *HAL-FORMS* document
   * +key+ : The unique identifier of the +link+ object. This is a REQUIRED element for each _link+ object. For this release, the only valid value for the +key+ element is +"self"+. If this element is missing, is set to an unrecognized value, or cannot be parsed, the associated +link+ object SHOULD be ignored.
   * +href+ : The URL associated with the +key+. This is a REQUIRED element. If this is missing, set to empty or unparsable, the associated +link+ object SHOULD be ignored.
 
+[[templates-element]]
 === The +_templates+ Element
 The +_templates+ element describes the available state transition details including the HTTP method, message content-type, and arguments for the transition. This is a REQUIRED element. If the *HAL-FORMS* document does not contain this element or the contents are unrecognized or unparsable, the *HAL-FORMS* document SHOULD be ignored.
 
@@ -93,7 +94,7 @@ The +target+ property holds the same information as the <<htarget-query-string, 
 
 [[property-element]]
 === The +property+ Element
-A +property+ element describes the details of the state transition element (+name+, +required+, +readOnly+, etc.). It appears as an array of +properties+ as a child of the +_templates+ element (See <<templates-object, The +_templates+ Element>>). Most attributes of a +property+ object are optional. Some attributes of a property are dependent on others and/or will appear in groups. For example, the +min+ attribute is expected to appear along with the +max+ attribute.  
+A +property+ element describes the details of the state transition element (+name+, +required+, +readOnly+, etc.). It appears as an array of +properties+ as a child of the +_templates+ element (See <<templates-element, The +_templates+ Element>>). Most attributes of a +property+ object are optional. Some attributes of a property are dependent on others and/or will appear in groups. For example, the +min+ attribute is expected to appear along with the +max+ attribute.  
 
 There is a small set of attributes that are considered _core_ attributes. There are a larger group that are considered _additional_ attributes. Any library supporting the *HAL-FORMS* specification SHOULD support all of the _core_ attributes and MAY support some or all of the _additional_ attributes.
 

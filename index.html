@@ -904,7 +904,7 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </dl></div>
 </div>
 <div class="sect2">
-<h3 id="_the_code__templates_code_element">4.2. The <code>_templates</code> Element</h3>
+<h3 id="templates-element">4.2. The <code>_templates</code> Element</h3>
 <div class="paragraph"><p>The <code>_templates</code> element describes the available state transition details including the HTTP method, message content-type, and arguments for the transition. This is a REQUIRED element. If the <strong>HAL-FORMS</strong> document does not contain this element or the contents are unrecognized or unparsable, the <strong>HAL-FORMS</strong> document SHOULD be ignored.</p></div>
 <div class="paragraph"><p>The <code>_templates</code> element contains a collection of <code>template</code> objects. Each <code>template</code> object contains the following possible properties:</p></div>
 <div class="dlist"><dl>
@@ -970,7 +970,7 @@ A human-readable string that can be used to identify this template. This is a va
 </div>
 <div class="sect2">
 <h3 id="property-element">4.3. The <code>property</code> Element</h3>
-<div class="paragraph"><p>A <code>property</code> element describes the details of the state transition element (<code>name</code>, <code>required</code>, <code>readOnly</code>, etc.). It appears as an array of <code>properties</code> as a child of the <code>_templates</code> element (See <a href="#templates-object">The <code>_templates</code> Element</a>). Most attributes of a <code>property</code> object are optional. Some attributes of a property are dependent on others and/or will appear in groups. For example, the <code>min</code> attribute is expected to appear along with the <code>max</code> attribute.</p></div>
+<div class="paragraph"><p>A <code>property</code> element describes the details of the state transition element (<code>name</code>, <code>required</code>, <code>readOnly</code>, etc.). It appears as an array of <code>properties</code> as a child of the <code>_templates</code> element (See <a href="#templates-element">The <code>_templates</code> Element</a>). Most attributes of a <code>property</code> object are optional. Some attributes of a property are dependent on others and/or will appear in groups. For example, the <code>min</code> attribute is expected to appear along with the <code>max</code> attribute.</p></div>
 <div class="paragraph"><p>There is a small set of attributes that are considered <em>core</em> attributes. There are a larger group that are considered <em>additional</em> attributes. Any library supporting the <strong>HAL-FORMS</strong> specification SHOULD support all of the <em>core</em> attributes and MAY support some or all of the <em>additional</em> attributes.</p></div>
 <div class="sect3">
 <h4 id="_core_code_property_code_attribbutes">4.3.1. Core <code>property</code> Attribbutes</h4>
@@ -1533,7 +1533,7 @@ Greg Turnquist.</p></div>
 <div id="footer">
 <div id="footer-text">
 Last updated
- 2020-12-28 14:01:57 EST
+ 2020-12-28 14:02:55 EST
 </div>
 </div>
 </body>
