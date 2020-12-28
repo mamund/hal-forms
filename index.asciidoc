@@ -93,7 +93,7 @@ The +target+ property holds the same information as the <<htarget-query-string, 
 
 [[property-object]]
 ==== The +property+ Object
-A +property+ object describes the details of the state transition element (+name+, +readOnl+, etc.). Most attributes of a +property+ object are optional. Some attributes of a property are dependent on others and/or will appear in groups. For example, +min+ attribute is expected to appear along with the +max+ attribute.  Below is a list of all the possible attributes of a +property+ object.
+A +property+ object describes the details of the state transition element (+name+, +required+, +readOnly+, etc.). Most attributes of a +property+ object are optional. Some attributes of a property are dependent on others and/or will appear in groups. For example, the +min+ attribute is expected to appear along with the +max+ attribute.  Below is a list of all the possible attributes of a +property+ object.
 
   * +max+ : The +max+ attribute specifies the maximum numeric value for the +value+ setting of a +property+  element. This attribute SHOULD appear along with the +min+ attribute. This is an OPTIONAL property and it MAY be ignored.
   * +maxLength+ : The +maxLength+ attribute specifies the maximum number of characters allowed in the +value+ property. This attribute SHOULD appear along with the +minLength+ attribute. This is an OPTIONAL property and it MAY be ignored.
