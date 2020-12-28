@@ -744,7 +744,7 @@ asciidoc.install(2);
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_status">Status</h2>
+<h2 id="_status">1. Status</h2>
 <div class="sectionbody">
 <div class="dlist"><dl>
 <dt class="hdlist1">
@@ -784,18 +784,18 @@ Last Updated
 </dt>
 <dd>
 <p>
-  2020-12-17
+  2020-12-28
 </p>
 </dd>
 </dl></div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_summary">Summary</h2>
+<h2 id="_summary">2. Summary</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>This document describes a simple media type designed to add runtime FORM support for the <a href="#hal">[HAL]</a> media type. This is an <em>independent backward-compatible</em> extension of the HAL media type and MUST NOT be treated as standard HAL or as part of the HAL specification <a href="#hal-spec">[HALSPEC]</a>.</p></div>
 <div class="sect2">
-<h3 id="_motivation">Motivation</h3>
+<h3 id="_motivation">2.1. Motivation</h3>
 <div class="paragraph"><p>The HAL media type is a popular format for representing API responses. One of the possible reasons for this popularity is that HAL does not include detailed information about state transitions like filtered requests (e.g. search, sort, etc.) or write operations (e.g. create, edit, delete, etc.) as part of the specification. This feature keeps the complexity of HAL responses relatively low and easy to deal with. However, this also means one of the challenges of using HAL for APIs that support dynamic user inputs and/or varying work flow patterns is client applications must encode the detailed transition information (args, methods, work flow) directly in the client code. That means clients must be updated each time the input or work flow details change.</p></div>
 <div class="paragraph"><p>The <strong>HAL-FORMS</strong> media type is an attempt to meet this challenge by creating a format and processing pattern to support dynamic UI forms for HAL responses. This is a backward-compatible, non-standard extension. There is nothing in this format or process pattern that adds breaking changes to the HAL media type itself. Clients that implement this extension can still be valid HAL clients by degrading gracefully (e.g. not throwing errors) when <strong>HAL-FORMS</strong> documents are not returned by the server.</p></div>
 <div class="admonitionblock">
@@ -810,11 +810,11 @@ Last Updated
 </div>
 </div>
 <div class="sect2">
-<h3 id="_updates">Updates</h3>
+<h3 id="_updates">2.2. Updates</h3>
 <div class="paragraph"><p>There is an open source repository <a href="#repo">[REPO]</a> for this specification. Readers are encouraged to submit updates via the repository any time.</p></div>
 </div>
 <div class="sect2">
-<h3 id="_compliance">Compliance</h3>
+<h3 id="_compliance">2.3. Compliance</h3>
 <div class="paragraph"><p>An implementation (client or server) of this specification is not compliant if it fails to satisfy one or more of the MUST or REQUIRED elements. An implementation that satisfies all the MUST and REQUIRED elements as well as all the SHOULD and RECOMMENDED elements is said to be "unconditionally compliant"; one that satisfies all the MUST and REQUIRED elements but not all the SHOULD and RECOMMENDED elements is said to be "conditionally compliant."</p></div>
 <div class="admonitionblock">
 <table><tr>
@@ -833,11 +833,11 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_the_hal_forms_media_type">The HAL-FORMS Media Type</h2>
+<h2 id="_the_hal_forms_media_type">3. The HAL-FORMS Media Type</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>The <strong>HAL-FORMS</strong> media type is a simple JSON <a href="#rfc7159">[RFC7159]</a> document that contains information on the HTTP method, message content-type, and parameters to use when making a templated request to a HAL server. This media type can be used to provide dynamic state transition descriptions at runtime.</p></div>
 <div class="sect2">
-<h3 id="_example_hal_forms_document">Example HAL-FORMS document</h3>
+<h3 id="_example_hal_forms_document">3.1. Example HAL-FORMS document</h3>
 <div class="paragraph"><p>Here is a simple <strong>HAL-FORMS</strong> document example:</p></div>
 <div class="listingblock">
 <div class="title">Example <strong>HAL-FORMS</strong> document.</div>
@@ -865,11 +865,11 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_properties_of_a_hal_forms_document">Properties of a HAL-FORMS Document</h2>
+<h2 id="_properties_of_a_hal_forms_document">4. Properties of a HAL-FORMS Document</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>All <strong>HAL-FORMS</strong> documents MUST be valid JSON documents. A well-formed <strong>HAL-FORMS</strong> document has two top-level objects: <code>_links</code> and <code>_templates</code>. The following is a summary of the structure of the <strong>HAL-FORMS</strong> media type.</p></div>
 <div class="sect2">
-<h3 id="_the_code__links_code_element">The <code>_links</code> Element</h3>
+<h3 id="_the_code__links_code_element">4.1. The <code>_links</code> Element</h3>
 <div class="paragraph"><p>The <code>_links</code> element contains any links associated with the <strong>HAL-FORMS</strong> document. For this release, the only valid <code>link</code> object is the <code>self</code> link object.</p></div>
 <div class="dlist"><dl>
 <dt class="hdlist1">
@@ -904,7 +904,7 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </dl></div>
 </div>
 <div class="sect2">
-<h3 id="_the_code__templates_code_element">The <code>_templates</code> Element</h3>
+<h3 id="_the_code__templates_code_element">4.2. The <code>_templates</code> Element</h3>
 <div class="paragraph"><p>The <code>_templates</code> element describes the available state transition details including the HTTP method, message content-type, and arguments for the transition. This is a REQUIRED element. If the <strong>HAL-FORMS</strong> document does not contain this element or the contents are unrecognized or unparsable, the <strong>HAL-FORMS</strong> document SHOULD be ignored.</p></div>
 <div class="paragraph"><p>The <code>_templates</code> element contains a collection of <code>template</code> objects. Each <code>template</code> object contains the following possible properties:</p></div>
 <div class="dlist"><dl>
@@ -945,9 +945,31 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </dt>
 <dd>
 <p>
-  A JSON object that describes a state transition parameter. A <code>property</code> object has the following elements:
- <br />
+  A JSON object that describes a state transition element. See <a href="#property-object"><code>property</code></a> for details.
 </p>
+</dd>
+<dt class="hdlist1">
+<code>target</code>
+</dt>
+<dd>
+<p>
+Contains the identifier of the target URL for the client to use when submitting the completed HAL-FORMS template. For example, if the client should submit the completed template to the following URL: <code>http://api.example.org/jobs/</code> then the <code>target</code> proprety would be <code>target="http://api.example.org/jobs/"</code>.
+</p>
+<div class="paragraph"><p>This is an OPTIONAL property. If this property is not understood by the recipient, left blank, or contains an invalid URL string, it SHOULD be ignored.</p></div>
+<div class="paragraph"><p>The <code>target</code> property holds the same information as the <a href="#htarget-query-string"><code>_htarget</code></a> query string property. If both the <code>target</code> prorperty and the <code>_htarget</code> query string value appear in the same message, the <code>_htarget</code> query string SHOULD be used and the <code>target</code> property SHOULD be ignored.</p></div>
+</dd>
+<dt class="hdlist1">
+<code>title</code>
+</dt>
+<dd>
+<p>
+A human-readable string that can be used to identify this template. This is a valid JSON string. This is an OPTIONAL element. If it does not exist or is unparsable, consumers MAY use the <code>key</code> value of the template as the value for <code>title</code>.
+</p>
+</dd>
+</dl></div>
+<div class="sect3">
+<h4 id="property-object">4.2.1. The <code>property</code> Object</h4>
+<div class="paragraph"><p>A <code>property</code> object describes the details of the state transition element (<code>name</code>, <code>readOnl</code>, etc.). Most attributes of a <code>property</code> object are optional. Some attributes of a property are dependent on others and/or will appear in groups. For example, <code>min</code> attribute is expected to appear along with the <code>max</code> attribute.  Below is a list of all the possible attributes of a <code>property</code> object.</p></div>
 <div class="ulist"><ul>
 <li>
 <p>
@@ -1041,29 +1063,10 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </p>
 </li>
 </ul></div>
-</dd>
-<dt class="hdlist1">
-<code>target</code>
-</dt>
-<dd>
-<p>
-Contains the identifier of the target URL for the client to use when submitting the completed HAL-FORMS template. For example, if the client should submit the completed template to the following URL: <code>http://api.example.org/jobs/</code> then the <code>target</code> proprety would be <code>target="http://api.example.org/jobs/"</code>.
-</p>
-<div class="paragraph"><p>This is an OPTIONAL property. If this property is not understood by the recipient, left blank, or contains an invalid URL string, it SHOULD be ignored.</p></div>
-<div class="paragraph"><p>The <code>target</code> property holds the same information as the <a href="#htarget-query-string"><code>_htarget</code></a> query string property. If both the <code>target</code> prorperty and the <code>_htarget</code> query string value appear in the same message, the <code>_htarget</code> query string SHOULD be used and the <code>target</code> property SHOULD be ignored.</p></div>
-</dd>
-<dt class="hdlist1">
-<code>title</code>
-</dt>
-<dd>
-<p>
-A human-readable string that can be used to identify this template. This is a valid JSON string. This is an OPTIONAL element. If it does not exist or is unparsable, consumers MAY use the <code>key</code> value of the template as the value for <code>title</code>.
-</p>
-</dd>
-</dl></div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_the_hal_forms_query_string_registry">The HAL-FORMS Query String Registry</h3>
+<h3 id="_the_hal_forms_query_string_registry">4.3. The HAL-FORMS Query String Registry</h3>
 <div class="paragraph"><p>The <strong>HAL-FORMS</strong> media type supports a set of OPTIONAL query string parameters. These can be passed when requesting <strong>HAL-FORMS</strong> documents in order to provide additional information (e.g. document identifiers, etc.) to the server when a client requests a <strong>HAL-FORMS</strong> document. For example, the server can use these parameter values to validate the <strong>HAL-FORMS</strong> request and/or use them to determine how to pre-populate the <strong>HAL-FORMS</strong> document before returning it to the client.</p></div>
 <div class="paragraph"><p>Below is the list of query string values defined for this release of the specification. One or more of these parameters MAY appear in the URLs used to request <strong>HAL-FORMS</strong> documents. They can appear in the query string in any order. One or more (possibly all) these parameters MAY be ignored by servers receiving the <strong>HAL-FORMS</strong> request.</p></div>
 <div class="dlist"><dl>
@@ -1139,11 +1142,11 @@ Contains the identifier of the target URL for the client to use when submitting 
 </div>
 </div>
 <div class="sect1">
-<h2 id="_encoding_requests">Encoding Requests</h2>
+<h2 id="_encoding_requests">5. Encoding Requests</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>Once the client application has used the <strong>HAL-FORMS</strong> document to render a UI for accepting inputs (and the user has supplied the inputs), that same document SHOULD be used to encode a request to send to the server to execute the state transition described by the <strong>HAL-FORMS</strong> document. There are two ways in which <strong>HAL-FORMS</strong> documents can be used to construct parameterized requests. The first is by <a href="#encoding-request-urls">encoding request URLs</a> for HTTP GET, DELETE, and HEAD requests. The second is by <a href="#encoding-request-bodies">encoding request bodies</a> for HTTP PUT, POST, and PATCH requests.</p></div>
 <div class="sect2">
-<h3 id="encoding-request-urls">Encoding Request URLs</h3>
+<h3 id="encoding-request-urls">5.1. Encoding Request URLs</h3>
 <div class="paragraph"><p>When clients are instructed to send a request without a body (e.g. GET, HEAD, DELETE), clients SHOULD use the list of <code>property</code> object&#8217;s <code>name</code> and <code>value</code> attributes to construct a valid URL using the W3C Mutate Action URL Algorithm <a href="#html5mut">[HTML5MUT]</a> to produce a valid query string. Below is a simple <strong>HAL-FORMS</strong> document that uses the GET method and the resulting updated URL.</p></div>
 <div class="listingblock">
 <div class="content">
@@ -1197,10 +1200,10 @@ http://api.example.org/task-list/?title=sample&amp;completed=false</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="encoding-request-bodies">Encoding Request Bodies</h3>
+<h3 id="encoding-request-bodies">5.2. Encoding Request Bodies</h3>
 <div class="paragraph"><p>When clients are instructed to send a request with a body (e.g. PUT, POST, PATCH), there are several possible content-types to use. Compliant applications MUST support encoding bodies using <code>application/json</code> and SHOULD support encoding bodies using <code>application/x_www-form-urlencoded</code>. Clients MAY support other content-types not listed in this document.</p></div>
 <div class="sect3">
-<h4 id="_sending_code_application_json_code_bodies">Sending <code>application/json</code> Bodies</h4>
+<h4 id="_sending_code_application_json_code_bodies">5.2.1. Sending <code>application/json</code> Bodies</h4>
 <div class="paragraph"><p>When sending bodies encoded as <code>application/json</code>, clients SHOULD construct a simple JSON dictionary object that contains a set of name-value pairs that match the <code>property</code> objects in the <strong>HAL-FORMS</strong> document. For example, using the Example <strong>HAL-FORMS</strong> document (see above) as a guide, a client would construct a JSON dictionary object that looks like the following:</p></div>
 <div class="listingblock">
 <div class="content">
@@ -1211,7 +1214,7 @@ http://api.example.org/task-list/?title=sample&amp;completed=false</code></pre>
 </div></div>
 </div>
 <div class="sect3">
-<h4 id="_sending_code_application_x_www_form_urlencoded_code_bodies">Sending <code>application/x-www-form-urlencoded</code> Bodies</h4>
+<h4 id="_sending_code_application_x_www_form_urlencoded_code_bodies">5.2.2. Sending <code>application/x-www-form-urlencoded</code> Bodies</h4>
 <div class="paragraph"><p>When sending bodies encoded as <code>application/x-www-form-urlencoded</code>, clients SHOULD construct a body that is in compliance with the guidance in the W3C FORMS Encoding Algorithm <a href="#html5enc">[HTML5ENC]</a>. A sample (using the Example <strong>HAL-FORMS</strong> document) follows:</p></div>
 <div class="listingblock">
 <div class="content">
@@ -1219,20 +1222,20 @@ http://api.example.org/task-list/?title=sample&amp;completed=false</code></pre>
 </div></div>
 </div>
 <div class="sect3">
-<h4 id="_sending_bodies_for_other_media_types">Sending Bodies for Other Media Types</h4>
+<h4 id="_sending_bodies_for_other_media_types">5.2.3. Sending Bodies for Other Media Types</h4>
 <div class="paragraph"><p>Providers who supply responses that contain <code>contentType</code> values not covered in this specification SHOULD publish documentation instructing clients on the proper way to construct request bodies from HAL-FORMS documents.</p></div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_the_hal_forms_media_type_identifier_string">The HAL-FORMS Media Type Identifier String</h2>
+<h2 id="_the_hal_forms_media_type_identifier_string">6. The HAL-FORMS Media Type Identifier String</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>The media type identifier string for <strong>HAL-FORMS</strong> documents is: <code>application/prs.hal-forms+json</code>  This SHOULD be used as part of the HTTP <code>accept</code> header when making a request for a <strong>HAL-FORMS</strong> document. It SHOULD appear as the HTTP <code>content-type</code> header when sending a response that contains a <strong>HAL-FORMS</strong> document.</p></div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_suggested_process_flow_for_hal_forms_documents">Suggested Process Flow for HAL-FORMS Documents</h2>
+<h2 id="_suggested_process_flow_for_hal_forms_documents">7. Suggested Process Flow for HAL-FORMS Documents</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>While it is completely up to providers and consumers to determine how they wish to use the <strong>HAL-FORMS</strong> media type, the following is a suggested process flow for runtime use of <strong>HAL-FORMS</strong> documents on the Web.</p></div>
 <div class="olist arabic"><ol class="arabic">
@@ -1259,7 +1262,7 @@ Clients collect the completed user inputs and, based on the value of <code>conte
 </ol></div>
 <div class="paragraph"><p>What follows is an illustrated example of this process flow.</p></div>
 <div class="sect2">
-<h3 id="_starting_with_a_typical_hal_response">Starting With a Typical HAL Response.</h3>
+<h3 id="_starting_with_a_typical_hal_response">7.1. Starting With a Typical HAL Response.</h3>
 <div class="paragraph"><p>A client application can start with a typical HAL response and use information in the representation to see if <strong>HAL-FORMS</strong> documents are available. Below is a HAL response w/ URLs for <code>rel</code> values. These MAY point to <strong>HAL-FORMS</strong> documents.</p></div>
 <div class="listingblock">
 <div class="title">A Typical HAL Response with URLs for rel values</div>
@@ -1305,7 +1308,7 @@ Date: Wed, 01 Jun 2016 14:50:30 GMT
 </div></div>
 </div>
 <div class="sect2">
-<h3 id="_requesting_a_hal_forms_document">Requesting a HAL-FORMS Document</h3>
+<h3 id="_requesting_a_hal_forms_document">7.2. Requesting a HAL-FORMS Document</h3>
 <div class="paragraph"><p>After parsing the HAL response, a <strong>HAL-FORMS</strong> compliant client app MAY use the <code>rel</code> URLs to make requests for <strong>HAL-FORMS</strong> documents. In the case of this example, the <code>http://api.example.org/rels/create</code> is used to see if there is a <strong>HAL-FORMS</strong> document available.</p></div>
 <div class="listingblock">
 <div class="title">Requesting a HAL-FORMS document</div>
@@ -1341,7 +1344,7 @@ Date: Wed, 01 Jun 2016 14:59:30 GMT
 </div></div>
 </div>
 <div class="sect2">
-<h3 id="_sending_a_hal_forms_body_request">Sending a HAL-FORMS Body Request</h3>
+<h3 id="_sending_a_hal_forms_body_request">7.3. Sending a HAL-FORMS Body Request</h3>
 <div class="paragraph"><p>After receiving the <strong>HAL-FORMS</strong> response and rendering the UI, the client application can&#8201;&#8212;&#8201;once the user supplies inputs and executes the "submit" action&#8201;&#8212;&#8201;use the instructions in the <strong>HAL-FORMS</strong> document to compose a request and send it to the URL indicated in the HAL document response (as follows):</p></div>
 <div class="listingblock">
 <div class="title">Sending a <strong>HAL-FORMS</strong> body request</div>
@@ -1366,7 +1369,7 @@ Date: Wed, 01 Jun 2016 15:03:30 GMT
 </div>
 </div>
 <div class="sect1">
-<h2 id="_extending_the_hal_forms_document">Extending the HAL-FORMS Document</h2>
+<h2 id="_extending_the_hal_forms_document">8. Extending the HAL-FORMS Document</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>Authors can extend the <strong>HAL-FORMS</strong> media type as long as the following rules are observed:</p></div>
 <div class="olist arabic"><ol class="arabic">
@@ -1399,7 +1402,7 @@ All new properties or objects are treated as OPTIONAL (e.g. no new REQUIRED elem
 </div>
 </div>
 <div class="sect1">
-<h2 id="_references">References</h2>
+<h2 id="_references">9. References</h2>
 <div class="sectionbody">
 <div class="ulist"><ul>
 <li>
@@ -1461,7 +1464,7 @@ All new properties or objects are treated as OPTIONAL (e.g. no new REQUIRED elem
 </div>
 </div>
 <div class="sect1">
-<h2 id="_acknowledgements">Acknowledgements</h2>
+<h2 id="_acknowledgements">10. Acknowledgements</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>I thank the everyone who helped contribute to this specification including:
 Josh Cohen,
@@ -1478,7 +1481,7 @@ Greg Turnquist.</p></div>
 <div id="footer">
 <div id="footer-text">
 Last updated
- 2020-12-17 17:22:35 EST
+ 2020-12-28 13:43:26 EST
 </div>
 </div>
 </body>
