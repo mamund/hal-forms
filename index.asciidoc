@@ -99,6 +99,7 @@ There is a small set of attributes that are considered _core_ attributes. There 
 
 ==== Core +property+ Attribbutes
 Below is a list of all the _core_ attributes of a +property+ object.
+
 +name+:: The +property+ name. This is a valid JSON string. This is a REQUIRED element. If this attribute is missing or set to empty, the client SHOULD ignore this +property+ object completely.
 +prompt+:: The human-readable prompt for the parameter. This is a valid JSON string. This is an OPTIONAL element. If this element is missing, clients MAY act as if the +prompt+ value is set to the value in the +name+ attribute.
 +readOnly+:: Indicates whether the parameter is read-only. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, empty, or set to an unrecognized value, it SHOULD be treated as if the value of +readOnly+ is set to `false'. 
