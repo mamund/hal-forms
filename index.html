@@ -937,7 +937,7 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </dt>
 <dd>
 <p>
-  An array of one or more anonymous <code>property</code> objects (see <a href="#property-object">The <code>property</code> Object</a>) that each describe a parameter for the associated state transition. This is an OPTIONAL element. If the array is missing or empty, the <code>properties</code> collection MUST be treated as an empty set of parameters&#8201;&#8212;&#8201;meaning that the transition is meant to be executed without passing any parameters.
+  An array of one or more anonymous <code>property</code> elements (see <a href="#property-object">The <code>property</code> Element</a>) that each describe a parameter for the associated state transition. This is an OPTIONAL element. If the array is missing or empty, the <code>properties</code> collection MUST be treated as an empty set of parameters&#8201;&#8212;&#8201;meaning that the transition is meant to be executed without passing any parameters.
 </p>
 </dd>
 <dt class="hdlist1">
@@ -945,7 +945,7 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </dt>
 <dd>
 <p>
-  A JSON object that describes a state transition element. See <a href="#property-object">The <code>property</code> Object</a> for details.
+  A JSON object that describes a state transition element. See <a href="#property-element">The <code>property</code> Element</a> for details.
 </p>
 </dd>
 <dt class="hdlist1">
@@ -967,9 +967,10 @@ A human-readable string that can be used to identify this template. This is a va
 </p>
 </dd>
 </dl></div>
-<div class="sect3">
-<h4 id="property-object">4.2.1. The <code>property</code> Object</h4>
-<div class="paragraph"><p>A <code>property</code> object describes the details of the state transition element (<code>name</code>, <code>required</code>, <code>readOnly</code>, etc.). Most attributes of a <code>property</code> object are optional. Some attributes of a property are dependent on others and/or will appear in groups. For example, the <code>min</code> attribute is expected to appear along with the <code>max</code> attribute.  Below is a list of all the possible attributes of a <code>property</code> object.</p></div>
+</div>
+<div class="sect2">
+<h3 id="property-element">4.3. The <code>property</code> Element</h3>
+<div class="paragraph"><p>A <code>property</code> element describes the details of the state transition element (<code>name</code>, <code>required</code>, <code>readOnly</code>, etc.). It appears as an array of <code>properties</code> as a child of the <code>_templates</code> element (See <a href="#templates-object">The <code>_templates</code> Element</a>). Most attributes of a <code>property</code> object are optional. Some attributes of a property are dependent on others and/or will appear in groups. For example, the <code>min</code> attribute is expected to appear along with the <code>max</code> attribute.  Below is a list of all the possible attributes of a <code>property</code> object.</p></div>
 <div class="ulist"><ul>
 <li>
 <p>
@@ -1064,9 +1065,8 @@ A human-readable string that can be used to identify this template. This is a va
 </li>
 </ul></div>
 </div>
-</div>
 <div class="sect2">
-<h3 id="_the_hal_forms_query_string_registry">4.3. The HAL-FORMS Query String Registry</h3>
+<h3 id="_the_hal_forms_query_string_registry">4.4. The HAL-FORMS Query String Registry</h3>
 <div class="paragraph"><p>The <strong>HAL-FORMS</strong> media type supports a set of OPTIONAL query string parameters. These can be passed when requesting <strong>HAL-FORMS</strong> documents in order to provide additional information (e.g. document identifiers, etc.) to the server when a client requests a <strong>HAL-FORMS</strong> document. For example, the server can use these parameter values to validate the <strong>HAL-FORMS</strong> request and/or use them to determine how to pre-populate the <strong>HAL-FORMS</strong> document before returning it to the client.</p></div>
 <div class="paragraph"><p>Below is the list of query string values defined for this release of the specification. One or more of these parameters MAY appear in the URLs used to request <strong>HAL-FORMS</strong> documents. They can appear in the query string in any order. One or more (possibly all) these parameters MAY be ignored by servers receiving the <strong>HAL-FORMS</strong> request.</p></div>
 <div class="dlist"><dl>
@@ -1481,7 +1481,7 @@ Greg Turnquist.</p></div>
 <div id="footer">
 <div id="footer-text">
 Last updated
- 2020-12-28 13:49:55 EST
+ 2020-12-28 13:55:42 EST
 </div>
 </div>
 </body>
