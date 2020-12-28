@@ -937,7 +937,7 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </dt>
 <dd>
 <p>
-  An array of one or more anonymous <code>property</code> objects (see <a href="#property-object"><code>property</code></a>) that each describe a parameter for the associated state transition. This is an OPTIONAL element. If the array is missing or empty, the <code>properties</code> collection MUST be treated as an empty set of parameters&#8201;&#8212;&#8201;meaning that the transition is meant to be executed without passing any parameters.
+  An array of one or more anonymous <code>property</code> objects (see <a href="#property-object">The <code>property</code> Object</a>) that each describe a parameter for the associated state transition. This is an OPTIONAL element. If the array is missing or empty, the <code>properties</code> collection MUST be treated as an empty set of parameters&#8201;&#8212;&#8201;meaning that the transition is meant to be executed without passing any parameters.
 </p>
 </dd>
 <dt class="hdlist1">
@@ -945,7 +945,7 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </dt>
 <dd>
 <p>
-  A JSON object that describes a state transition element. See <a href="#property-object"><code>property</code></a> for details.
+  A JSON object that describes a state transition element. See <a href="#property-object">The <code>property</code> Object</a> for details.
 </p>
 </dd>
 <dt class="hdlist1">
@@ -973,27 +973,27 @@ A human-readable string that can be used to identify this template. This is a va
 <div class="ulist"><ul>
 <li>
 <p>
-<code>max</code> : The <code>max</code> attribute specifies the maximum value for the <code>value</code> setting of a <code>property</code>  element. This is an OPTIONAL property and it MAY be ignored.
+<code>max</code> : The <code>max</code> attribute specifies the maximum numeric value for the <code>value</code> setting of a <code>property</code>  element. This attribute SHOULD appear along with the <code>min</code> attribute. This is an OPTIONAL property and it MAY be ignored.
 </p>
 </li>
 <li>
 <p>
-<code>maxLength</code> : The <code>maxLength</code> attribute specifies the maximum number of characters allowed in the <code>value</code> property. This is an OPTIONAL property and it MAY be ignored.
+<code>maxLength</code> : The <code>maxLength</code> attribute specifies the maximum number of characters allowed in the <code>value</code> property. This attribute SHOULD appear along with the <code>minLength</code> attribute. This is an OPTIONAL property and it MAY be ignored.
 </p>
 </li>
 <li>
 <p>
-<code>min</code> : The <code>min</code> attribute specifies the minimum value for an <code>value</code> setting of a <code>property</code> element. This is an OPTIONAL property and it MAY be ignored.
+<code>min</code> : The <code>min</code> attribute specifies the minimum numeric value for an <code>value</code> setting of a <code>property</code> element. This attribute SHOULD appear along with the <code>max</code> attribute. This is an OPTIONAL property and it MAY be ignored.
 </p>
 </li>
 <li>
 <p>
-<code>minLength</code> : The <code>minlength</code> attribute specifies the minimum number of characters required in a <code>value</code> property. This is an OPTIONAL property and it MAY be ignored.
+<code>minLength</code> : The <code>minlength</code> attribute specifies the minimum number of characters required in a <code>value</code> property. this attribute SHOULD appear along with the <code>maxLength</code> attribute. This is an OPTIONAL property and it MAY be ignored.
 </p>
 </li>
 <li>
 <p>
-<code>name</code> : The parameter name. This is a valid JSON string. This is a REQUIRED element. If this attribute is missing or set to empty, the client SHOULD ignore this <code>property</code> object completely.
+<code>name</code> : The <code>property</code> name. This is a valid JSON string. This is a REQUIRED element. If this attribute is missing or set to empty, the client SHOULD ignore this <code>property</code> object completely.
 </p>
 </li>
 <li>
@@ -1481,7 +1481,7 @@ Greg Turnquist.</p></div>
 <div id="footer">
 <div id="footer-text">
 Last updated
- 2020-12-28 13:43:26 EST
+ 2020-12-28 13:48:33 EST
 </div>
 </div>
 </body>
