@@ -970,7 +970,21 @@ A human-readable string that can be used to identify this template. This is a va
 </div>
 <div class="sect2">
 <h3 id="property-element">4.3. The <code>property</code> Element</h3>
-<div class="paragraph"><p>A <code>property</code> element describes the details of the state transition element (<code>name</code>, <code>required</code>, <code>readOnly</code>, etc.). It appears as an array of <code>properties</code> as a child of the <code>_templates</code> element (See <a href="#templates-object">The <code>_templates</code> Element</a>). Most attributes of a <code>property</code> object are optional. Some attributes of a property are dependent on others and/or will appear in groups. For example, the <code>min</code> attribute is expected to appear along with the <code>max</code> attribute.  Below is a list of all the possible attributes of a <code>property</code> object.</p></div>
+<div class="paragraph"><p>A <code>property</code> element describes the details of the state transition element (<code>name</code>, <code>required</code>, <code>readOnly</code>, etc.). It appears as an array of <code>properties</code> as a child of the <code>_templates</code> element (See <a href="#templates-object">The <code>_templates</code> Element</a>). Most attributes of a <code>property</code> object are optional. Some attributes of a property are dependent on others and/or will appear in groups. For example, the <code>min</code> attribute is expected to appear along with the <code>max</code> attribute.</p></div>
+<div class="paragraph"><p>There is a small set of attributes that are considered <em>core</em> attributes. There are a larger group that are considered <em>additional</em> attributes. Any library supporting the <strong>HAL-FORMS</strong> specification SHOULD support all of the <em>core</em> attributes and MAY support some or all of the <em>additional</em> attributes.</p></div>
+<div class="sect3">
+<h4 id="_core_code_property_code_attribbutes">4.3.1. Core <code>property</code> Attribbutes</h4>
+<div class="paragraph"><p>Below is a list of all the <em>core</em> attributes of a <code>property</code> object.
+<code>name</code>:: The <code>property</code> name. This is a valid JSON string. This is a REQUIRED element. If this attribute is missing or set to empty, the client SHOULD ignore this <code>property</code> object completely.
+<code>prompt</code>:: The human-readable prompt for the parameter. This is a valid JSON string. This is an OPTIONAL element. If this element is missing, clients MAY act as if the <code>prompt</code> value is set to the value in the <code>name</code> attribute.
+<code>readOnly</code>:: Indicates whether the parameter is read-only. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, empty, or set to an unrecognized value, it SHOULD be treated as if the value of <code>readOnly</code> is set to &#8216;false&#8217;.
+<code>regex</code>:: A regular expression string to be applied to the value of the parameter. Rules for valid values are the same as the HTML5 pattern attribute <a href="#html5pat">[HTML5PAT]</a>. This is an OPTIONAL element. If this attribute missing, is set to empty, or is unparseable , it SHOULD be ignored.
+<code>required</code>:: Indicates whether the parameter is required. This is a valid JSON boolean. This is an OPTIONAL element. If this attribute is missing, set to blank or contains an unrecognized value, it SHOULD be treated as if the value of <code>required</code> is set to &#8216;false&#8217;.
+<code>templated</code>:: Indicate whether the <code>value</code> element contains a URI Template <a href="#rfc6570">[RFC6570]</a> string for the client to resolve. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, set to empty, or contains unrecognized content, it SHOULD be treated as if the value of <code>templated</code> is set to &#8216;false&#8217;.
+<code>value</code>:: The <code>property</code> value. This is a valid JSON string. This string MAY contain a URI Template (see <code>templated</code> for details). This is an OPTIONAL element. If it does not exist, clients SHOULD act as if the <code>value</code> property is set to an empty string.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_additional_code_property_code_attributes">4.3.2. Additional <code>property</code> Attributes</h4>
 <div class="dlist"><dl>
 <dt class="hdlist1">
 <code>max</code>
@@ -1005,14 +1019,6 @@ The <code>minlength</code> attribute specifies the minimum number of characters 
 </p>
 </dd>
 <dt class="hdlist1">
-<code>name</code>
-</dt>
-<dd>
-<p>
-The <code>property</code> name. This is a valid JSON string. This is a REQUIRED element. If this attribute is missing or set to empty, the client SHOULD ignore this <code>property</code> object completely.
-</p>
-</dd>
-<dt class="hdlist1">
 <code>placeholder</code>
 </dt>
 <dd>
@@ -1021,51 +1027,11 @@ The <code>placeholder</code> attribute specifies a short hint that describes the
 </p>
 </dd>
 <dt class="hdlist1">
-<code>prompt</code>
-</dt>
-<dd>
-<p>
-The human-readable prompt for the parameter. This is a valid JSON string. This is an OPTIONAL element. If this element is missing, clients MAY act as if the <code>prompt</code> value is set to the value in the <code>name</code> attribute.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>readOnly</code>
-</dt>
-<dd>
-<p>
-Indicates whether the parameter is read-only. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, empty, or set to an unrecognized value, it SHOULD be treated as if the value of <code>readOnly</code> is set to &#8216;false&#8217;.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>regex</code>
-</dt>
-<dd>
-<p>
-A regular expression string to be applied to the value of the parameter. Rules for valid values are the same as the HTML5 pattern attribute <a href="#html5pat">[HTML5PAT]</a>. This is an OPTIONAL element. If this attribute missing, is set to empty, or is unparseable , it SHOULD be ignored.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>required</code>
-</dt>
-<dd>
-<p>
-Indicates whether the parameter is required. This is a valid JSON boolean. This is an OPTIONAL element. If this attribute is missing, set to blank or contains an unrecognized value, it SHOULD be treated as if the value of <code>required</code> is set to &#8216;false&#8217;.
-</p>
-</dd>
-<dt class="hdlist1">
 <code>step</code>
 </dt>
 <dd>
 <p>
 The <code>step</code> attribute specifies the interval between legal numbers in a <code>value</code> property. For example, if <code>step="3"</code>, legal numbers could be -3, 0, 3, 6, etc.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>templated</code>
-</dt>
-<dd>
-<p>
-Indicate whether the <code>value</code> element contains a URI Template <a href="#rfc6570">[RFC6570]</a> string for the client to resolve. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, set to empty, or contains unrecognized content, it SHOULD be treated as if the value of <code>templated</code> is set to &#8216;false&#8217;.
 </p>
 </dd>
 <dt class="hdlist1">
@@ -1097,15 +1063,8 @@ The <code>type</code> attribute controls the data type of the <code>property</co
   For hints on how to render and process various <code>type</code> values, see <a href="#html5type">[HTML5TYPE]</a>.
 </p>
 </dd>
-<dt class="hdlist1">
-<code>value</code>
-</dt>
-<dd>
-<p>
-The <code>property</code> value. This is a valid JSON string. This string MAY contain a URI Template (see <code>templated</code> for details). This is an OPTIONAL element. If it does not exist, clients SHOULD act as if the <code>value</code> property is set to an empty string.
-</p>
-</dd>
 </dl></div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_the_hal_forms_query_string_registry">4.4. The HAL-FORMS Query String Registry</h3>
@@ -1523,7 +1482,7 @@ Greg Turnquist.</p></div>
 <div id="footer">
 <div id="footer-text">
 Last updated
- 2020-12-28 13:57:55 EST
+ 2020-12-28 14:01:38 EST
 </div>
 </div>
 </body>
