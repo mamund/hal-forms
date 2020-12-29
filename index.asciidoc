@@ -98,7 +98,7 @@ A +property+ element describes the details of the state transition element (+nam
 
 There is a set of +property+ attributes that are considered _core_ attributes. There are is also group of +property+ attributes that are considered _additional_ attributes. Any library supporting the *HAL-FORMS* specification SHOULD support all of the _core_ attributes and MAY support some or all of the _additional_ attributes.
 
-==== Core +property+ Attribbutes
+==== Core +property+ Attributes
 Below is a list of all the _core_ +property+ attributes.
 
 +name+:: The +property+ name. This is a valid JSON string. This is a REQUIRED element. If this attribute is missing or set to empty, the client SHOULD ignore this +property+ object completely.
@@ -112,11 +112,13 @@ Below is a list of all the _core_ +property+ attributes.
 ==== Additional +property+ Attributes
 Below is a list of all the _additional_ +property+ attributes.
 
++cols+:: The +cols+ attribute specifies the expected maximum number of characters per line to display when rendering the input box. This attribute applies to the associated +property+ element when that +property+ element's +type+ attribute is set to +"textarea"+. The +cols+ attribute is a non-negative integer greater than zero. If the +cols+ attribute is missing or contains an invalid value, it can be assumed to be set to the value of +40+. If the +type+ attribute of the associated +property+ element is not set to +"textarea"+, this attribute SHOULD be ignored. This is an OPTIONAL attribute and it MAY be ignored. The +cols+ attribute SHOULD appear along with the +rows+ attribute.
 +max+:: The +max+ attribute specifies the maximum numeric value for the +value+ setting of a +property+  element. This attribute SHOULD appear along with the +min+ attribute. This is an OPTIONAL property and it MAY be ignored.
 +maxLength+:: The +maxLength+ attribute specifies the maximum number of characters allowed in the +value+ property. This attribute SHOULD appear along with the +minLength+ attribute. This is an OPTIONAL property and it MAY be ignored.
 +min+:: The +min+ attribute specifies the minimum numeric value for an +value+ setting of a +property+ element. This attribute SHOULD appear along with the +max+ attribute. This is an OPTIONAL property and it MAY be ignored.
 +minLength+:: The +minlength+ attribute specifies the minimum number of characters required in a +value+ property. this attribute SHOULD appear along with the +maxLength+ attribute. This is an OPTIONAL property and it MAY be ignored.
 +placeholder+:: The +placeholder+ attribute specifies a short hint that describes the expected value of an input field (e.g. a sample value or a short description of the expected format). This is an OPTIONAL field and MAY be ignored.
++rows+:: The +rows+ attribute specifies the expected maximum number of lines to display when rendering the input box. This attribute applies to the associated +property+ element when that +property+ element's +type+ attribute is set to +"textarea"+. The +cols+ attribute is a non-negative integer greater than zero. If the +cols+ attribute is missing or contains an invalid value, it can be assumed to be set to the value of +5+. If the +type+ attribute of the associated +property+ element is not set to +"textarea"+, this attribute SHOULD be ignored. This is an OPTIONAL attribute and it MAY be ignored. The +rows+ attribute SHOULD appear along with the +cols+ attribute.
 +step+:: The +step+ attribute specifies the interval between legal numbers in a +value+ property. For example, if +step="3"+, legal numbers could be -3, 0, 3, 6, etc.
 +type+:: The +type+ attribute controls the data type of the +property+ value. It is an enumerated attribute. The +type+ can also used to determine the interface control to display for user input. This is an OPTIONAL element. If the +type+ value is not supported by the document consumer, contains a value not understood by the consumer, and/or is missing, the the document consumer SHOULD assume the +type+ attribute is set to the default value: +"text"+ and render the display input as a simple text box. 
   +
@@ -124,6 +126,7 @@ Below is a list of all the _additional_ +property+ attributes.
   Possible settings for the +type+ value in this release are: 
   +hidden+, 
   +text+,
+  +textarea+,
   +search+,
   +tel+,
   +url+,
