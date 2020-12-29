@@ -1,8 +1,12 @@
+// a2x: --xsltproc-opts "--stringparam toc.section.depth 6"
+// a2x: --dblatex-opts "--param toc.section.depth=6"
+
 = The HAL-FORMS Media Type
 :author: Mike Amundsen
 :email: mca@amundsen.com
 :toc: 
 :numbered:
+:toclevels: 6
 
 == Status
 Doc Status:: 
@@ -60,12 +64,13 @@ All *HAL-FORMS* documents MUST be valid JSON documents. A well-formed *HAL-FORMS
 === The +_links+ Element
 The +_links+ element contains any links associated with the *HAL-FORMS* document. For this release, the only valid +link+ object is the +self+ link object.
 
-+_links+::
-  Contains the collection of valid +link+ objects in the *HAL-FORMS* document. This is a RECOMMENDED element. If this element is missing or if the contents is unrecognized, it SHOULD be treated as if it contains a single +link+ element with the key of +self+ and the value of the URL used to request this *HAL-FORMS* document.
-+link+::
-  The +link+ element consists of a key and a set of properties. 
-  +
-  * +key+ : The unique identifier of the +link+ object. This is a REQUIRED element for each _link+ object. For this release, the only valid value for the +key+ element is +"self"+. If this element is missing, is set to an unrecognized value, or cannot be parsed, the associated +link+ object SHOULD be ignored.
+==== +_links+
+Contains the collection of valid +link+ objects in the *HAL-FORMS* document. This is a RECOMMENDED element. If this element is missing or if the contents is unrecognized, it SHOULD be treated as if it contains a single +link+ element with the key of +self+ and the value of the URL used to request this *HAL-FORMS* document.
+  
+==== +link+
+The +link+ element consists of a key and a set of properties. 
+
+ * +key+ : The unique identifier of the +link+ object. This is a REQUIRED element for each +link+ object. For this release, the only valid value for the +key+ element is +"self"+. If this element is missing, is set to an unrecognized value, or cannot be parsed, the associated +link+ object SHOULD be ignored.
   * +href+ : The URL associated with the +key+. This is a REQUIRED element. If this is missing, set to empty or unparsable, the associated +link+ object SHOULD be ignored.
 
 [[templates-element]]
@@ -74,56 +79,101 @@ The +_templates+ element describes the available state transition details includ
 
 The +_templates+ element contains a collection of +template+ objects. Each +template+ object contains the following possible properties: 
 
-+contentType+ ::
-  The value of +contentType+ is the media type the client SHOULD use when sending a request body to the server. This is an OPTIONAL element. The value of this property SHOULD be set to +"application/json"+ or +"application/x-www-form-urlencoded"+. It MAY be set to other valid media-type values. If the +contentType+ property is missing, is set to empty, or contains an unrecognized value, the client SHOULD act is if the +contentType+ is set to +"application/json"+. See <<encoding-request-bodies,Encoding Request Bodies>> for details.
-+key+ :: 
-  The unique identifier for this +template+ object. This is a REQUIRED element. For this release, the only valid value for +key+ is +"default"+.  If this element is missing, set to empty or is unparsable, this +template+ object SHOULD be ignored.
-+method+ ::
-  The HTTP method the client SHOULD use when the service request. Any valid HTTP method is allowed. This is a REQUIRED element. If the value is empty or is not understood by the client, the value MUST be treated as an HTTP GET.
-+properties+ ::
-  An array of one or more anonymous +property+ elements (see <<property-element, The +property+ Element>>) that each describe a parameter for the associated state transition. This is an OPTIONAL element. If the array is missing or empty, the +properties+ collection MUST be treated as an empty set of parameters -- meaning that the transition is meant to be executed without passing any parameters.
-+property+ ::
-  A JSON object that describes a state transition element. See <<property-element, The +property+ Element>> for details.
-+target+:: Contains the identifier of the target URL for the client to use when submitting the completed HAL-FORMS template. For example, if the client should submit the completed template to the following URL: +http://api.example.org/jobs/+ then the +target+ proprety would be +target="http://api.example.org/jobs/"+. 
-+
+==== +contentType+
+The value of +contentType+ is the media type the client SHOULD use when sending a request body to the server. This is an OPTIONAL element. The value of this property SHOULD be set to +"application/json"+ or +"application/x-www-form-urlencoded"+. It MAY be set to other valid media-type values. If the +contentType+ property is missing, is set to empty, or contains an unrecognized value, the client SHOULD act is if the +contentType+ is set to +"application/json"+. See <<encoding-request-bodies,Encoding Request Bodies>> for details.
+
+==== +key+
+The unique identifier for this +template+ object. This is a REQUIRED element. For this release, the only valid value for +key+ is +"default"+.  If this element is missing, set to empty or is unparsable, this +template+ object SHOULD be ignored.
+
+==== +method+
+The HTTP method the client SHOULD use when the service request. Any valid HTTP method is allowed. This is a REQUIRED element. If the value is empty or is not understood by the client, the value MUST be treated as an HTTP GET.
+
+==== +properties+
+An array of one or more anonymous +property+ elements (see <<property-element, The +property+ Element>>) that each describe a parameter for the associated state transition. This is an OPTIONAL element. If the array is missing or empty, the +properties+ collection MUST be treated as an empty set of parameters -- meaning that the transition is meant to be executed without passing any parameters.
+
+==== +property+
+A JSON object that describes the details of the state transition element (+name+, +required+, +readOnly+, etc.). It appears as an anonymous array of +properties+ as a child of the +_templates+ element (See <<templates-element, The +_templates+ Element>>). 
+
+There is a set of +property+ attributes that are considered <<core-property-attributes, _core_ attributes>>. There are is also group of +property+ attributes that are considered <<additional-property-attributes, _additional_ attributes>>. Any library supporting the *HAL-FORMS* specification SHOULD support all of the core attributes and MAY support some or all of the additional attributes.
+
+==== +target+
+Contains the identifier of the target URL for the client to use when submitting the completed HAL-FORMS template. For example, if the client should submit the completed template to the following URL: +http://api.example.org/jobs/+ then the +target+ proprety would be +target="http://api.example.org/jobs/"+. 
+
 This is an OPTIONAL property. If this property is not understood by the recipient, left blank, or contains an invalid URL string, it SHOULD be ignored.
-+
+
 The +target+ property holds the same information as the <<htarget-query-string, +_htarget+>> query string property. If both the +target+ prorperty and the +_htarget+ query string value appear in the same message, the +_htarget+ query string SHOULD be used and the +target+ property SHOULD be ignored.
 
-+title+:: A human-readable string that can be used to identify this template. This is a valid JSON string. This is an OPTIONAL element. If it does not exist or is unparsable, consumers MAY use the +key+ value of the template as the value for +title+.
+==== +title+
+A human-readable string that can be used to identify this template. This is a valid JSON string. This is an OPTIONAL element. If it does not exist or is unparsable, consumers MAY use the +key+ value of the template as the value for +title+.
 
-[[property-element]]
-=== The +property+ Element
-A +property+ element describes the details of the state transition element (+name+, +required+, +readOnly+, etc.). It appears as an array of +properties+ as a child of the +_templates+ element (See <<templates-element, The +_templates+ Element>>). Most attributes of a +property+ object are optional. Some attributes of a property are dependent on others and/or will appear in groups. For example, the +min+ attribute is expected to appear along with the +max+ attribute.  
+[[core-property-attributes]]
+=== Core +property+ Attributes
+The core +property+ attributes cover the basics of describing a single value used for a state transition (write or filter parameter). Most all attributes are OPTIONAL and MAY be ignored by *HAL-FORMS* processors. Below is a list of all the core +property+ attributes. 
 
-There is a set of +property+ attributes that are considered _core_ attributes. There are is also group of +property+ attributes that are considered _additional_ attributes. Any library supporting the *HAL-FORMS* specification SHOULD support all of the _core_ attributes and MAY support some or all of the _additional_ attributes.
+[NOTE] 
+====
+Any library, tooling, or utility supporting the *HAL-FORMS* specification SHOULD support all of the _core_ +property+ attributes.
+====
 
-==== Core +property+ Attributes
-Below is a list of all the _core_ +property+ attributes.
+==== +name+
+The +property+ name. This is a valid JSON string. This is a REQUIRED element. If this attribute is missing or set to empty, the client SHOULD ignore this +property+ object completely.
 
-+name+:: The +property+ name. This is a valid JSON string. This is a REQUIRED element. If this attribute is missing or set to empty, the client SHOULD ignore this +property+ object completely.
-+prompt+:: The human-readable prompt for the parameter. This is a valid JSON string. This is an OPTIONAL element. If this element is missing, clients MAY act as if the +prompt+ value is set to the value in the +name+ attribute.
-+readOnly+:: Indicates whether the parameter is read-only. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, empty, or set to an unrecognized value, it SHOULD be treated as if the value of +readOnly+ is set to `false'. 
-+regex+:: A regular expression string to be applied to the value of the parameter. Rules for valid values are the same as the HTML5 pattern attribute <<html5pat,[HTML5PAT]>>. This is an OPTIONAL element. If this attribute missing, is set to empty, or is unparseable , it SHOULD be ignored.
-+required+:: Indicates whether the parameter is required. This is a valid JSON boolean. This is an OPTIONAL element. If this attribute is missing, set to blank or contains an unrecognized value, it SHOULD be treated as if the value of +required+ is set to `false'.
-+templated+:: Indicate whether the +value+ element contains a URI Template <<rfc6570, [RFC6570]>> string for the client to resolve. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, set to empty, or contains unrecognized content, it SHOULD be treated as if the value of +templated+ is set to `false'.
-+value+:: The +property+ value. This is a valid JSON string. This string MAY contain a URI Template (see +templated+ for details). This is an OPTIONAL element. If it does not exist, clients SHOULD act as if the +value+ property is set to an empty string.
+==== +prompt+
+The human-readable prompt for the parameter. This is a valid JSON string. This is an OPTIONAL element. If this element is missing, clients MAY act as if the +prompt+ value is set to the value in the +name+ attribute.
 
-==== Additional +property+ Attributes
-Below is a list of all the _additional_ +property+ attributes.
+==== +readOnly+ 
+Indicates whether the parameter is read-only. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, empty, or set to an unrecognized value, it SHOULD be treated as if the value of +readOnly+ is set to `false'. 
 
-+cols+:: The +cols+ attribute specifies the expected maximum number of characters per line to display when rendering the input box. This attribute applies to the associated +property+ element when that +property+ element's +type+ attribute is set to +"textarea"+. The +cols+ attribute is a non-negative integer greater than zero. If the +cols+ attribute is missing or contains an invalid value, it can be assumed to be set to the value of +40+. If the +type+ attribute of the associated +property+ element is not set to +"textarea"+, this attribute SHOULD be ignored. This is an OPTIONAL attribute and it MAY be ignored. The +cols+ attribute SHOULD appear along with the +rows+ attribute.
-+max+:: The +max+ attribute specifies the maximum numeric value for the +value+ setting of a +property+  element. This attribute SHOULD appear along with the +min+ attribute. This is an OPTIONAL property and it MAY be ignored.
-+maxLength+:: The +maxLength+ attribute specifies the maximum number of characters allowed in the +value+ property. This attribute SHOULD appear along with the +minLength+ attribute. This is an OPTIONAL property and it MAY be ignored.
-+min+:: The +min+ attribute specifies the minimum numeric value for an +value+ setting of a +property+ element. This attribute SHOULD appear along with the +max+ attribute. This is an OPTIONAL property and it MAY be ignored.
-+minLength+:: The +minlength+ attribute specifies the minimum number of characters required in a +value+ property. this attribute SHOULD appear along with the +maxLength+ attribute. This is an OPTIONAL property and it MAY be ignored.
-+placeholder+:: The +placeholder+ attribute specifies a short hint that describes the expected value of an input field (e.g. a sample value or a short description of the expected format). This is an OPTIONAL field and MAY be ignored.
-+rows+:: The +rows+ attribute specifies the expected maximum number of lines to display when rendering the input box. This attribute applies to the associated +property+ element when that +property+ element's +type+ attribute is set to +"textarea"+. The +cols+ attribute is a non-negative integer greater than zero. If the +cols+ attribute is missing or contains an invalid value, it can be assumed to be set to the value of +5+. If the +type+ attribute of the associated +property+ element is not set to +"textarea"+, this attribute SHOULD be ignored. This is an OPTIONAL attribute and it MAY be ignored. The +rows+ attribute SHOULD appear along with the +cols+ attribute.
-+step+:: The +step+ attribute specifies the interval between legal numbers in a +value+ property. For example, if +step="3"+, legal numbers could be -3, 0, 3, 6, etc.
-+type+:: The +type+ attribute controls the data type of the +property+ value. It is an enumerated attribute. The +type+ can also used to determine the interface control to display for user input. This is an OPTIONAL element. If the +type+ value is not supported by the document consumer, contains a value not understood by the consumer, and/or is missing, the the document consumer SHOULD assume the +type+ attribute is set to the default value: +"text"+ and render the display input as a simple text box. 
-  +
-  +
-  Possible settings for the +type+ value in this release are: 
+==== +regex+
+A regular expression string to be applied to the value of the parameter. Rules for valid values are the same as the HTML5 pattern attribute <<html5pat,[HTML5PAT]>>. This is an OPTIONAL element. If this attribute missing, is set to empty, or is unparseable , it SHOULD be ignored.
+
+==== +required+
+Indicates whether the parameter is required. This is a valid JSON boolean. This is an OPTIONAL element. If this attribute is missing, set to blank or contains an unrecognized value, it SHOULD be treated as if the value of +required+ is set to `false'.
+
+==== +templated+
+Indicate whether the +value+ element contains a URI Template <<rfc6570, [RFC6570]>> string for the client to resolve. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, set to empty, or contains unrecognized content, it SHOULD be treated as if the value of 
++templated+ is set to `false'.
+
+==== +value+
+The +property+ value. This is a valid JSON string. This string MAY contain a URI Template (see +templated+ for details). This is an OPTIONAL element. If it does not exist, clients SHOULD act as if the +value+ property is set to an empty string.
+
+[[additional-property-attributes]]
+=== Additional +property+ Attributes
+The additional +property+ attributes provide greater controls for describing the rendering and validation of input controls for a state transition (write and filter parameters). All of the additional attributes are OPTIONAL and one or more of them MAY be ignored by *HAL-FORMS* processors. Below is a list of all the additional +property+ attributes.
+
+[NOTE] 
+====
+Any library, tooling, or utility supporting the *HAL-FORMS* specification MAY support some or all of the _additional_ +property+ attributes.
+====
+
+==== +cols+
+The +cols+ attribute specifies the expected maximum number of characters per line to display when rendering the input box. This attribute applies to the associated +property+ element when that +property+ element's +type+ attribute is set to +textarea+. The +cols+ attribute is a non-negative integer greater than zero. If the +cols+ attribute is missing or contains an invalid value, it can be assumed to be set to the value of +40+. If the +type+ attribute of the associated +property+ element is not set to +textarea+, this attribute SHOULD be ignored. This is an OPTIONAL attribute and it MAY be ignored. The +cols+ attribute SHOULD appear along with the +rows+ attribute.
+
+==== +max+
+The +max+ attribute specifies the maximum numeric value for the +value+ setting of a +property+  element. This attribute SHOULD appear along with the +min+ attribute. This is an OPTIONAL property and it MAY be ignored.
+
+==== +maxLength+
+The +maxLength+ attribute specifies the maximum number of characters allowed in the +value+ property. This attribute SHOULD appear along with the +minLength+ attribute. This is an OPTIONAL property and it MAY be ignored.
+
+==== +min+
+The +min+ attribute specifies the minimum numeric value for an +value+ setting of a +property+ element. This attribute SHOULD appear along with the +max+ attribute. This is an OPTIONAL property and it MAY be ignored.
+
+==== +minLength+
+The +minlength+ attribute specifies the minimum number of characters required in a +value+ property. this attribute SHOULD appear along with the +maxLength+ attribute. This is an OPTIONAL property and it MAY be ignored.
+
+==== +placeholder+
+The +placeholder+ attribute specifies a short hint that describes the expected value of an input field (e.g. a sample value or a short description of the expected format). This is an OPTIONAL field and MAY be ignored.
+
+==== +rows+
+The +rows+ attribute specifies the expected maximum number of lines to display when rendering the input box. This attribute applies to the associated +property+ element when that +property+ element's +type+ attribute is set to +"textarea"+. The +cols+ attribute is a non-negative integer greater than zero. If the +cols+ attribute is missing or contains an invalid value, it can be assumed to be set to the value of +5+. If the +type+ attribute of the associated +property+ element is not set to +"textarea"+, this attribute SHOULD be ignored. This is an OPTIONAL attribute and it MAY be ignored. The +rows+ attribute SHOULD appear along with the +cols+ attribute.
+
+==== +step+
+The +step+ attribute specifies the interval between legal numbers in a +value+ property. For example, if +step="3"+, legal numbers could be -3, 0, 3, 6, etc.
+
+==== +type+
+The +type+ attribute controls the data type of the +property+ value. It is an enumerated attribute. The +type+ can also used to determine the interface control to display for user input. This is an OPTIONAL element. If the +type+ value is not supported by the document consumer, contains a value not understood by the consumer, and/or is missing, the the document consumer SHOULD assume the +type+ attribute is set to the default value: +"text"+ and render the display input as a simple text box. 
+
+Possible settings for the +type+ value in this release are: 
   +hidden+, 
   +text+,
   +textarea+,
@@ -140,28 +190,26 @@ Below is a list of all the _additional_ +property+ attributes.
   +number+,
   +range+,
   +color+.
-  +
-  +
-  For hints on how to render and process various +type+ values, see <<html5type, [HTML5TYPE]>>.
 
+For hints on how to render and process various +type+ values, see <<html5type, [HTML5TYPE]>>.
 
-=== The HAL-FORMS Query String Registry
+== The HAL-FORMS Query String Registry
 The *HAL-FORMS* media type supports a set of OPTIONAL query string parameters. These can be passed when requesting *HAL-FORMS* documents in order to provide additional information (e.g. document identifiers, etc.) to the server when a client requests a *HAL-FORMS* document. For example, the server can use these parameter values to validate the *HAL-FORMS* request and/or use them to determine how to pre-populate the *HAL-FORMS* document before returning it to the client.
 
 Below is the list of query string values defined for this release of the specification. One or more of these parameters MAY appear in the URLs used to request *HAL-FORMS* documents. They can appear in the query string in any order. One or more (possibly all) these parameters MAY be ignored by servers receiving the *HAL-FORMS* request. 
 
-+_hdoc+::
+=== +_hdoc+
 Contains the identifier (usually a URL) of the HAL document from which this request was derived. For example if the HAL document had a URL of +http://api.example.org/users/123+ then the +_hdoc+ query parameter would be +_hdoc=http%3A%2F%2Fapi.example.org%2Fusers%2F123+. 
 
-+_hkey+::
+=== +_hkey+
 Contains the +key+ value of the *HAL-FORMS* template the client wishes to receive. For example, if the *HAL-FORMS* template +key+ is +default+ then the +_hkey+ parameter would be +_hkey=default+.
 
-+_hmethod+::
+=== +_hmethod+
 Contains the HTTP method to be used when populating the *HAL-FORMS* +method+ value in the +_template+. For example, if the client wishes to execute an HTTP POST with the template, the +_hmethod+ parameter would be: +_hmethod=post+.
 
-+_hrel+::
+=== +_hrel+
 Contains the +key+ of the HAL +_link+ element that identified the URL for the *HAL-FORMS* document. For example, if the HAL document had a +_link+ element that looked like this:
-+
+
 ----
 "http://api.example.org/rels/filter": {
   "href": "http://api.example.org/task-list/",
@@ -169,14 +217,14 @@ Contains the +key+ of the HAL +_link+ element that identified the URL for the *H
   "templated": false
 }
 ----
-+ 
+ 
 ...then the +_hrel+ parameter would be +_hkey=http%3A%2F%2Fapi.example.org%2Frels%2Ffilter+. 
 
-+_hsource+::
+=== +_hsource+
 Contains the identifier of the source record to use when pre-populating the *HAL-FORMS* document. For example, if the client wishes to edit the resource identified by the URL +http://api.example.org/users/123+ then the +_hsource+ parameter would be +_hsource=http%3A%2F%2Fapi.example.org%2Fusers%2F123+.
 
 [[htarget-query-string]]
-+_htarget+::
+=== +_htarget+
 Contains the identifier of the target URL for the client to use when submitting the completed *HAL-FORMS* template. For example, if the client should submit the completed template to the following URL: +http://api.example.org/jobs/+ then the +_htarget+ parameter would be +_htarget=http%3A%2F%2Fapi.example.org%2Fjobs%2F+.
 
 [NOTE]

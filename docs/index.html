@@ -728,7 +728,7 @@ install: function(toclevels) {
 }
 
 }
-asciidoc.install(2);
+asciidoc.install(6);
 /*]]>*/
 </script>
 </head>
@@ -871,27 +871,17 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 <div class="sect2">
 <h3 id="_the_code__links_code_element">4.1. The <code>_links</code> Element</h3>
 <div class="paragraph"><p>The <code>_links</code> element contains any links associated with the <strong>HAL-FORMS</strong> document. For this release, the only valid <code>link</code> object is the <code>self</code> link object.</p></div>
-<div class="dlist"><dl>
-<dt class="hdlist1">
-<code>_links</code>
-</dt>
-<dd>
-<p>
-  Contains the collection of valid <code>link</code> objects in the <strong>HAL-FORMS</strong> document. This is a RECOMMENDED element. If this element is missing or if the contents is unrecognized, it SHOULD be treated as if it contains a single <code>link</code> element with the key of <code>self</code> and the value of the URL used to request this <strong>HAL-FORMS</strong> document.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>link</code>
-</dt>
-<dd>
-<p>
-  The <code>link</code> element consists of a key and a set of properties.
- <br />
-</p>
+<div class="sect3">
+<h4 id="_code__links_code">4.1.1. <code>_links</code></h4>
+<div class="paragraph"><p>Contains the collection of valid <code>link</code> objects in the <strong>HAL-FORMS</strong> document. This is a RECOMMENDED element. If this element is missing or if the contents is unrecognized, it SHOULD be treated as if it contains a single <code>link</code> element with the key of <code>self</code> and the value of the URL used to request this <strong>HAL-FORMS</strong> document.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_code_link_code">4.1.2. <code>link</code></h4>
+<div class="paragraph"><p>The <code>link</code> element consists of a key and a set of properties.</p></div>
 <div class="ulist"><ul>
 <li>
 <p>
-<code>key</code> : The unique identifier of the <code>link</code> object. This is a REQUIRED element for each _link+ object. For this release, the only valid value for the <code>key</code> element is <code>"self"</code>. If this element is missing, is set to an unrecognized value, or cannot be parsed, the associated <code>link</code> object SHOULD be ignored.
+<code>key</code> : The unique identifier of the <code>link</code> object. This is a REQUIRED element for each <code>link</code> object. For this release, the only valid value for the <code>key</code> element is <code>"self"</code>. If this element is missing, is set to an unrecognized value, or cannot be parsed, the associated <code>link</code> object SHOULD be ignored.
 </p>
 </li>
 <li>
@@ -900,217 +890,136 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </p>
 </li>
 </ul></div>
-</dd>
-</dl></div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="templates-element">4.2. The <code>_templates</code> Element</h3>
 <div class="paragraph"><p>The <code>_templates</code> element describes the available state transition details including the HTTP method, message content-type, and arguments for the transition. This is a REQUIRED element. If the <strong>HAL-FORMS</strong> document does not contain this element or the contents are unrecognized or unparsable, the <strong>HAL-FORMS</strong> document SHOULD be ignored.</p></div>
 <div class="paragraph"><p>The <code>_templates</code> element contains a collection of <code>template</code> objects. Each <code>template</code> object contains the following possible properties:</p></div>
-<div class="dlist"><dl>
-<dt class="hdlist1">
-<code>contentType</code> 
-</dt>
-<dd>
-<p>
-  The value of <code>contentType</code> is the media type the client SHOULD use when sending a request body to the server. This is an OPTIONAL element. The value of this property SHOULD be set to <code>"application/json"</code> or <code>"application/x-www-form-urlencoded"</code>. It MAY be set to other valid media-type values. If the <code>contentType</code> property is missing, is set to empty, or contains an unrecognized value, the client SHOULD act is if the <code>contentType</code> is set to <code>"application/json"</code>. See <a href="#encoding-request-bodies">Encoding Request Bodies</a> for details.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>key</code> 
-</dt>
-<dd>
-<p>
-  The unique identifier for this <code>template</code> object. This is a REQUIRED element. For this release, the only valid value for <code>key</code> is <code>"default"</code>.  If this element is missing, set to empty or is unparsable, this <code>template</code> object SHOULD be ignored.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>method</code> 
-</dt>
-<dd>
-<p>
-  The HTTP method the client SHOULD use when the service request. Any valid HTTP method is allowed. This is a REQUIRED element. If the value is empty or is not understood by the client, the value MUST be treated as an HTTP GET.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>properties</code> 
-</dt>
-<dd>
-<p>
-  An array of one or more anonymous <code>property</code> elements (see <a href="#property-element">The <code>property</code> Element</a>) that each describe a parameter for the associated state transition. This is an OPTIONAL element. If the array is missing or empty, the <code>properties</code> collection MUST be treated as an empty set of parameters&#8201;&#8212;&#8201;meaning that the transition is meant to be executed without passing any parameters.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>property</code> 
-</dt>
-<dd>
-<p>
-  A JSON object that describes a state transition element. See <a href="#property-element">The <code>property</code> Element</a> for details.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>target</code>
-</dt>
-<dd>
-<p>
-Contains the identifier of the target URL for the client to use when submitting the completed HAL-FORMS template. For example, if the client should submit the completed template to the following URL: <code>http://api.example.org/jobs/</code> then the <code>target</code> proprety would be <code>target="http://api.example.org/jobs/"</code>.
-</p>
+<div class="sect3">
+<h4 id="_code_contenttype_code">4.2.1. <code>contentType</code></h4>
+<div class="paragraph"><p>The value of <code>contentType</code> is the media type the client SHOULD use when sending a request body to the server. This is an OPTIONAL element. The value of this property SHOULD be set to <code>"application/json"</code> or <code>"application/x-www-form-urlencoded"</code>. It MAY be set to other valid media-type values. If the <code>contentType</code> property is missing, is set to empty, or contains an unrecognized value, the client SHOULD act is if the <code>contentType</code> is set to <code>"application/json"</code>. See <a href="#encoding-request-bodies">Encoding Request Bodies</a> for details.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_code_key_code">4.2.2. <code>key</code></h4>
+<div class="paragraph"><p>The unique identifier for this <code>template</code> object. This is a REQUIRED element. For this release, the only valid value for <code>key</code> is <code>"default"</code>.  If this element is missing, set to empty or is unparsable, this <code>template</code> object SHOULD be ignored.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_code_method_code">4.2.3. <code>method</code></h4>
+<div class="paragraph"><p>The HTTP method the client SHOULD use when the service request. Any valid HTTP method is allowed. This is a REQUIRED element. If the value is empty or is not understood by the client, the value MUST be treated as an HTTP GET.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_code_properties_code">4.2.4. <code>properties</code></h4>
+<div class="paragraph"><p>An array of one or more anonymous <code>property</code> elements (see <a href="#property-element">The <code>property</code> Element</a>) that each describe a parameter for the associated state transition. This is an OPTIONAL element. If the array is missing or empty, the <code>properties</code> collection MUST be treated as an empty set of parameters&#8201;&#8212;&#8201;meaning that the transition is meant to be executed without passing any parameters.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_code_property_code">4.2.5. <code>property</code></h4>
+<div class="paragraph"><p>A JSON object that describes the details of the state transition element (<code>name</code>, <code>required</code>, <code>readOnly</code>, etc.). It appears as an anonymous array of <code>properties</code> as a child of the <code>_templates</code> element (See <a href="#templates-element">The <code>_templates</code> Element</a>).</p></div>
+<div class="paragraph"><p>There is a set of <code>property</code> attributes that are considered <a href="#core-property-attributes"><em>core</em> attributes</a>. There are is also group of <code>property</code> attributes that are considered <a href="#additional-property-attributes"><em>additional</em> attributes</a>. Any library supporting the <strong>HAL-FORMS</strong> specification SHOULD support all of the core attributes and MAY support some or all of the additional attributes.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_code_target_code">4.2.6. <code>target</code></h4>
+<div class="paragraph"><p>Contains the identifier of the target URL for the client to use when submitting the completed HAL-FORMS template. For example, if the client should submit the completed template to the following URL: <code>http://api.example.org/jobs/</code> then the <code>target</code> proprety would be <code>target="http://api.example.org/jobs/"</code>.</p></div>
 <div class="paragraph"><p>This is an OPTIONAL property. If this property is not understood by the recipient, left blank, or contains an invalid URL string, it SHOULD be ignored.</p></div>
 <div class="paragraph"><p>The <code>target</code> property holds the same information as the <a href="#htarget-query-string"><code>_htarget</code></a> query string property. If both the <code>target</code> prorperty and the <code>_htarget</code> query string value appear in the same message, the <code>_htarget</code> query string SHOULD be used and the <code>target</code> property SHOULD be ignored.</p></div>
-</dd>
-<dt class="hdlist1">
-<code>title</code>
-</dt>
-<dd>
-<p>
-A human-readable string that can be used to identify this template. This is a valid JSON string. This is an OPTIONAL element. If it does not exist or is unparsable, consumers MAY use the <code>key</code> value of the template as the value for <code>title</code>.
-</p>
-</dd>
-</dl></div>
+</div>
+<div class="sect3">
+<h4 id="_code_title_code">4.2.7. <code>title</code></h4>
+<div class="paragraph"><p>A human-readable string that can be used to identify this template. This is a valid JSON string. This is an OPTIONAL element. If it does not exist or is unparsable, consumers MAY use the <code>key</code> value of the template as the value for <code>title</code>.</p></div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="property-element">4.3. The <code>property</code> Element</h3>
-<div class="paragraph"><p>A <code>property</code> element describes the details of the state transition element (<code>name</code>, <code>required</code>, <code>readOnly</code>, etc.). It appears as an array of <code>properties</code> as a child of the <code>_templates</code> element (See <a href="#templates-element">The <code>_templates</code> Element</a>). Most attributes of a <code>property</code> object are optional. Some attributes of a property are dependent on others and/or will appear in groups. For example, the <code>min</code> attribute is expected to appear along with the <code>max</code> attribute.</p></div>
-<div class="paragraph"><p>There is a set of <code>property</code> attributes that are considered <em>core</em> attributes. There are is also group of <code>property</code> attributes that are considered <em>additional</em> attributes. Any library supporting the <strong>HAL-FORMS</strong> specification SHOULD support all of the <em>core</em> attributes and MAY support some or all of the <em>additional</em> attributes.</p></div>
-<div class="sect3">
-<h4 id="_core_code_property_code_attributes">4.3.1. Core <code>property</code> Attributes</h4>
-<div class="paragraph"><p>Below is a list of all the <em>core</em> <code>property</code> attributes.</p></div>
-<div class="dlist"><dl>
-<dt class="hdlist1">
-<code>name</code>
-</dt>
-<dd>
-<p>
-The <code>property</code> name. This is a valid JSON string. This is a REQUIRED element. If this attribute is missing or set to empty, the client SHOULD ignore this <code>property</code> object completely.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>prompt</code>
-</dt>
-<dd>
-<p>
-The human-readable prompt for the parameter. This is a valid JSON string. This is an OPTIONAL element. If this element is missing, clients MAY act as if the <code>prompt</code> value is set to the value in the <code>name</code> attribute.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>readOnly</code>
-</dt>
-<dd>
-<p>
-Indicates whether the parameter is read-only. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, empty, or set to an unrecognized value, it SHOULD be treated as if the value of <code>readOnly</code> is set to &#8216;false&#8217;.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>regex</code>
-</dt>
-<dd>
-<p>
-A regular expression string to be applied to the value of the parameter. Rules for valid values are the same as the HTML5 pattern attribute <a href="#html5pat">[HTML5PAT]</a>. This is an OPTIONAL element. If this attribute missing, is set to empty, or is unparseable , it SHOULD be ignored.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>required</code>
-</dt>
-<dd>
-<p>
-Indicates whether the parameter is required. This is a valid JSON boolean. This is an OPTIONAL element. If this attribute is missing, set to blank or contains an unrecognized value, it SHOULD be treated as if the value of <code>required</code> is set to &#8216;false&#8217;.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>templated</code>
-</dt>
-<dd>
-<p>
-Indicate whether the <code>value</code> element contains a URI Template <a href="#rfc6570">[RFC6570]</a> string for the client to resolve. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, set to empty, or contains unrecognized content, it SHOULD be treated as if the value of <code>templated</code> is set to &#8216;false&#8217;.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>value</code>
-</dt>
-<dd>
-<p>
-The <code>property</code> value. This is a valid JSON string. This string MAY contain a URI Template (see <code>templated</code> for details). This is an OPTIONAL element. If it does not exist, clients SHOULD act as if the <code>value</code> property is set to an empty string.
-</p>
-</dd>
-</dl></div>
+<h3 id="core-property-attributes">4.3. Core <code>property</code> Attributes</h3>
+<div class="paragraph"><p>The core <code>property</code> attributes cover the basics of describing a single value used for a state transition (write or filter parameter). Most all attributes are OPTIONAL and MAY be ignored by <strong>HAL-FORMS</strong> processors. Below is a list of all the core <code>property</code> attributes.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph"><p>Any library, tooling, or utility supporting the <strong>HAL-FORMS</strong> specification SHOULD support all of the <em>core</em> <code>property</code> attributes.</p></div>
+</td>
+</tr></table>
 </div>
 <div class="sect3">
-<h4 id="_additional_code_property_code_attributes">4.3.2. Additional <code>property</code> Attributes</h4>
-<div class="paragraph"><p>Below is a list of all the <em>additional</em> <code>property</code> attributes.</p></div>
-<div class="dlist"><dl>
-<dt class="hdlist1">
-<code>cols</code>
-</dt>
-<dd>
-<p>
-The <code>cols</code> attribute specifies the expected maximum number of characters per line to display when rendering the input box. This attribute applies to the associated <code>property</code> element when that <code>property</code> element&#8217;s <code>type</code> attribute is set to <code>"textarea"</code>. The <code>cols</code> attribute is a non-negative integer greater than zero. If the <code>cols</code> attribute is missing or contains an invalid value, it can be assumed to be set to the value of <code>40</code>. If the <code>type</code> attribute of the associated <code>property</code> element is not set to <code>"textarea"</code>, this attribute SHOULD be ignored. This is an OPTIONAL attribute and it MAY be ignored. The <code>cols</code> attribute SHOULD appear along with the <code>rows</code> attribute.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>max</code>
-</dt>
-<dd>
-<p>
-The <code>max</code> attribute specifies the maximum numeric value for the <code>value</code> setting of a <code>property</code>  element. This attribute SHOULD appear along with the <code>min</code> attribute. This is an OPTIONAL property and it MAY be ignored.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>maxLength</code>
-</dt>
-<dd>
-<p>
-The <code>maxLength</code> attribute specifies the maximum number of characters allowed in the <code>value</code> property. This attribute SHOULD appear along with the <code>minLength</code> attribute. This is an OPTIONAL property and it MAY be ignored.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>min</code>
-</dt>
-<dd>
-<p>
-The <code>min</code> attribute specifies the minimum numeric value for an <code>value</code> setting of a <code>property</code> element. This attribute SHOULD appear along with the <code>max</code> attribute. This is an OPTIONAL property and it MAY be ignored.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>minLength</code>
-</dt>
-<dd>
-<p>
-The <code>minlength</code> attribute specifies the minimum number of characters required in a <code>value</code> property. this attribute SHOULD appear along with the <code>maxLength</code> attribute. This is an OPTIONAL property and it MAY be ignored.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>placeholder</code>
-</dt>
-<dd>
-<p>
-The <code>placeholder</code> attribute specifies a short hint that describes the expected value of an input field (e.g. a sample value or a short description of the expected format). This is an OPTIONAL field and MAY be ignored.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>rows</code>
-</dt>
-<dd>
-<p>
-The <code>rows</code> attribute specifies the expected maximum number of lines to display when rendering the input box. This attribute applies to the associated <code>property</code> element when that <code>property</code> element&#8217;s <code>type</code> attribute is set to <code>"textarea"</code>. The <code>cols</code> attribute is a non-negative integer greater than zero. If the <code>cols</code> attribute is missing or contains an invalid value, it can be assumed to be set to the value of <code>5</code>. If the <code>type</code> attribute of the associated <code>property</code> element is not set to <code>"textarea"</code>, this attribute SHOULD be ignored. This is an OPTIONAL attribute and it MAY be ignored. The <code>rows</code> attribute SHOULD appear along with the <code>cols</code> attribute.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>step</code>
-</dt>
-<dd>
-<p>
-The <code>step</code> attribute specifies the interval between legal numbers in a <code>value</code> property. For example, if <code>step="3"</code>, legal numbers could be -3, 0, 3, 6, etc.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>type</code>
-</dt>
-<dd>
-<p>
-The <code>type</code> attribute controls the data type of the <code>property</code> value. It is an enumerated attribute. The <code>type</code> can also used to determine the interface control to display for user input. This is an OPTIONAL element. If the <code>type</code> value is not supported by the document consumer, contains a value not understood by the consumer, and/or is missing, the the document consumer SHOULD assume the <code>type</code> attribute is set to the default value: <code>"text"</code> and render the display input as a simple text box.
- <br />
- <br />
-  Possible settings for the <code>type</code> value in this release are:
+<h4 id="_code_name_code">4.3.1. <code>name</code></h4>
+<div class="paragraph"><p>The <code>property</code> name. This is a valid JSON string. This is a REQUIRED element. If this attribute is missing or set to empty, the client SHOULD ignore this <code>property</code> object completely.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_code_prompt_code">4.3.2. <code>prompt</code></h4>
+<div class="paragraph"><p>The human-readable prompt for the parameter. This is a valid JSON string. This is an OPTIONAL element. If this element is missing, clients MAY act as if the <code>prompt</code> value is set to the value in the <code>name</code> attribute.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_code_readonly_code">4.3.3. <code>readOnly</code></h4>
+<div class="paragraph"><p>Indicates whether the parameter is read-only. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, empty, or set to an unrecognized value, it SHOULD be treated as if the value of <code>readOnly</code> is set to &#8216;false&#8217;.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_code_regex_code">4.3.4. <code>regex</code></h4>
+<div class="paragraph"><p>A regular expression string to be applied to the value of the parameter. Rules for valid values are the same as the HTML5 pattern attribute <a href="#html5pat">[HTML5PAT]</a>. This is an OPTIONAL element. If this attribute missing, is set to empty, or is unparseable , it SHOULD be ignored.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_code_required_code">4.3.5. <code>required</code></h4>
+<div class="paragraph"><p>Indicates whether the parameter is required. This is a valid JSON boolean. This is an OPTIONAL element. If this attribute is missing, set to blank or contains an unrecognized value, it SHOULD be treated as if the value of <code>required</code> is set to &#8216;false&#8217;.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_code_templated_code">4.3.6. <code>templated</code></h4>
+<div class="paragraph"><p>Indicate whether the <code>value</code> element contains a URI Template <a href="#rfc6570">[RFC6570]</a> string for the client to resolve. This is a valid JSON boolean. This is an OPTIONAL element. If this element is missing, set to empty, or contains unrecognized content, it SHOULD be treated as if the value of
+<code>templated</code> is set to &#8216;false&#8217;.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_code_value_code">4.3.7. <code>value</code></h4>
+<div class="paragraph"><p>The <code>property</code> value. This is a valid JSON string. This string MAY contain a URI Template (see <code>templated</code> for details). This is an OPTIONAL element. If it does not exist, clients SHOULD act as if the <code>value</code> property is set to an empty string.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="additional-property-attributes">4.4. Additional <code>property</code> Attributes</h3>
+<div class="paragraph"><p>The additional <code>property</code> attributes provide greater controls for describing the rendering and validation of input controls for a state transition (write and filter parameters). All of the additional attributes are OPTIONAL and one or more of them MAY be ignored by <strong>HAL-FORMS</strong> processors. Below is a list of all the additional <code>property</code> attributes.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph"><p>Any library, tooling, or utility supporting the <strong>HAL-FORMS</strong> specification MAY support some or all of the <em>additional</em> <code>property</code> attributes.</p></div>
+</td>
+</tr></table>
+</div>
+<div class="sect3">
+<h4 id="_code_cols_code">4.4.1. <code>cols</code></h4>
+<div class="paragraph"><p>The <code>cols</code> attribute specifies the expected maximum number of characters per line to display when rendering the input box. This attribute applies to the associated <code>property</code> element when that <code>property</code> element&#8217;s <code>type</code> attribute is set to <code>textarea</code>. The <code>cols</code> attribute is a non-negative integer greater than zero. If the <code>cols</code> attribute is missing or contains an invalid value, it can be assumed to be set to the value of <code>40</code>. If the <code>type</code> attribute of the associated <code>property</code> element is not set to <code>textarea</code>, this attribute SHOULD be ignored. This is an OPTIONAL attribute and it MAY be ignored. The <code>cols</code> attribute SHOULD appear along with the <code>rows</code> attribute.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_code_max_code">4.4.2. <code>max</code></h4>
+<div class="paragraph"><p>The <code>max</code> attribute specifies the maximum numeric value for the <code>value</code> setting of a <code>property</code>  element. This attribute SHOULD appear along with the <code>min</code> attribute. This is an OPTIONAL property and it MAY be ignored.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_code_maxlength_code">4.4.3. <code>maxLength</code></h4>
+<div class="paragraph"><p>The <code>maxLength</code> attribute specifies the maximum number of characters allowed in the <code>value</code> property. This attribute SHOULD appear along with the <code>minLength</code> attribute. This is an OPTIONAL property and it MAY be ignored.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_code_min_code">4.4.4. <code>min</code></h4>
+<div class="paragraph"><p>The <code>min</code> attribute specifies the minimum numeric value for an <code>value</code> setting of a <code>property</code> element. This attribute SHOULD appear along with the <code>max</code> attribute. This is an OPTIONAL property and it MAY be ignored.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_code_minlength_code">4.4.5. <code>minLength</code></h4>
+<div class="paragraph"><p>The <code>minlength</code> attribute specifies the minimum number of characters required in a <code>value</code> property. this attribute SHOULD appear along with the <code>maxLength</code> attribute. This is an OPTIONAL property and it MAY be ignored.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_code_placeholder_code">4.4.6. <code>placeholder</code></h4>
+<div class="paragraph"><p>The <code>placeholder</code> attribute specifies a short hint that describes the expected value of an input field (e.g. a sample value or a short description of the expected format). This is an OPTIONAL field and MAY be ignored.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_code_rows_code">4.4.7. <code>rows</code></h4>
+<div class="paragraph"><p>The <code>rows</code> attribute specifies the expected maximum number of lines to display when rendering the input box. This attribute applies to the associated <code>property</code> element when that <code>property</code> element&#8217;s <code>type</code> attribute is set to <code>"textarea"</code>. The <code>cols</code> attribute is a non-negative integer greater than zero. If the <code>cols</code> attribute is missing or contains an invalid value, it can be assumed to be set to the value of <code>5</code>. If the <code>type</code> attribute of the associated <code>property</code> element is not set to <code>"textarea"</code>, this attribute SHOULD be ignored. This is an OPTIONAL attribute and it MAY be ignored. The <code>rows</code> attribute SHOULD appear along with the <code>cols</code> attribute.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_code_step_code">4.4.8. <code>step</code></h4>
+<div class="paragraph"><p>The <code>step</code> attribute specifies the interval between legal numbers in a <code>value</code> property. For example, if <code>step="3"</code>, legal numbers could be -3, 0, 3, 6, etc.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_code_type_code">4.4.9. <code>type</code></h4>
+<div class="paragraph"><p>The <code>type</code> attribute controls the data type of the <code>property</code> value. It is an enumerated attribute. The <code>type</code> can also used to determine the interface control to display for user input. This is an OPTIONAL element. If the <code>type</code> value is not supported by the document consumer, contains a value not understood by the consumer, and/or is missing, the the document consumer SHOULD assume the <code>type</code> attribute is set to the default value: <code>"text"</code> and render the display input as a simple text box.</p></div>
+<div class="paragraph"><p>Possible settings for the <code>type</code> value in this release are:
   <code>hidden</code>,
   <code>text</code>,
   <code>textarea</code>,
@@ -1126,51 +1035,32 @@ The <code>type</code> attribute controls the data type of the <code>property</co
   <code>datetime-local</code>,
   <code>number</code>,
   <code>range</code>,
-  <code>color</code>.
- <br />
- <br />
-  For hints on how to render and process various <code>type</code> values, see <a href="#html5type">[HTML5TYPE]</a>.
-</p>
-</dd>
-</dl></div>
+  <code>color</code>.</p></div>
+<div class="paragraph"><p>For hints on how to render and process various <code>type</code> values, see <a href="#html5type">[HTML5TYPE]</a>.</p></div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_the_hal_forms_query_string_registry">4.4. The HAL-FORMS Query String Registry</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_hal_forms_query_string_registry">5. The HAL-FORMS Query String Registry</h2>
+<div class="sectionbody">
 <div class="paragraph"><p>The <strong>HAL-FORMS</strong> media type supports a set of OPTIONAL query string parameters. These can be passed when requesting <strong>HAL-FORMS</strong> documents in order to provide additional information (e.g. document identifiers, etc.) to the server when a client requests a <strong>HAL-FORMS</strong> document. For example, the server can use these parameter values to validate the <strong>HAL-FORMS</strong> request and/or use them to determine how to pre-populate the <strong>HAL-FORMS</strong> document before returning it to the client.</p></div>
 <div class="paragraph"><p>Below is the list of query string values defined for this release of the specification. One or more of these parameters MAY appear in the URLs used to request <strong>HAL-FORMS</strong> documents. They can appear in the query string in any order. One or more (possibly all) these parameters MAY be ignored by servers receiving the <strong>HAL-FORMS</strong> request.</p></div>
-<div class="dlist"><dl>
-<dt class="hdlist1">
-<code>_hdoc</code>
-</dt>
-<dd>
-<p>
-Contains the identifier (usually a URL) of the HAL document from which this request was derived. For example if the HAL document had a URL of <code>http://api.example.org/users/123</code> then the <code>_hdoc</code> query parameter would be <code>_hdoc=http%3A%2F%2Fapi.example.org%2Fusers%2F123</code>.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>_hkey</code>
-</dt>
-<dd>
-<p>
-Contains the <code>key</code> value of the <strong>HAL-FORMS</strong> template the client wishes to receive. For example, if the <strong>HAL-FORMS</strong> template <code>key</code> is <code>default</code> then the <code>_hkey</code> parameter would be <code>_hkey=default</code>.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>_hmethod</code>
-</dt>
-<dd>
-<p>
-Contains the HTTP method to be used when populating the <strong>HAL-FORMS</strong> <code>method</code> value in the <code>_template</code>. For example, if the client wishes to execute an HTTP POST with the template, the <code>_hmethod</code> parameter would be: <code>_hmethod=post</code>.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>_hrel</code>
-</dt>
-<dd>
-<p>
-Contains the <code>key</code> of the HAL <code>_link</code> element that identified the URL for the <strong>HAL-FORMS</strong> document. For example, if the HAL document had a <code>_link</code> element that looked like this:
-</p>
+<div class="sect2">
+<h3 id="_code__hdoc_code">5.1. <code>_hdoc</code></h3>
+<div class="paragraph"><p>Contains the identifier (usually a URL) of the HAL document from which this request was derived. For example if the HAL document had a URL of <code>http://api.example.org/users/123</code> then the <code>_hdoc</code> query parameter would be <code>_hdoc=http%3A%2F%2Fapi.example.org%2Fusers%2F123</code>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_code__hkey_code">5.2. <code>_hkey</code></h3>
+<div class="paragraph"><p>Contains the <code>key</code> value of the <strong>HAL-FORMS</strong> template the client wishes to receive. For example, if the <strong>HAL-FORMS</strong> template <code>key</code> is <code>default</code> then the <code>_hkey</code> parameter would be <code>_hkey=default</code>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_code__hmethod_code">5.3. <code>_hmethod</code></h3>
+<div class="paragraph"><p>Contains the HTTP method to be used when populating the <strong>HAL-FORMS</strong> <code>method</code> value in the <code>_template</code>. For example, if the client wishes to execute an HTTP POST with the template, the <code>_hmethod</code> parameter would be: <code>_hmethod=post</code>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_code__hrel_code">5.4. <code>_hrel</code></h3>
+<div class="paragraph"><p>Contains the <code>key</code> of the HAL <code>_link</code> element that identified the URL for the <strong>HAL-FORMS</strong> document. For example, if the HAL document had a <code>_link</code> element that looked like this:</p></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>"http://api.example.org/rels/filter": {
@@ -1180,25 +1070,15 @@ Contains the <code>key</code> of the HAL <code>_link</code> element that identif
 }</code></pre>
 </div></div>
 <div class="paragraph"><p>&#8230;then the <code>_hrel</code> parameter would be <code>_hkey=http%3A%2F%2Fapi.example.org%2Frels%2Ffilter</code>.</p></div>
-</dd>
-<dt class="hdlist1">
-<code>_hsource</code>
-</dt>
-<dd>
-<p>
-Contains the identifier of the source record to use when pre-populating the <strong>HAL-FORMS</strong> document. For example, if the client wishes to edit the resource identified by the URL <code>http://api.example.org/users/123</code> then the <code>_hsource</code> parameter would be <code>_hsource=http%3A%2F%2Fapi.example.org%2Fusers%2F123</code>.
-</p>
-</dd>
-<dt class="hdlist1">
-<code>_htarget</code>
-</dt>
-<dd>
-<p>
-Contains the identifier of the target URL for the client to use when submitting the completed <strong>HAL-FORMS</strong> template. For example, if the client should submit the completed template to the following URL: <code>http://api.example.org/jobs/</code> then the <code>_htarget</code> parameter would be <code>_htarget=http%3A%2F%2Fapi.example.org%2Fjobs%2F</code>.
-</p>
-</dd>
-</dl></div>
-<div class="admonitionblock" id="htarget-query-string">
+</div>
+<div class="sect2">
+<h3 id="_code__hsource_code">5.5. <code>_hsource</code></h3>
+<div class="paragraph"><p>Contains the identifier of the source record to use when pre-populating the <strong>HAL-FORMS</strong> document. For example, if the client wishes to edit the resource identified by the URL <code>http://api.example.org/users/123</code> then the <code>_hsource</code> parameter would be <code>_hsource=http%3A%2F%2Fapi.example.org%2Fusers%2F123</code>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="htarget-query-string">5.6. <code>_htarget</code></h3>
+<div class="paragraph"><p>Contains the identifier of the target URL for the client to use when submitting the completed <strong>HAL-FORMS</strong> template. For example, if the client should submit the completed template to the following URL: <code>http://api.example.org/jobs/</code> then the <code>_htarget</code> parameter would be <code>_htarget=http%3A%2F%2Fapi.example.org%2Fjobs%2F</code>.</p></div>
+<div class="admonitionblock">
 <table><tr>
 <td class="icon">
 <div class="title">Note</div>
@@ -1212,11 +1092,11 @@ Contains the identifier of the target URL for the client to use when submitting 
 </div>
 </div>
 <div class="sect1">
-<h2 id="_encoding_requests">5. Encoding Requests</h2>
+<h2 id="_encoding_requests">6. Encoding Requests</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>Once the client application has used the <strong>HAL-FORMS</strong> document to render a UI for accepting inputs (and the user has supplied the inputs), that same document SHOULD be used to encode a request to send to the server to execute the state transition described by the <strong>HAL-FORMS</strong> document. There are two ways in which <strong>HAL-FORMS</strong> documents can be used to construct parameterized requests. The first is by <a href="#encoding-request-urls">encoding request URLs</a> for HTTP GET, DELETE, and HEAD requests. The second is by <a href="#encoding-request-bodies">encoding request bodies</a> for HTTP PUT, POST, and PATCH requests.</p></div>
 <div class="sect2">
-<h3 id="encoding-request-urls">5.1. Encoding Request URLs</h3>
+<h3 id="encoding-request-urls">6.1. Encoding Request URLs</h3>
 <div class="paragraph"><p>When clients are instructed to send a request without a body (e.g. GET, HEAD, DELETE), clients SHOULD use the list of <code>property</code> object&#8217;s <code>name</code> and <code>value</code> attributes to construct a valid URL using the W3C Mutate Action URL Algorithm <a href="#html5mut">[HTML5MUT]</a> to produce a valid query string. Below is a simple <strong>HAL-FORMS</strong> document that uses the GET method and the resulting updated URL.</p></div>
 <div class="listingblock">
 <div class="content">
@@ -1270,10 +1150,10 @@ http://api.example.org/task-list/?title=sample&amp;completed=false</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="encoding-request-bodies">5.2. Encoding Request Bodies</h3>
+<h3 id="encoding-request-bodies">6.2. Encoding Request Bodies</h3>
 <div class="paragraph"><p>When clients are instructed to send a request with a body (e.g. PUT, POST, PATCH), there are several possible content-types to use. Compliant applications MUST support encoding bodies using <code>application/json</code> and SHOULD support encoding bodies using <code>application/x_www-form-urlencoded</code>. Clients MAY support other content-types not listed in this document.</p></div>
 <div class="sect3">
-<h4 id="_sending_code_application_json_code_bodies">5.2.1. Sending <code>application/json</code> Bodies</h4>
+<h4 id="_sending_code_application_json_code_bodies">6.2.1. Sending <code>application/json</code> Bodies</h4>
 <div class="paragraph"><p>When sending bodies encoded as <code>application/json</code>, clients SHOULD construct a simple JSON dictionary object that contains a set of name-value pairs that match the <code>property</code> objects in the <strong>HAL-FORMS</strong> document. For example, using the Example <strong>HAL-FORMS</strong> document (see above) as a guide, a client would construct a JSON dictionary object that looks like the following:</p></div>
 <div class="listingblock">
 <div class="content">
@@ -1284,7 +1164,7 @@ http://api.example.org/task-list/?title=sample&amp;completed=false</code></pre>
 </div></div>
 </div>
 <div class="sect3">
-<h4 id="_sending_code_application_x_www_form_urlencoded_code_bodies">5.2.2. Sending <code>application/x-www-form-urlencoded</code> Bodies</h4>
+<h4 id="_sending_code_application_x_www_form_urlencoded_code_bodies">6.2.2. Sending <code>application/x-www-form-urlencoded</code> Bodies</h4>
 <div class="paragraph"><p>When sending bodies encoded as <code>application/x-www-form-urlencoded</code>, clients SHOULD construct a body that is in compliance with the guidance in the W3C FORMS Encoding Algorithm <a href="#html5enc">[HTML5ENC]</a>. A sample (using the Example <strong>HAL-FORMS</strong> document) follows:</p></div>
 <div class="listingblock">
 <div class="content">
@@ -1292,20 +1172,20 @@ http://api.example.org/task-list/?title=sample&amp;completed=false</code></pre>
 </div></div>
 </div>
 <div class="sect3">
-<h4 id="_sending_bodies_for_other_media_types">5.2.3. Sending Bodies for Other Media Types</h4>
+<h4 id="_sending_bodies_for_other_media_types">6.2.3. Sending Bodies for Other Media Types</h4>
 <div class="paragraph"><p>Providers who supply responses that contain <code>contentType</code> values not covered in this specification SHOULD publish documentation instructing clients on the proper way to construct request bodies from HAL-FORMS documents.</p></div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_the_hal_forms_media_type_identifier_string">6. The HAL-FORMS Media Type Identifier String</h2>
+<h2 id="_the_hal_forms_media_type_identifier_string">7. The HAL-FORMS Media Type Identifier String</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>The media type identifier string for <strong>HAL-FORMS</strong> documents is: <code>application/prs.hal-forms+json</code>  This SHOULD be used as part of the HTTP <code>accept</code> header when making a request for a <strong>HAL-FORMS</strong> document. It SHOULD appear as the HTTP <code>content-type</code> header when sending a response that contains a <strong>HAL-FORMS</strong> document.</p></div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_suggested_process_flow_for_hal_forms_documents">7. Suggested Process Flow for HAL-FORMS Documents</h2>
+<h2 id="_suggested_process_flow_for_hal_forms_documents">8. Suggested Process Flow for HAL-FORMS Documents</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>While it is completely up to providers and consumers to determine how they wish to use the <strong>HAL-FORMS</strong> media type, the following is a suggested process flow for runtime use of <strong>HAL-FORMS</strong> documents on the Web.</p></div>
 <div class="olist arabic"><ol class="arabic">
@@ -1332,7 +1212,7 @@ Clients collect the completed user inputs and, based on the value of <code>conte
 </ol></div>
 <div class="paragraph"><p>What follows is an illustrated example of this process flow.</p></div>
 <div class="sect2">
-<h3 id="_starting_with_a_typical_hal_response">7.1. Starting With a Typical HAL Response.</h3>
+<h3 id="_starting_with_a_typical_hal_response">8.1. Starting With a Typical HAL Response.</h3>
 <div class="paragraph"><p>A client application can start with a typical HAL response and use information in the representation to see if <strong>HAL-FORMS</strong> documents are available. Below is a HAL response w/ URLs for <code>rel</code> values. These MAY point to <strong>HAL-FORMS</strong> documents.</p></div>
 <div class="listingblock">
 <div class="title">A Typical HAL Response with URLs for rel values</div>
@@ -1378,7 +1258,7 @@ Date: Wed, 01 Jun 2016 14:50:30 GMT
 </div></div>
 </div>
 <div class="sect2">
-<h3 id="_requesting_a_hal_forms_document">7.2. Requesting a HAL-FORMS Document</h3>
+<h3 id="_requesting_a_hal_forms_document">8.2. Requesting a HAL-FORMS Document</h3>
 <div class="paragraph"><p>After parsing the HAL response, a <strong>HAL-FORMS</strong> compliant client app MAY use the <code>rel</code> URLs to make requests for <strong>HAL-FORMS</strong> documents. In the case of this example, the <code>http://api.example.org/rels/create</code> is used to see if there is a <strong>HAL-FORMS</strong> document available.</p></div>
 <div class="listingblock">
 <div class="title">Requesting a HAL-FORMS document</div>
@@ -1414,7 +1294,7 @@ Date: Wed, 01 Jun 2016 14:59:30 GMT
 </div></div>
 </div>
 <div class="sect2">
-<h3 id="_sending_a_hal_forms_body_request">7.3. Sending a HAL-FORMS Body Request</h3>
+<h3 id="_sending_a_hal_forms_body_request">8.3. Sending a HAL-FORMS Body Request</h3>
 <div class="paragraph"><p>After receiving the <strong>HAL-FORMS</strong> response and rendering the UI, the client application can&#8201;&#8212;&#8201;once the user supplies inputs and executes the "submit" action&#8201;&#8212;&#8201;use the instructions in the <strong>HAL-FORMS</strong> document to compose a request and send it to the URL indicated in the HAL document response (as follows):</p></div>
 <div class="listingblock">
 <div class="title">Sending a <strong>HAL-FORMS</strong> body request</div>
@@ -1439,7 +1319,7 @@ Date: Wed, 01 Jun 2016 15:03:30 GMT
 </div>
 </div>
 <div class="sect1">
-<h2 id="_extending_the_hal_forms_document">8. Extending the HAL-FORMS Document</h2>
+<h2 id="_extending_the_hal_forms_document">9. Extending the HAL-FORMS Document</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>Authors can extend the <strong>HAL-FORMS</strong> media type as long as the following rules are observed:</p></div>
 <div class="olist arabic"><ol class="arabic">
@@ -1472,7 +1352,7 @@ All new properties or objects are treated as OPTIONAL (e.g. no new REQUIRED elem
 </div>
 </div>
 <div class="sect1">
-<h2 id="_references">9. References</h2>
+<h2 id="_references">10. References</h2>
 <div class="sectionbody">
 <div class="ulist"><ul>
 <li>
@@ -1534,7 +1414,7 @@ All new properties or objects are treated as OPTIONAL (e.g. no new REQUIRED elem
 </div>
 </div>
 <div class="sect1">
-<h2 id="_acknowledgements">10. Acknowledgements</h2>
+<h2 id="_acknowledgements">11. Acknowledgements</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>I thank the everyone who helped contribute to this specification including:
 Josh Cohen,
@@ -1551,7 +1431,7 @@ Greg Turnquist.</p></div>
 <div id="footer">
 <div id="footer-text">
 Last updated
- 2020-12-29 10:30:25 EST
+ 2020-12-29 11:28:36 EST
 </div>
 </div>
 </body>
