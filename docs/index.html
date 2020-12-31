@@ -895,14 +895,14 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 <div class="sect2">
 <h3 id="templates-element">4.2. The <code>_templates</code> Element</h3>
 <div class="paragraph"><p>The <code>_templates</code> element describes the available state transition details including the HTTP method, message content-type, and arguments for the transition. This is a REQUIRED element. If the <strong>HAL-FORMS</strong> document does not contain this element or the contents are unrecognized or unparsable, the <strong>HAL-FORMS</strong> document SHOULD be ignored.</p></div>
-<div class="paragraph"><p>The <code>_templates</code> element contains a collection of <code>template</code> objects. Each <code>template</code> object contains the following possible properties:</p></div>
+<div class="paragraph"><p>The <code>_templates</code> element contains a dictionary collection of <code>template</code> objects. A valid <strong>HAL-FORMS</strong> document has at least one entry in the <code>_templates</code> dictionary collection. Each <code>template</code> contains the following possible properties:</p></div>
 <div class="sect3">
 <h4 id="_code_contenttype_code">4.2.1. <code>contentType</code></h4>
 <div class="paragraph"><p>The value of <code>contentType</code> is the media type the client SHOULD use when sending a request body to the server. This is an OPTIONAL element. The value of this property SHOULD be set to <code>"application/json"</code> or <code>"application/x-www-form-urlencoded"</code>. It MAY be set to other valid media-type values. If the <code>contentType</code> property is missing, is set to empty, or contains an unrecognized value, the client SHOULD act is if the <code>contentType</code> is set to <code>"application/json"</code>. See <a href="#encoding-request-bodies">Encoding Request Bodies</a> for details.</p></div>
 </div>
 <div class="sect3">
 <h4 id="_code_key_code">4.2.2. <code>key</code></h4>
-<div class="paragraph"><p>The unique identifier for this <code>template</code> object. This is a REQUIRED element. For this release, the only valid value for <code>key</code> is <code>"default"</code>.  If this element is missing, set to empty or is unparsable, this <code>template</code> object SHOULD be ignored.</p></div>
+<div class="paragraph"><p>The unique identifier for this template element. This is a REQUIRED element. For this release, the only pre-defined value for <code>key</code> is <code>"default"</code>. If there is only one element in the collection the <code>key</code> value MUST be set to <code>"default"</code>. Clients MAY ignore additional entries in the collection. If this element is missing, set to empty or is unparsable, this template object SHOULD be ignored.</p></div>
 </div>
 <div class="sect3">
 <h4 id="_code_method_code">4.2.3. <code>method</code></h4>
@@ -1431,7 +1431,7 @@ Greg Turnquist.</p></div>
 <div id="footer">
 <div id="footer-text">
 Last updated
- 2020-12-31 11:35:28 EST
+ 2020-12-31 12:15:56 EST
 </div>
 </div>
 </body>
