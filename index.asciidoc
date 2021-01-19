@@ -61,21 +61,25 @@ include::hal-forms-response.json[]
 == Properties of a HAL-FORMS Document
 All *HAL-FORMS* documents MUST be valid JSON documents. A well-formed *HAL-FORMS* document has two top-level objects: +_links+ and +_templates+. The following is a summary of the structure of the *HAL-FORMS* media type.
 
-=== The +_links+ Element
-The +_links+ element contains any links associated with the *HAL-FORMS* document. For this release, the only valid +link+ object is the +self+ link object.
+=== The +_links+ Collection
+The +_links+ collection contains a dictionary collection of +link+ elements associated with the *HAL-FORMS* document. 
 
 ==== +_links+
-Contains the collection of valid +link+ objects in the *HAL-FORMS* document. This is a RECOMMENDED element. If this element is missing or if the contents is unrecognized, it SHOULD be treated as if it contains a single +link+ element with the key of +self+ and the value of the URL used to request this *HAL-FORMS* document.
+Contains the collection of valid +link+ elements in the *HAL-FORMS* document. This is a RECOMMENDED element. If this element is missing, is invalid, or cannot be parsed, the *HAL-FORMS* document SHOULD be treated as if it contains a +_links+ collection which contains a single +link+ element with the key of +self+ and the value of the URL that was used to request the current *HAL-FORMS* document.
   
+Every *HAL-FORMS* document SHOULD have at least one +link+ element in the collection with a +key+ value set to +self+. The +_links+ collection MAY have additional +link+ elements with other +key+ values. *HAL-FORMS* clients SHOULD ignore any +link+ elements with +key+ values they do not understand. Clients MAY reject a *HAL-FORMS* document that does not contain a +link+ element with the +key+ value set to +self+.
+
 ==== +link+
 The +link+ element consists of a key and a set of properties. 
 
- * +key+ : The unique identifier of the +link+ object. This is a REQUIRED element for each +link+ object. For this release, the only valid value for the +key+ element is +"self"+. If this element is missing, is set to an unrecognized value, or cannot be parsed, the associated +link+ object SHOULD be ignored.
-  * +href+ : The URL associated with the +key+. This is a REQUIRED element. If this is missing, set to empty or unparsable, the associated +link+ object SHOULD be ignored.
+ * +key+ : The unique identifier of the +link+ element. This is a REQUIRED property for each +link+ element. If this property is missing, is set to an unrecognized value, or cannot be parsed, the associated +link+ element SHOULD be ignored.
+ * +href+ : The URL associated with the +key+. This is a REQUIRED property. If this is missing, set to empty or cannot be parsed, the associated +link+ element SHOULD be ignored.
+
+NOTE: Additional properties MAY appear within a +link+ element. *HAL-FORMS* clients SHOULD ignore any properties they do not understand and/or cannot parse. 
 
 [[templates-element]]
-=== The +_templates+ Element
-The +_templates+ element describes the available state transition details including the HTTP method, message content-type, and arguments for the transition. This is a REQUIRED element. If the *HAL-FORMS* document does not contain this element or the contents are unrecognized or unparsable, the *HAL-FORMS* document SHOULD be ignored.
+=== The +_templates+ Collection
+The +_templates+ collection describes the available state transition details including the HTTP method, message content-type, and arguments for the transition. This is a REQUIRED element. If the *HAL-FORMS* document does not contain this element or the contents are unrecognized or unparsable, the *HAL-FORMS* document SHOULD be ignored.
 
 The +_templates+ element contains a dictionary collection of +template+ objects. A valid *HAL-FORMS* document has at least one entry in the +_templates+ dictionary collection. Each +template+ contains the following possible properties: 
 
