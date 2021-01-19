@@ -784,7 +784,7 @@ Last Updated
 </dt>
 <dd>
 <p>
-  2020-12-31
+  2021-01-19
 </p>
 </dd>
 </dl></div>
@@ -869,11 +869,12 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 <div class="sectionbody">
 <div class="paragraph"><p>All <strong>HAL-FORMS</strong> documents MUST be valid JSON documents. A well-formed <strong>HAL-FORMS</strong> document has two top-level objects: <code>_links</code> and <code>_templates</code>. The following is a summary of the structure of the <strong>HAL-FORMS</strong> media type.</p></div>
 <div class="sect2">
-<h3 id="_the_code__links_code_element">4.1. The <code>_links</code> Element</h3>
-<div class="paragraph"><p>The <code>_links</code> element contains any links associated with the <strong>HAL-FORMS</strong> document. For this release, the only valid <code>link</code> object is the <code>self</code> link object.</p></div>
+<h3 id="_the_code__links_code_collection">4.1. The <code>_links</code> Collection</h3>
+<div class="paragraph"><p>The <code>_links</code> collection contains a dictionary collection of <code>link</code> elements associated with the <strong>HAL-FORMS</strong> document.</p></div>
 <div class="sect3">
 <h4 id="_code__links_code">4.1.1. <code>_links</code></h4>
-<div class="paragraph"><p>Contains the collection of valid <code>link</code> objects in the <strong>HAL-FORMS</strong> document. This is a RECOMMENDED element. If this element is missing or if the contents is unrecognized, it SHOULD be treated as if it contains a single <code>link</code> element with the key of <code>self</code> and the value of the URL used to request this <strong>HAL-FORMS</strong> document.</p></div>
+<div class="paragraph"><p>Contains the collection of valid <code>link</code> elements in the <strong>HAL-FORMS</strong> document. This is a RECOMMENDED element. If this element is missing, is invalid, or cannot be parsed, the <strong>HAL-FORMS</strong> document SHOULD be treated as if it contains a <code>_links</code> collection which contains a single <code>link</code> element with the key of <code>self</code> and the value of the URL that was used to request the current <strong>HAL-FORMS</strong> document.</p></div>
+<div class="paragraph"><p>Every <strong>HAL-FORMS</strong> document SHOULD have at least one <code>link</code> element in the collection with a <code>key</code> value set to <code>self</code>. The <code>_links</code> collection MAY have additional <code>link</code> elements with other <code>key</code> values. <strong>HAL-FORMS</strong> clients SHOULD ignore any <code>link</code> elements with <code>key</code> values they do not understand. Clients MAY reject a <strong>HAL-FORMS</strong> document that does not contain a <code>link</code> element with the <code>key</code> value set to <code>self</code>.</p></div>
 </div>
 <div class="sect3">
 <h4 id="_code_link_code">4.1.2. <code>link</code></h4>
@@ -881,20 +882,28 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 <div class="ulist"><ul>
 <li>
 <p>
-<code>key</code> : The unique identifier of the <code>link</code> object. This is a REQUIRED element for each <code>link</code> object. For this release, the only valid value for the <code>key</code> element is <code>"self"</code>. If this element is missing, is set to an unrecognized value, or cannot be parsed, the associated <code>link</code> object SHOULD be ignored.
+<code>key</code> : The unique identifier of the <code>link</code> element. This is a REQUIRED property for each <code>link</code> element. If this property is missing, is set to an unrecognized value, or cannot be parsed, the associated <code>link</code> element SHOULD be ignored.
 </p>
 </li>
 <li>
 <p>
-<code>href</code> : The URL associated with the <code>key</code>. This is a REQUIRED element. If this is missing, set to empty or unparsable, the associated <code>link</code> object SHOULD be ignored.
+<code>href</code> : The URL associated with the <code>key</code>. This is a REQUIRED property. If this is missing, set to empty or cannot be parsed, the associated <code>link</code> element SHOULD be ignored.
 </p>
 </li>
 </ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">Additional properties MAY appear within a <code>link</code> element. <strong>HAL-FORMS</strong> clients SHOULD ignore any properties they do not understand and/or cannot parse.</td>
+</tr></table>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="templates-element">4.2. The <code>_templates</code> Element</h3>
-<div class="paragraph"><p>The <code>_templates</code> element describes the available state transition details including the HTTP method, message content-type, and arguments for the transition. This is a REQUIRED element. If the <strong>HAL-FORMS</strong> document does not contain this element or the contents are unrecognized or unparsable, the <strong>HAL-FORMS</strong> document SHOULD be ignored.</p></div>
+<h3 id="templates-element">4.2. The <code>_templates</code> Collection</h3>
+<div class="paragraph"><p>The <code>_templates</code> collection describes the available state transition details including the HTTP method, message content-type, and arguments for the transition. This is a REQUIRED element. If the <strong>HAL-FORMS</strong> document does not contain this element or the contents are unrecognized or unparsable, the <strong>HAL-FORMS</strong> document SHOULD be ignored.</p></div>
 <div class="paragraph"><p>The <code>_templates</code> element contains a dictionary collection of <code>template</code> objects. A valid <strong>HAL-FORMS</strong> document has at least one entry in the <code>_templates</code> dictionary collection. Each <code>template</code> contains the following possible properties:</p></div>
 <div class="sect3">
 <h4 id="_code_contenttype_code">4.2.1. <code>contentType</code></h4>
@@ -1431,7 +1440,7 @@ Greg Turnquist.</p></div>
 <div id="footer">
 <div id="footer-text">
 Last updated
- 2020-12-31 12:15:56 EST
+ 2021-01-19 11:57:23 EST
 </div>
 </div>
 </body>
