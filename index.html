@@ -873,8 +873,8 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 <div class="paragraph"><p>The <code>_links</code> collection contains a dictionary collection of <code>link</code> elements associated with the <strong>HAL-FORMS</strong> document.</p></div>
 <div class="sect3">
 <h4 id="_code__links_code">4.1.1. <code>_links</code></h4>
-<div class="paragraph"><p>Contains the collection of valid <code>link</code> elements in the <strong>HAL-FORMS</strong> document. This is a RECOMMENDED element. If this element is missing, is invalid, or is not parseable, the <strong>HAL-FORMS</strong> document SHOULD be treated as if it contains a <code>_links</code> collection which contains a single <code>link</code> element with the key of <code>self</code> and the value of the URL that was used to request the current <strong>HAL-FORMS</strong> document.</p></div>
-<div class="paragraph"><p>Every <strong>HAL-FORMS</strong> document SHOULD have at least one <code>link</code> element in the collection with a <code>key</code> value set to <code>self</code>. The <code>_links</code> collection MAY have additional <code>link</code> elements with other <code>key</code> values. <strong>HAL-FORMS</strong> clients SHOULD ignore any <code>link</code> elements with <code>key</code> values they do not understand. Clients MAY reject a <strong>HAL-FORMS</strong> document that does not contain a <code>link</code> element withe its <code>key</code> value set to <code>self</code>.</p></div>
+<div class="paragraph"><p>Contains the collection of valid <code>link</code> elements in the <strong>HAL-FORMS</strong> document. This is a RECOMMENDED element. If this element is missing, is invalid, or cannot be parsed, the <strong>HAL-FORMS</strong> document SHOULD be treated as if it contains a <code>_links</code> collection which contains a single <code>link</code> element with the key of <code>self</code> and the value of the URL that was used to request the current <strong>HAL-FORMS</strong> document.</p></div>
+<div class="paragraph"><p>Every <strong>HAL-FORMS</strong> document SHOULD have at least one <code>link</code> element in the collection with a <code>key</code> value set to <code>self</code>. The <code>_links</code> collection MAY have additional <code>link</code> elements with other <code>key</code> values. <strong>HAL-FORMS</strong> clients SHOULD ignore any <code>link</code> elements with <code>key</code> values they do not understand. Clients MAY reject a <strong>HAL-FORMS</strong> document that does not contain a <code>link</code> element with the <code>key</code> value set to <code>self</code>.</p></div>
 </div>
 <div class="sect3">
 <h4 id="_code_link_code">4.1.2. <code>link</code></h4>
@@ -882,12 +882,12 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 <div class="ulist"><ul>
 <li>
 <p>
-<code>key</code> : The unique identifier of the <code>link</code> object. This is a REQUIRED property for each <code>link</code> element. If this property is missing, is set to an unrecognized value, or cannot be parsed, the associated <code>link</code> element SHOULD be ignored.
+<code>key</code> : The unique identifier of the <code>link</code> element. This is a REQUIRED property for each <code>link</code> element. If this property is missing, is set to an unrecognized value, or cannot be parsed, the associated <code>link</code> element SHOULD be ignored.
 </p>
 </li>
 <li>
 <p>
-<code>href</code> : The URL associated with the <code>key</code>. This is a REQUIRED property. If this is missing, set to empty or unparsable, the associated <code>link</code> element SHOULD be ignored.
+<code>href</code> : The URL associated with the <code>key</code>. This is a REQUIRED property. If this is missing, set to empty or cannot be parsed, the associated <code>link</code> element SHOULD be ignored.
 </p>
 </li>
 </ul></div>
@@ -1440,7 +1440,7 @@ Greg Turnquist.</p></div>
 <div id="footer">
 <div id="footer-text">
 Last updated
- 2021-01-19 11:52:18 EST
+ 2021-01-19 11:57:23 EST
 </div>
 </div>
 </body>

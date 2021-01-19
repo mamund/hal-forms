@@ -72,8 +72,8 @@ Every *HAL-FORMS* document SHOULD have at least one +link+ element in the collec
 ==== +link+
 The +link+ element consists of a key and a set of properties. 
 
- * +key+ : The unique identifier of the +link+ object. This is a REQUIRED property for each +link+ element. If this property is missing, is set to an unrecognized value, or cannot be parsed, the associated +link+ element SHOULD be ignored.
- * +href+ : The URL associated with the +key+. This is a REQUIRED property. If this is missing, set to empty or unparsable, the associated +link+ element SHOULD be ignored.
+ * +key+ : The unique identifier of the +link+ element. This is a REQUIRED property for each +link+ element. If this property is missing, is set to an unrecognized value, or cannot be parsed, the associated +link+ element SHOULD be ignored.
+ * +href+ : The URL associated with the +key+. This is a REQUIRED property. If this is missing, set to empty or cannot be parsed, the associated +link+ element SHOULD be ignored.
 
 NOTE: Additional properties MAY appear within a +link+ element. *HAL-FORMS* clients SHOULD ignore any properties they do not understand and/or cannot parse. 
 
