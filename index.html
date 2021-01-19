@@ -869,8 +869,8 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 <div class="sectionbody">
 <div class="paragraph"><p>All <strong>HAL-FORMS</strong> documents MUST be valid JSON documents. A well-formed <strong>HAL-FORMS</strong> document has two top-level objects: <code>_links</code> and <code>_templates</code>. The following is a summary of the structure of the <strong>HAL-FORMS</strong> media type.</p></div>
 <div class="sect2">
-<h3 id="_the_code__links_code_element">4.1. The <code>_links</code> Element</h3>
-<div class="paragraph"><p>The <code>_links</code> element contains a dictionary collection of <code>link</code> elements associated with the <strong>HAL-FORMS</strong> document.</p></div>
+<h3 id="_the_code__links_code_collection">4.1. The <code>_links</code> Collection</h3>
+<div class="paragraph"><p>The <code>_links</code> collection contains a dictionary collection of <code>link</code> elements associated with the <strong>HAL-FORMS</strong> document.</p></div>
 <div class="sect3">
 <h4 id="_code__links_code">4.1.1. <code>_links</code></h4>
 <div class="paragraph"><p>Contains the collection of valid <code>link</code> elements in the <strong>HAL-FORMS</strong> document. This is a RECOMMENDED element. If this element is missing, is invalid, or is not parseable, the <strong>HAL-FORMS</strong> document SHOULD be treated as if it contains a <code>_links</code> collection which contains a single <code>link</code> element with the key of <code>self</code> and the value of the URL that was used to request the current <strong>HAL-FORMS</strong> document.</p></div>
@@ -902,8 +902,8 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="templates-element">4.2. The <code>_templates</code> Element</h3>
-<div class="paragraph"><p>The <code>_templates</code> element describes the available state transition details including the HTTP method, message content-type, and arguments for the transition. This is a REQUIRED element. If the <strong>HAL-FORMS</strong> document does not contain this element or the contents are unrecognized or unparsable, the <strong>HAL-FORMS</strong> document SHOULD be ignored.</p></div>
+<h3 id="templates-element">4.2. The <code>_templates</code> Collection</h3>
+<div class="paragraph"><p>The <code>_templates</code> collection describes the available state transition details including the HTTP method, message content-type, and arguments for the transition. This is a REQUIRED element. If the <strong>HAL-FORMS</strong> document does not contain this element or the contents are unrecognized or unparsable, the <strong>HAL-FORMS</strong> document SHOULD be ignored.</p></div>
 <div class="paragraph"><p>The <code>_templates</code> element contains a dictionary collection of <code>template</code> objects. A valid <strong>HAL-FORMS</strong> document has at least one entry in the <code>_templates</code> dictionary collection. Each <code>template</code> contains the following possible properties:</p></div>
 <div class="sect3">
 <h4 id="_code_contenttype_code">4.2.1. <code>contentType</code></h4>
@@ -1440,7 +1440,7 @@ Greg Turnquist.</p></div>
 <div id="footer">
 <div id="footer-text">
 Last updated
- 2021-01-19 11:49:34 EST
+ 2021-01-19 11:52:18 EST
 </div>
 </div>
 </body>
