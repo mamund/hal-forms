@@ -1134,7 +1134,7 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 <div class="sect4 xxx">
 <h5 id="options-inline">3.4.2.1. <code>inline</code></h5>
 <div class="paragraph"><p>The <code>inline</code> attribute is a JSON array that contains the list of possible values. The <code>inline</code> attribute is OPTIONAL. If the <code>inline</code> attribute is missing or unparseable and the <code>link</code> (see <a href="#options-link"><code>link</code></a>) attribute is missing or unparseable, then the <code>options</code> element SHOULD be ignored.</p></div>
-<div class="paragraph"><p>In it&#8217;s simplest form, the <code>inline</code> attribute holds a set of anonymous JSON dictionary objects in the form <code>{'"prompt": "...", "value" : ""}</code> (see <a href="#options-inline">A Simple Inline Array of Values</a>). The <code>inline</code> contents can also be an array of unique name-value pairs (see <a href="#options-inline-nvp">An Inline Array of Name/Value Pairs</a>).</p></div>
+<div class="paragraph"><p>In it&#8217;s simplest form, the <code>inline</code> attribute holds a set of anonymous JSON dictionary objects in the form <code>{'"prompt": "...", "value" : ""}</code> (see <a href="#options-inline-simple">A Simple Inline Array of Values</a>). The <code>inline</code> contents can also be an array of unique name-value pairs (see <a href="#options-inline-nvp">An Inline Array of Name/Value Pairs</a>).</p></div>
 <div class="admonitionblock">
 <table><tr>
 <td class="icon">
@@ -1165,7 +1165,7 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </p>
 </li>
 </ul></div>
-<div class="paragraph"><p>The value returned when dereferencing a <code>link</code> element SHOULD be either a simple array (see <a href="#options-link">An External Array of Values</a>) or a custom collection (see <a href="#options-link-nvp">An External Array of Name/Value Pairs</a>). The exact format of the returned collection will vary based on the value of the HTTP <code>Accept</code> header sent with the request.</p></div>
+<div class="paragraph"><p>The value returned when dereferencing a <code>link</code> element SHOULD be either a simple array (see <a href="#options-external">An External Array of Values</a>) or a custom collection (see <a href="#options-external-nvp">An External Array of Name/Value Pairs</a>). The exact format of the returned collection will vary based on the value of the HTTP <code>Accept</code> header sent with the request.</p></div>
 <div class="paragraph"><p>When responding to an <code>options.link</code> request, the server MAY return additional fields (e.g. more than <code>prompt</code> and <code>value</code> fields). These additional fields SHOULD be ignored by the client application.</p></div>
 <div class="admonitionblock">
 <table><tr>
@@ -1219,7 +1219,7 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </div>
 <div class="sect4 xxx">
 <h5 id="options-valueField">3.4.2.7. <code>valueField</code></h5>
-<div class="paragraph"><p>This attribute contains the name of the JSON dictionary element in the array returned via the <a href="#options-inline"><code>inline</code></a> or <a href="#options-link"><code>link</code></a> elements to use as the value when rendering the <code>options</code> UI and filling in the <a href="#options-selectedValues+">[options-selectedValues+]</a> attribute. This is an OPTIONAL attribute. If this attribute is missing or unparseable the application SHOULD assume the <code>valueField</code> value is set to <code>"value"</code>.</p></div>
+<div class="paragraph"><p>This attribute contains the name of the JSON dictionary element in the array returned via the <a href="#options-inline"><code>inline</code></a> or <a href="#options-link"><code>link</code></a> elements to use as the value when rendering the <code>options</code> UI and filling in the <a href="#options-selectedValues"><code>selectedValues</code></a> attribute. This is an OPTIONAL attribute. If this attribute is missing or unparseable the application SHOULD assume the <code>valueField</code> value is set to <code>"value"</code>.</p></div>
 <div class="paragraph"><p>See <a href="#options-fields">Reference Fields</a> for an example.</p></div>
 </div>
 </div>
@@ -1271,7 +1271,7 @@ Multiple Return Values
 </li>
 </ul></div>
 <div class="sect4 xxx">
-<h5 id="options-inline">3.4.4.1. A Simple Inline Array of Values</h5>
+<h5 id="options-inline-simple">3.4.4.1. A Simple Inline Array of Values</h5>
 <div class="paragraph"><p>Below is a simple rendition of the <code>options</code> control using the <em>Inline Array</em> style.  Note that, in the example below control&#8217;s default value would be set to "FedEx".</p></div>
 <div class="listingblock">
 <div class="content">
@@ -1350,7 +1350,7 @@ Multiple Return Values
 <div class="sect4 xxx">
 <h5 id="options-external">3.4.4.3. An External Array of Values</h5>
 <div class="paragraph"><p>The source of possible values for a <code>options</code> control can also be an external resource. This resource is reachable using an <code>HTML.GET</code> against a supplied URL (which MAY be templated) and and OPTIONAL <code>options.link.type</code> property that holds a valid registered media type (e.g. <code>application/json</code>, <code>text/csv</code>, etc.).</p></div>
-<div class="paragraph"><p>By default, the response value is a <em>Simple Array</em> rendered in <code>application/json</code> as simple JSON array.</p></div>
+<div class="paragraph"><p>By default, the response value is a <em>Simple Array</em> rendered in <code>application/json</code> as a JSON array.</p></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>{
@@ -1969,7 +1969,7 @@ Greg Turnquist.</p></div>
 <div id="footer">
 <div id="footer-text">
 Last updated
- 2021-02-20 16:08:25 EST
+ 2021-02-20 16:23:11 EST
 </div>
 </div>
 </body>
