@@ -210,7 +210,7 @@ For hints on how to render and process various +type+ values as well as for guid
 
 [[options-element]]
 === The +options+ Element
-The motivation for the control is to provide an enumerated list of possible values for a `property`. This can be used to provide a UI similar to HTML controls such as: 
+The +options+ element contains an enumerated list of possible values for a `property`. This can be used to provide a UI similar to HTML controls such as: 
 
  * `SELECT & OPTIONS`
  * `INPUT.type="radio"`
