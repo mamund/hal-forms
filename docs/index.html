@@ -784,7 +784,7 @@ Last Updated
 </dt>
 <dd>
 <p>
-  2021-01-22
+  2021-02-20
 </p>
 </dd>
 </dl></div>
@@ -1017,21 +1017,26 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 <div class="paragraph"><p>The <code>minlength</code> attribute specifies the minimum number of characters required in a <code>value</code> property. this attribute MAY appear along with the <code>maxLength</code> attribute. This is an OPTIONAL property and it MAY be ignored.</p></div>
 </div>
 <div class="sect4 xxx">
-<h5 id="_code_placeholder_code">4.3.2.6. <code>placeholder</code></h5>
+<h5 id="_code_options_code">4.3.2.6. <code>options</code></h5>
+<div class="paragraph"><p>The <code>options</code> element contains a set of possible values accessible either byValue (e.g. <code>inline</code>) or byReference (e.g. via <code>link.href</code>) and can be used to provide a constrained list of possble values for a <code>property</code> field. See <a href="#options-element">The <code>options</code> Element</a> for details.</p></div>
+<div class="paragraph"><p>Support for the <code>options</code> object of a <code>property</code> element is OPTIONAL. If the client does not understand or cannot parse the <code>options</code> object, the <code>options</code> object SHOULD be ignored and the corresponding <code>property</code> SHOULD be treated as a simple text input element.</p></div>
+</div>
+<div class="sect4 xxx">
+<h5 id="_code_placeholder_code">4.3.2.7. <code>placeholder</code></h5>
 <div class="paragraph"><p>The <code>placeholder</code> attribute specifies a short hint that describes the expected value of an input field (e.g. a sample value or a short description of the expected format). This is an OPTIONAL field and MAY be ignored.</p></div>
 </div>
 <div class="sect4 xxx">
-<h5 id="_code_rows_code">4.3.2.7. <code>rows</code></h5>
+<h5 id="_code_rows_code">4.3.2.8. <code>rows</code></h5>
 <div class="paragraph"><p>The <code>rows</code> attribute specifies the expected maximum number of lines to display when rendering the input box. This attribute applies to the associated <code>property</code> element when that <code>property</code> element&#8217;s <code>type</code> attribute is set to <code>"textarea"</code>. The <code>cols</code> attribute is a non-negative integer greater than zero. If the <code>cols</code> attribute is missing or contains an invalid value, it can be assumed to be set to the value of <code>5</code>. If the <code>type</code> attribute of the associated <code>property</code> element is not set to <code>"textarea"</code>, this attribute SHOULD be ignored. This is an OPTIONAL attribute and it MAY be ignored. The <code>rows</code> attribute SHOULD appear along with the <code>cols</code> attribute.</p></div>
 </div>
 <div class="sect4 xxx">
-<h5 id="_code_step_code">4.3.2.8. <code>step</code></h5>
+<h5 id="_code_step_code">4.3.2.9. <code>step</code></h5>
 <div class="paragraph"><p>The <code>step</code> attribute specifies the interval between legal numbers in a <code>value</code> property. For example, if <code>step="3"</code>, legal numbers could be -3, 0, 3, 6, etc.</p></div>
 </div>
 <div class="sect4 xxx">
-<h5 id="_code_type_code">4.3.2.9. <code>type</code></h5>
+<h5 id="_code_type_code">4.3.2.10. <code>type</code></h5>
 <div class="paragraph"><p>The <code>type</code> attribute controls the data type of the <code>property</code> value. It is an enumerated attribute. The <code>type</code> can also used to determine the interface control to display for user input. This is an OPTIONAL element. If the <code>type</code> value is not supported by the document consumer, contains a value not understood by the consumer, and/or is missing, the the document consumer SHOULD assume the <code>type</code> attribute is set to the default value: <code>"text"</code> and render the display input as a simple text box.</p></div>
-<div class="paragraph"><p>Possible settings for the <code>type</code> value in this release are:
+<div class="paragraph"><p>Possible settings for the <code>type</code> value adn teh expected contents to be returned inthe  are:
   <code>hidden</code>,
   <code>text</code>,
   <code>textarea</code>,
@@ -1050,6 +1055,416 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
   <code>color</code>.</p></div>
 <div class="paragraph"><p>For hints on how to render and process various <code>type</code> values as well as for guidance on how each <code>type</code> value affects to the contents of the associated <code>value</code> property, see <a href="#html5type">[HTML5TYPE]</a>.</p></div>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="options-element">4.4. The <code>options</code> Element</h3>
+<div class="paragraph"><p>The motivation for the control is to provide an enumerated list of possible values for a <code>property</code>. This can be used to provide a UI similar to HTML controls such as:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>SELECT &amp; OPTIONS</code>
+</p>
+</li>
+<li>
+<p>
+<code>INPUT.type="radio"</code>
+</p>
+</li>
+<li>
+<p>
+<code>INPUT.type="checkbox"</code>
+</p>
+</li>
+<li>
+<p>
+<code>INPUT.type="search"</code> (w/ type-ahead suggestions)
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>The <code>options</code> control can also be used in machine-to-machine interactions where it is important to provide the client information about the possible values for a <code>property</code>.</p></div>
+<div class="paragraph"><p>The <code>options</code> element contains a set of possible values accessible either <em>by value</em> (e.g. <code>options.inline</code>) or <em>by reference</em> (e.g. via <code>options.link.href</code>) and can be used to provide a constrained list of possble values for a <code>property</code> field. If, when first loaded, the <strong>HAL-FORMS</strong> template has a pre-set value in the corresponding <code>property.options.selectedValues</code> array attribute, the UI MAY render the form with selected value(s) already chosen.</p></div>
+<div class="paragraph"><p>Whatever value is ultimately selected gets placed into the <code>property.options.selectedValues</code> array attribute. When sending the results of the completed <strong>HAL-FORMS</strong> to the server, content <code>property.options.selectedValues</code> is serialized in a manner compliant with the media type value in the <code>contentType</code> attribute (e.g. <code>appilcation/json</code>, <code>application/x-www-form-urlencded</code>, etc.).</p></div>
+<div class="sect3">
+<h4 id="_overview_of_the_code_options_code_element">4.4.1. Overview of the <code>options</code> Element</h4>
+<div class="paragraph"><p>Below is an overview of the <code>property.options</code> element as it appears within a <strong>HAL-FORMS</strong> document. Details describing the meaning and use of all the elements of the design appears in the sections that follow.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>{
+  "_templates" : {
+    "default" : {
+      ...
+      "contentType" : "application/json|application/x-www-form-ulencoded",
+      "properties" : [
+        {
+          "name" : "...",
+          "prompt" : "...",
+          "options" : {
+            "selectedValues" : ["...", "...", ...],
+            "inline" : ["...", "..." , ...] | [{"prompt" : "...", "value" : "..."}, {...}, ...],
+            "link" : {
+              "href" : "...",
+              "templated" : "true|false",
+              "type" : "application/json|text/csv..."
+            },
+            "promptField" : "...",
+            "valueField" : "...",
+            "minItems" : 0,
+            "maxItems" : 1
+          }
+        }
+      ]
+    }
+  }
+}</code></pre>
+</div></div>
+<div class="paragraph"><p>Not all the elements of the <code>options</code> object shown above are valid at the same time.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_a_simple_inline_array_of_values">4.4.2. A Simple Inline Array of Values</h4>
+<div class="paragraph"><p>Below is a simple rendition of the <code>options</code> control using the <em>Inline Array</em> style.  Note that, in the example below control&#8217;s default value would be set to "FedEx".</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>{
+  "_templates" : {
+    "default" : {
+      ...
+      "properties" : [
+        {
+          "name" : "shipping",
+          "prompt" : "Select Shipping Method",
+          "options" : {
+            "selectedValues" : ["FedEx"],
+            "inline" : ["FedEx","UPS","DHL"]
+          }
+        }
+      ]
+    }
+  }
+}</code></pre>
+</div></div>
+<div class="paragraph"><p>A corresponding <code>HTML.SELECT</code> rendering looks like this:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>&lt;label for="shipping"&gt;Select Shipping Method&lt;/label&gt;
+&lt;select name="shipping"&gt;
+  &lt;option selected="true"&gt;FedEx&lt;/option&gt;
+  &lt;option&gt;UPS&lt;/option&gt;
+  &lt;option&gt;DHL&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+</div></div>
+</div>
+<div class="sect3">
+<h4 id="_an_inline_array_of_name_value_pairs">4.4.3. An Inline Array of Name/Value Pairs</h4>
+<div class="paragraph"><p>Below is an example of the <code>options</code> control using an <em>Inline Array of Name/Value Paris</em>.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>{
+  "_templates" : {
+    "default" : {
+      ...
+      "properties" : [
+        {
+          "name" : "shipping",
+          "type" : "radio",
+          "prompt" : "Select Shipping Method",
+          "options" : {
+            "selectedValues" : ["FedEx"],
+            "inline" : [
+              {"prompt" : "Federal Express", "value" : "FedEx"},
+              {"prompt" : "United Parcel Service", "value" : "UPS"},
+              {"prompt" : "DHL Express", "value" : "DHL"}
+            ]
+          }
+        }
+      ]
+    }
+  }
+}</code></pre>
+</div></div>
+<div class="paragraph"><p>A corresponding <code>HTML.INPUT.type="radio"</code> rendering looks like this:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>&lt;p&gt;
+  &lt;input type="radio" id="fedex" name="shipping" value="FedEx" checked="true"&gt;
+  &lt;label for="fedex"&gt;Federal Express&lt;/label&gt;&lt;br&gt;
+
+  &lt;input type="radio" id="ups" name="shipping" value="UPS"&gt;
+  &lt;label for="ups"&gt;United Parcel Service&lt;/label&gt;&lt;br&gt;
+
+  &lt;input type="radio" id="dhl" name="shipping" value="DHL"&gt;
+  &lt;label for="dhl"&gt;DHL Express&lt;/label&gt;
+&lt;/p&gt;</code></pre>
+</div></div>
+</div>
+<div class="sect3">
+<h4 id="_an_external_array_of_values">4.4.4. An External Array of Values</h4>
+<div class="paragraph"><p>The source of possible values for a <code>options</code> control can also be an external resource. This resource is reachable using an <code>HTML.GET</code> against a supplied URL (which MAY be templated) and and OPTIONAL <code>options.link.type</code> property that holds a valid registered media type (e.g. <code>application/json</code>, <code>text/csv</code>, etc.).</p></div>
+<div class="paragraph"><p>By default, the response value is a <em>Simple Array</em> rendered in <code>application/json</code> as simple JSON array.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>{
+  "_templates" : {
+    "default" : {
+      ...
+      "properties" : [
+        {
+          "name" : "shipping",
+          "type" : "radio",
+          "prompt" : "Select Shipping Method",
+          "options" : {
+            "selectedValues" : ["FedEx"],
+            "link" : {
+              "href" : "http://api.examples.org/shipping-options",
+              "templated" : "false",
+              "type" : "application/json"
+            }
+          }
+        }
+      ]
+    }
+  }
+}</code></pre>
+</div></div>
+<div class="paragraph"><p>The client would dereference the URL using <code>HTTP.GET</code>. The exchange (including the response) looks like this:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>*** REQUEST
+GET /shipping-options HTTP/2.0
+Host: api.example.org
+Accept: application/json
+
+*** RESPONSE
+HTTP/2.0 200 OK
+Content-Type: application/json
+Content-Length: nn
+
+["Fedex","UPS","DHL"]</code></pre>
+</div></div>
+<div class="paragraph"><p>A CR-LF delimited set of values MAY be returned if the <code>options.link.type</code> attribute is set to <code>text/csv</code></p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>*** REQUEST
+GET /shipping-options HTTP/2.0
+Host: api.example.org
+Accept: text/csv
+
+*** RESPONSE
+HTTP/2.0 200 OK
+Content-Type: text/csv
+Content-Length: nn
+
+Fedex
+UPS
+DHL</code></pre>
+</div></div>
+</div>
+<div class="sect3">
+<h4 id="_an_external_array_of_name_value_pairs">4.4.5. An External Array of Name/Value Pairs</h4>
+<div class="paragraph"><p>The external resource MAY return a collection of name/value pairs.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>{
+  "_templates" : {
+    "default" : {
+      ...
+      "properties" : [
+        {
+          "name" : "shipping",
+          "type" : "dropdown",
+          "prompt" : "Select Shipping Method",
+          "options" : {
+            "selectedValues" : ["FedEx"],
+            "link" : {
+              "href" : "http://api.examples.org/shipping-options",
+              "templated" : "false",
+              "type : "application/json"
+            }
+          }
+        }
+      ]
+    }
+  }
+}</code></pre>
+</div></div>
+<div class="paragraph"><p>The client would dereference the URL using <code>HTTP.GET</code>. The exchange (including the response) looks like this:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>*** REQUEST
+GET /shipping-options HTTP/2.0
+Host: api.example.org
+Accept: application/json
+
+*** RESPONSE
+HTTP/2.0 200 OK
+Content-Type: application/json
+Content-Length: nn
+
+[
+  {"prompt" : "Federal Express", "value" : "FedEx"},
+  {"prompt" : "United Parcel Service", "value" : "UPS"},
+  {"prompt" : "DHL Express", "value" : "DHL"}
+]</code></pre>
+</div></div>
+<div class="paragraph"><p>The set of name/value pairs MAY be returned in <code>text/csv</code> format when the <code>options.link.type</code> property is set to <code>text/csv</code>.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>*** REQUEST
+GET /shipping-options HTTP/2.0
+Host: api.example.org
+Accept: text/csv
+
+*** RESPONSE
+HTTP/2.0 200 OK
+Content-Type: text/csv
+Content-Length: nn
+
+Federal Express,FedEx
+United Parcel Service,UPS
+DHL Express,DHL</code></pre>
+</div></div>
+</div>
+<div class="sect3">
+<h4 id="_reference_fields">4.4.6. Reference Fields</h4>
+<div class="paragraph"><p>The <code>options</code> element also supports the use of <code>options.promptField</code> and <code>options.valueField</code> as custom property names  or <em>Reference Fields</em> instead of using the default names <code>"prompt"</code> and <code>"value"</code>.  In this case, the <code>promptField</code> value contains the name of the field in the source collection (<code>inline</code> or <code>link</code>) to be used for prompts and the <code>valueField</code> value contains the name of the field in the source collection to be used for values.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>{
+  "_templates" : {
+    "default" : {
+      ...
+      "properties" : [
+        {
+          "name" : "shipping",
+          "type" : "radio",
+          "prompt" : "Select Shipping Method",
+          "options" : {
+            "selectedValues" : ["FedEx"],
+            "inline" : [
+              {"shipName" : "Federal Express", "shipCode" : "FedEx"},
+              {"shipName" : "United Parcel Service", "shipCode" : "UPS"},
+              {"shipName" : "DHL Express", "shipCode" : "DHL"}
+            ],
+            "promptField" : "shipName",
+            "valueField" : "shipCode"
+          }
+        }
+      ]
+    }
+  }
+}</code></pre>
+</div></div>
+<div class="paragraph"><p><em>Reference Fields</em> MAY be used when returning an array of JSON objects if the <code>options.accept</code> attribute is set to <code>application/json</code></p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>*** REQUEST
+GET /shipping-options HTTP/2.0
+Host: api.example.org
+Accept: application/json
+
+*** RESPONSE
+HTTP/2.0 200 OK
+Content-Type: application/json
+Content-Length: nn
+
+[
+  {"shipName" : "Federal Express", "shipCode" : "FedEx"},
+  {"shipName" : "United Parcel Service", "shipCode" : "UPS"},
+  {"shipName" : "DHL Express", "shipCode" : "DHL"}
+]</code></pre>
+</div></div>
+</div>
+<div class="sect3">
+<h4 id="_multiple_return_values">4.4.7. Multiple Return Values</h4>
+<div class="paragraph"><p>You can signal the minimum and maximum number of items that can be selected using the <code>options.minItems</code> and <code>options.maxItems</code> attributes. By default, these attributes are <code>options.minItems=0</code> and <code>options.maxItems</code> is unbounded (e.g. there are no limits). Client applications SHOULD validate the number of seleted values using these attributes. This can apply whether the source list comes from <code>inline</code> or <code>link</code>. These attributes are OPTIONAL and MAY be ignored by the client.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>{
+  "_templates" : {
+    "default" : {
+      ...
+      "properties" : [
+        {
+          "name" : "shipping",
+          "type" : "checkbox",
+          "prompt" : "Select Shipping Method",
+          "options" : {
+            "selectedValues" : ["FedEx"],
+            "inline" : [
+              {"shipName" : "Federal Express", "shipCode" : "FedEx"},
+              {"shipName" : "United Parcel Service", "shipCode" : "UPS"},
+              {"shipName" : "DHL Express", "shipCode" : "DHL"}
+            ],
+            "minItems" : 1,
+            "maxItems" : 2
+            "promptField" : "shipName",
+            "valueField" : "shipCode"
+          }
+        }
+      ]
+    }
+  }
+}</code></pre>
+</div></div>
+<div class="paragraph"><p>When sending the results of selecting multiple values in the <code>options.selectedValues</code> array from the client to the server, the rules associated with the <code>contentType</code> SHOULD be applied.  When the <code>contentType</code> is set to <code>application/json</code>, the contents of the <code>options.selectedValues</code> array SHOULD be serialized as a simple JSON array:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>{
+  ...
+  shipping=["FedEx", "DHL"]
+  ...
+}</code></pre>
+</div></div>
+<div class="paragraph"><p>When the <code>contentType</code> is set to <code>application/x-www-form-urlencoded</code>, the contents of the <code>options.selectedValues</code> array SHOULD be serialized as a set of repeating name/value pairs:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>shipping=FedEx&amp;shipping=DHL</code></pre>
+</div></div>
+</div>
+<div class="sect3">
+<h4 id="_additional_considerations">4.4.8. Additional Considerations</h4>
+<div class="ulist"><ul>
+<li>
+<p>
+Support for the <code>options</code> object of a <code>property</code> element is OPTIONAL. If the client does not understand or cannot parse the <code>options</code> object, the <code>options</code> object SHOULD be ignored and the corresponding <code>property</code> SHOULD be treated as a simple text input element.
+</p>
+</li>
+<li>
+<p>
+If the <code>options</code> object has no <code>inline</code> and no <code>link</code> properties, the <code>options</code> object is invalid and SHOULD be ignored.
+</p>
+</li>
+<li>
+<p>
+If both <code>inline</code> and <code>link</code> elements appear in the same <code>options</code> object, the <code>inline</code> element SHOULD be used and the <code>link</code> element SHOULD NOT be used.
+</p>
+</li>
+<li>
+<p>
+In cases where the possible value collection from (<code>inline</code> or <code>link</code> elements) only supplies a list of <code>value</code> elements, the client SHOULD operate as if a <code>prompt</code> element was supplied and set that <code>prompt</code> value to equal the contents of the corresponding <code>value</code> element.
+</p>
+</li>
+<li>
+<p>
+Compliant applications SHOULD support both <code>application/json</code> and <code>text/csv</code> as valid response types for <code>options.link</code> implementations. Clients MAY support other values. If no <code>options.link.type</code> attribute exists, the client application SHOULD default to <code>application/json</code>. Whether the <code>options.link.type</code> value appears or not, client applications SHOULD send an <code>Accept</code> header when making a request to the server with the supplied URL. If no <code>Accept</code> header is sent by the client, the server SHOULD assume the client expects an <code>Accept</code> header set to <code>application/json</code> and respond accordingly.
+</p>
+</li>
+<li>
+<p>
+When responding to a <code>options.link</code> request, the server MAY return additional fields (e.g. more than <code>prompt</code> and <code>value</code> fields). Additional fields SHOULD be ignored by the client application.
+</p>
+</li>
+<li>
+<p>
+When no <code>minItems</code> attribute is supplied, the client SHOULD assume the <code>minItems</code> value is set to <code>0</code> (e.g. there is no minimum number of items that must be selected. When no <code>maxItems</code> attribute is supplied, the client SHOULD assume the <code>maxItems</code> value is unbounded (e.g. there is no limit to the number of items that can be selected.
+</p>
+</li>
+<li>
+<p>
+Document authors need to take care that <code>property.required</code> and <code>property.options.minItems</code> values do not conflict (e.g. <code>property.required:true</code> and <code>options.minItems:`0</code>).
+</p>
+</li>
+</ul></div>
 </div>
 </div>
 </div>
@@ -1417,6 +1832,16 @@ All new properties or objects are treated as OPTIONAL (e.g. no new REQUIRED elem
 <a id="html5type"></a> [HTML5TYPE] "HTML 5.2 FORMS", December 2017, <a href="https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-input-type">https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-input-type</a>
 </p>
 </li>
+<li>
+<p>
+<a id="rfc8259"></a> [RFC8259] Bray, Tim, Ed., "Javascript Object Notation", December 2017, <a href="https://tools.ietf.org/html/rfc8259">https://tools.ietf.org/html/rfc8259</a>
+</p>
+</li>
+<li>
+<p>
+<a id="rfc4180"></a> [RFC4180] Y. Shafranovich, "Common Format and MIME Type for Comma-Separated Values (CSV) Files", October 2005, <a href="https://tools.ietf.org/html/rfc4180">https://tools.ietf.org/html/rfc4180</a>
+</p>
+</li>
 </ul></div>
 </div>
 </div>
@@ -1438,7 +1863,7 @@ Greg Turnquist.</p></div>
 <div id="footer">
 <div id="footer-text">
 Last updated
- 2021-01-22 19:30:53 EST
+ 2021-02-20 11:50:04 EST
 </div>
 </div>
 </body>
