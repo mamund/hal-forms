@@ -1195,6 +1195,7 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 <div class="sect4 xxx">
 <h5 id="options-promptField">3.4.2.5. <code>promptField</code></h5>
 <div class="paragraph"><p>This attribute contains the name of the JSON dictionary element in the array returned via the <a href="#options-inline"><code>inline</code></a> or <a href="#options-link"><code>link</code></a> elements to use as the prompt when rendering the <code>options</code> UI. This is an OPTIONAL attribute. If this attribute is missing or unparseable the application SHOULD assume the <code>promptField</code> value is set to <code>"prompt"</code>.</p></div>
+<div class="paragraph"><p>See <a href="#options-fields">Reference Fields</a> for an example.</p></div>
 </div>
 <div class="sect4 xxx">
 <h5 id="options-selectedValues">3.4.2.6. <code>selectedValues</code></h5>
@@ -1214,10 +1215,12 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 <div class="content">
 <pre><code>shipping=FedEx&amp;shipping=DHL</code></pre>
 </div></div>
+<div class="paragraph"><p>See <a href="#options-return-values">Multiple Return Values</a> for an example.</p></div>
 </div>
 <div class="sect4 xxx">
 <h5 id="options-valueField">3.4.2.7. <code>valueField</code></h5>
 <div class="paragraph"><p>This attribute contains the name of the JSON dictionary element in the array returned via the <a href="#options-inline"><code>inline</code></a> or <a href="#options-link"><code>link</code></a> elements to use as the value when rendering the <code>options</code> UI and filling in the <a href="#options-selectedValues+">[options-selectedValues+]</a> attribute. This is an OPTIONAL attribute. If this attribute is missing or unparseable the application SHOULD assume the <code>valueField</code> value is set to <code>"value"</code>.</p></div>
+<div class="paragraph"><p>See <a href="#options-fields">Reference Fields</a> for an example.</p></div>
 </div>
 </div>
 <div class="sect3">
@@ -1232,9 +1235,8 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 <div class="paragraph"><p>Compliant applications SHOULD support both <code>application/json</code> and <code>text/csv</code> as valid response types for <code>options.link</code> implementations. Clients MAY support other values. If no <code>options.link.type</code> attribute exists, the client application SHOULD default to <code>application/json</code>. Whether the <code>options.link.type</code> value appears or not, client applications SHOULD send an <code>Accept</code> header when making a request to the server with the supplied URL. If no <code>Accept</code> header is sent by the client, the server SHOULD assume the client expects an <code>Accept</code> header set to <code>application/json</code> and respond accordingly.</p></div>
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_code_options_code_examples">3.5. <code>options</code> Examples</h3>
+<div class="sect3">
+<h4 id="_code_options_code_examples">3.4.4. <code>options</code> Examples</h4>
 <div class="paragraph"><p>Not all the elements of the <code>options</code> object shown above are valid at the same time. There are a number of possible "renditions" of the <code>options</code> object. This spec covers the following:</p></div>
 <div class="ulist"><ul>
 <li>
@@ -1268,8 +1270,8 @@ Multiple Return Values
 </p>
 </li>
 </ul></div>
-<div class="sect3">
-<h4 id="options-inline">3.5.1. A Simple Inline Array of Values</h4>
+<div class="sect4 xxx">
+<h5 id="options-inline">3.4.4.1. A Simple Inline Array of Values</h5>
 <div class="paragraph"><p>Below is a simple rendition of the <code>options</code> control using the <em>Inline Array</em> style.  Note that, in the example below control&#8217;s default value would be set to "FedEx".</p></div>
 <div class="listingblock">
 <div class="content">
@@ -1302,8 +1304,8 @@ Multiple Return Values
 &lt;/select&gt;</code></pre>
 </div></div>
 </div>
-<div class="sect3">
-<h4 id="options-inline-nvp">3.5.2. An Inline Array of Name/Value Pairs</h4>
+<div class="sect4 xxx">
+<h5 id="options-inline-nvp">3.4.4.2. An Inline Array of Name/Value Pairs</h5>
 <div class="paragraph"><p>Below is an example of the <code>options</code> control using an <em>Inline Array of Name/Value Paris</em>.</p></div>
 <div class="listingblock">
 <div class="content">
@@ -1345,8 +1347,8 @@ Multiple Return Values
 &lt;/p&gt;</code></pre>
 </div></div>
 </div>
-<div class="sect3">
-<h4 id="options-external">3.5.3. An External Array of Values</h4>
+<div class="sect4 xxx">
+<h5 id="options-external">3.4.4.3. An External Array of Values</h5>
 <div class="paragraph"><p>The source of possible values for a <code>options</code> control can also be an external resource. This resource is reachable using an <code>HTML.GET</code> against a supplied URL (which MAY be templated) and and OPTIONAL <code>options.link.type</code> property that holds a valid registered media type (e.g. <code>application/json</code>, <code>text/csv</code>, etc.).</p></div>
 <div class="paragraph"><p>By default, the response value is a <em>Simple Array</em> rendered in <code>application/json</code> as simple JSON array.</p></div>
 <div class="listingblock">
@@ -1407,8 +1409,8 @@ UPS
 DHL</code></pre>
 </div></div>
 </div>
-<div class="sect3">
-<h4 id="options-external-nvp">3.5.4. An External Array of Name/Value Pairs</h4>
+<div class="sect4 xxx">
+<h5 id="options-external-nvp">3.4.4.4. An External Array of Name/Value Pairs</h5>
 <div class="paragraph"><p>The external resource MAY return a collection of name/value pairs.</p></div>
 <div class="listingblock">
 <div class="content">
@@ -1472,8 +1474,8 @@ United Parcel Service,UPS
 DHL Express,DHL</code></pre>
 </div></div>
 </div>
-<div class="sect3">
-<h4 id="options-fields">3.5.5. Reference Fields</h4>
+<div class="sect4 xxx">
+<h5 id="options-fields">3.4.4.5. Reference Fields</h5>
 <div class="paragraph"><p>The <code>options</code> element also supports the use of <code>options.promptField</code> and <code>options.valueField</code> as custom property names  or <em>Reference Fields</em> instead of using the default names <code>"prompt"</code> and <code>"value"</code>.  In this case, the <code>promptField</code> value contains the name of the field in the source collection (<code>inline</code> or <code>link</code>) to be used for prompts and the <code>valueField</code> value contains the name of the field in the source collection to be used for values.</p></div>
 <div class="listingblock">
 <div class="content">
@@ -1522,8 +1524,8 @@ Content-Length: nn
 ]</code></pre>
 </div></div>
 </div>
-<div class="sect3">
-<h4 id="options-return-values">3.5.6. Multiple Return Values</h4>
+<div class="sect4 xxx">
+<h5 id="options-return-values">3.4.4.6. Multiple Return Values</h5>
 <div class="paragraph"><p>You can signal the minimum and maximum number of items that can be selected using the <code>options.minItems</code> and <code>options.maxItems</code> attributes. By default, these attributes are <code>options.minItems=0</code> and <code>options.maxItems</code> is unbounded (e.g. there are no limits). Client applications SHOULD validate the number of seleted values using these attributes. This can apply whether the source list comes from <code>inline</code> or <code>link</code>. These attributes are OPTIONAL and MAY be ignored by the client.</p></div>
 <div class="listingblock">
 <div class="content">
@@ -1568,6 +1570,7 @@ Content-Length: nn
 <div class="content">
 <pre><code>shipping=FedEx&amp;shipping=DHL</code></pre>
 </div></div>
+</div>
 </div>
 </div>
 </div>
@@ -1966,7 +1969,7 @@ Greg Turnquist.</p></div>
 <div id="footer">
 <div id="footer-text">
 Last updated
- 2021-02-20 15:46:12 EST
+ 2021-02-20 16:08:25 EST
 </div>
 </div>
 </body>
