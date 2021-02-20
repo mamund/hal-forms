@@ -307,6 +307,9 @@ NOTE: Document authors need to take care that +property.required+ and +property.
 ===== +promptField+
 This attribute contains the name of the JSON dictionary element in the array returned via the <<options-inline, +inline+>> or <<options-link, +link+>> elements to use as the prompt when rendering the +options+ UI. This is an OPTIONAL attribute. If this attribute is missing or unparseable the application SHOULD assume the +promptField+ value is set to +"prompt"+. 
 
+See <<options-fields, Reference Fields>> for an example.
+
+
 [[options-selectedValues]]
 ===== +selectedValues+
 This is a JSON array that holds the set of values selected from the list of possible values supplied by the <<options-inline, +inline+>> and <<options-link, +link+>> attributes. This is an OPTIONAL element. If it is missing or unparseable, the application SHOULD assume it is an empty JSON array.
@@ -329,9 +332,13 @@ When the `contentType` is set to `application/x-www-form-urlencoded`, the conten
 shipping=FedEx&shipping=DHL
 ----
 
+See <<options-return-values, Multiple Return Values>> for an example.
+
 [[options-valueField]]
 ===== +valueField+
 This attribute contains the name of the JSON dictionary element in the array returned via the <<options-inline, +inline+>> or <<options-link, +link+>> elements to use as the value when rendering the +options+ UI and filling in the <<options-selectedValues+>> attribute. This is an OPTIONAL attribute. If this attribute is missing or unparseable the application SHOULD assume the +valueField+ value is set to +"value"+. 
+
+See <<options-fields, Reference Fields>> for an example.
 
 ==== Additional Considerations
 Here are some additional considerations when implementing support for the +property.options+ element.
@@ -342,7 +349,7 @@ In cases where the possible value collection from (`inline` or `link` elements) 
 ===== Supporting JSON and CSV
 Compliant applications SHOULD support both `application/json` and `text/csv` as valid response types for `options.link` implementations. Clients MAY support other values. If no `options.link.type` attribute exists, the client application SHOULD default to `application/json`. Whether the `options.link.type` value appears or not, client applications SHOULD send an `Accept` header when making a request to the server with the supplied URL. If no `Accept` header is sent by the client, the server SHOULD assume the client expects an `Accept` header set to `application/json` and respond accordingly.
  
-=== +options+ Examples
+==== +options+ Examples
 Not all the elements of the `options` object shown above are valid at the same time. There are a number of possible "renditions" of the `options` object. This spec covers the following:
 
  * A Simple Inline Array of Values
@@ -353,7 +360,7 @@ Not all the elements of the `options` object shown above are valid at the same t
  * Multiple Return Values
 
 [[options-inline]]
-==== A Simple Inline Array of Values
+===== A Simple Inline Array of Values
 Below is a simple rendition of the `options` control using the _Inline Array_ style.  Note that, in the example below control's default value would be set to "FedEx".
 
 ----
@@ -388,7 +395,7 @@ A corresponding `HTML.SELECT` rendering looks like this:
 ----
 
 [[options-inline-nvp]]
-==== An Inline Array of Name/Value Pairs
+===== An Inline Array of Name/Value Pairs
 Below is an example of the `options` control using an _Inline Array of Name/Value Paris_.
 
 ----
@@ -432,7 +439,7 @@ A corresponding `HTML.INPUT.type="radio"` rendering looks like this:
 ----
 
 [[options-external]]
-==== An External Array of Values
+===== An External Array of Values
 The source of possible values for a `options` control can also be an external resource. This resource is reachable using an `HTML.GET` against a supplied URL (which MAY be templated) and and OPTIONAL `options.link.type` property that holds a valid registered media type (e.g. `application/json`, `text/csv`, etc.). 
 
 By default, the response value is a _Simple Array_ rendered in `application/json` as simple JSON array.
@@ -497,7 +504,7 @@ DHL
 ----
 
 [[options-external-nvp]]
-==== An External Array of Name/Value Pairs
+===== An External Array of Name/Value Pairs
 The external resource MAY return a collection of name/value pairs.
 
 ----
@@ -564,7 +571,7 @@ DHL Express,DHL
 ----
 
 [[options-fields]]
-==== Reference Fields
+===== Reference Fields
 The `options` element also supports the use of `options.promptField` and `options.valueField` as custom property names  or _Reference Fields_ instead of using the default names `"prompt"` and `"value"`.  In this case, the `promptField` value contains the name of the field in the source collection (`inline` or `link`) to be used for prompts and the `valueField` value contains the name of the field in the source collection to be used for values.
 
 ----
@@ -615,7 +622,7 @@ Content-Length: nn
 ----
 
 [[options-return-values]]
-==== Multiple Return Values
+===== Multiple Return Values
 You can signal the minimum and maximum number of items that can be selected using the `options.minItems` and `options.maxItems` attributes. By default, these attributes are `options.minItems=0` and `options.maxItems` is unbounded (e.g. there are no limits). Client applications SHOULD validate the number of seleted values using these attributes. This can apply whether the source list comes from `inline` or `link`. These attributes are OPTIONAL and MAY be ignored by the client.
 
 
@@ -663,6 +670,7 @@ When the `contentType` is set to `application/x-www-form-urlencoded`, the conten
 ----
 shipping=FedEx&shipping=DHL
 ----
+
 == The HAL-FORMS Query String Registry
 The *HAL-FORMS* media type supports a set of OPTIONAL query string parameters. These can be passed when requesting *HAL-FORMS* documents in order to provide additional information (e.g. document identifiers, etc.) to the server when a client requests a *HAL-FORMS* document. For example, the server can use these parameter values to validate the *HAL-FORMS* request and/or use them to determine how to pre-populate the *HAL-FORMS* document before returning it to the client.
 
