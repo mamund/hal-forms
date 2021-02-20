@@ -273,7 +273,7 @@ Below is the list of +options+ attribute. *HAL-FORMS* compliant applications tha
 ===== +inline+
 The +inline+ attribute is a JSON array that contains the list of possible values. The +inline+ attribute is OPTIONAL. If the +inline+ attribute is missing or unparseable and the +link+ (see <<options-link, +link+>>) attribute is missing or unparseable, then the +options+ element SHOULD be ignored.
 
-In it's simplest form, the +inline+ attribute holds a set of anonymous JSON dictionary objects in the form `{'"prompt": "...", "value" : ""}` (see <<options-inline, A Simple Inline Array of Values>>). The +inline+ contents can also be an array of unique name-value pairs (see <<options-inline-nvp, An Inline Array of Name/Value Pairs>>).
+In it's simplest form, the +inline+ attribute holds a set of anonymous JSON dictionary objects in the form `{'"prompt": "...", "value" : ""}` (see <<options-inline-simple, A Simple Inline Array of Values>>). The +inline+ contents can also be an array of unique name-value pairs (see <<options-inline-nvp, An Inline Array of Name/Value Pairs>>).
 
 NOTE: If both +inline+ and +link+ elements appear in the same +options+ object, the +inline+ element SHOULD be used and the +link+ element SHOULD NOT be used.
 
@@ -287,7 +287,7 @@ The +link+ attribute has the following child attributes:
  * +type+ : A string used as a hint to indicate the media type expected when dereferencing the target resource. This is an OPTIONAL attribute. The +type+ value SHOULD be set to +application/json+ or +text/csv+. It MAY be set to some other value. If the +type+ attribute is missing or unparseable, it SHOULD be assumed to be set to +application/json+. Client applications SHOULD use the value of the +type+ attribute to populate the HTTP +Accept+ header. 
  * +templated+ : A boolean value that SHOULD be set to +true+ when +link.href+ contains a URI Template <<rfc6570, [RFC6570]>>. This is an OPTIONAL attribute. If it is missing or unparseable, the value of +templated+ SHOULD be treated as set to +false+.
 
-The value returned when dereferencing a +link+ element SHOULD be either a simple array (see <<options-link, An External Array of Values>>) or a custom collection (see <<options-link-nvp, An External Array of Name/Value Pairs>>). The exact format of the returned collection will vary based on the value of the HTTP +Accept+ header sent with the request.
+The value returned when dereferencing a +link+ element SHOULD be either a simple array (see <<options-external, An External Array of Values>>) or a custom collection (see <<options-external-nvp, An External Array of Name/Value Pairs>>). The exact format of the returned collection will vary based on the value of the HTTP +Accept+ header sent with the request.
 
 When responding to an `options.link` request, the server MAY return additional fields (e.g. more than `prompt` and `value` fields). These additional fields SHOULD be ignored by the client application.
 
@@ -336,7 +336,7 @@ See <<options-return-values, Multiple Return Values>> for an example.
 
 [[options-valueField]]
 ===== +valueField+
-This attribute contains the name of the JSON dictionary element in the array returned via the <<options-inline, +inline+>> or <<options-link, +link+>> elements to use as the value when rendering the +options+ UI and filling in the <<options-selectedValues+>> attribute. This is an OPTIONAL attribute. If this attribute is missing or unparseable the application SHOULD assume the +valueField+ value is set to +"value"+. 
+This attribute contains the name of the JSON dictionary element in the array returned via the <<options-inline, +inline+>> or <<options-link, +link+>> elements to use as the value when rendering the +options+ UI and filling in the <<options-selectedValues, +selectedValues+>> attribute. This is an OPTIONAL attribute. If this attribute is missing or unparseable the application SHOULD assume the +valueField+ value is set to +"value"+. 
 
 See <<options-fields, Reference Fields>> for an example.
 
@@ -359,7 +359,7 @@ Not all the elements of the `options` object shown above are valid at the same t
  * Reference Fields
  * Multiple Return Values
 
-[[options-inline]]
+[[options-inline-simple]]
 ===== A Simple Inline Array of Values
 Below is a simple rendition of the `options` control using the _Inline Array_ style.  Note that, in the example below control's default value would be set to "FedEx".
 
@@ -442,7 +442,7 @@ A corresponding `HTML.INPUT.type="radio"` rendering looks like this:
 ===== An External Array of Values
 The source of possible values for a `options` control can also be an external resource. This resource is reachable using an `HTML.GET` against a supplied URL (which MAY be templated) and and OPTIONAL `options.link.type` property that holds a valid registered media type (e.g. `application/json`, `text/csv`, etc.). 
 
-By default, the response value is a _Simple Array_ rendered in `application/json` as simple JSON array.
+By default, the response value is a _Simple Array_ rendered in `application/json` as a JSON array.
 
 ----
 {
