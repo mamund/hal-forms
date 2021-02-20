@@ -171,6 +171,11 @@ The +min+ attribute specifies the minimum numeric value for an +value+ setting o
 ===== +minLength+
 The +minlength+ attribute specifies the minimum number of characters required in a +value+ property. this attribute MAY appear along with the +maxLength+ attribute. This is an OPTIONAL property and it MAY be ignored.
 
+===== +options+
+The +options+ element contains a set of possible values accessible either byValue (e.g. `inline`) or byReference (e.g. via `link.href`) and can be used to provide a constrained list of possble values for a `property` field. See <<options-element, The +options+ Element>> for details.
+
+Support for the `options` object of a `property` element is OPTIONAL. If the client does not understand or cannot parse the `options` object, the `options` object SHOULD be ignored and the corresponding `property` SHOULD be treated as a simple text input element.
+
 ===== +placeholder+
 The +placeholder+ attribute specifies a short hint that describes the expected value of an input field (e.g. a sample value or a short description of the expected format). This is an OPTIONAL field and MAY be ignored.
 
@@ -183,7 +188,7 @@ The +step+ attribute specifies the interval between legal numbers in a +value+ p
 ===== +type+
 The +type+ attribute controls the data type of the +property+ value. It is an enumerated attribute. The +type+ can also used to determine the interface control to display for user input. This is an OPTIONAL element. If the +type+ value is not supported by the document consumer, contains a value not understood by the consumer, and/or is missing, the the document consumer SHOULD assume the +type+ attribute is set to the default value: +"text"+ and render the display input as a simple text box. 
 
-Possible settings for the +type+ value in this release are: 
+Possible settings for the +type+ value adn teh expected contents to be returned inthe  are: 
   +hidden+, 
   +text+,
   +textarea+,
@@ -202,6 +207,380 @@ Possible settings for the +type+ value in this release are:
   +color+.
 
 For hints on how to render and process various +type+ values as well as for guidance on how each +type+ value affects to the contents of the associated +value+ property, see <<html5type, [HTML5TYPE]>>.
+
+[[options-element]]
+=== The +options+ Element
+The motivation for the control is to provide an enumerated list of possible values for a `property`. This can be used to provide a UI similar to HTML controls such as: 
+
+ * `SELECT & OPTIONS`
+ * `INPUT.type="radio"`
+ * `INPUT.type="checkbox"`
+ * `INPUT.type="search"` (w/ type-ahead suggestions)
+
+The +options+ control can also be used in machine-to-machine interactions where it is important to provide the client information about the possible values for a +property+.
+
+The +options+ element contains a set of possible values accessible either _by value_ (e.g. `options.inline`) or _by reference_ (e.g. via `options.link.href`) and can be used to provide a constrained list of possble values for a `property` field. If, when first loaded, the **HAL-FORMS** template has a pre-set value in the corresponding `property.options.selectedValues` array attribute, the UI MAY render the form with selected value(s) already chosen.
+
+Whatever value is ultimately selected gets placed into the `property.options.selectedValues` array attribute. When sending the results of the completed **HAL-FORMS** to the server, content `property.options.selectedValues` is serialized in a manner compliant with the media type value in the `contentType` attribute (e.g. `appilcation/json`, `application/x-www-form-urlencded`, etc.).
+
+==== Overview of the +options+ Element
+Below is an overview of the +property.options+ element as it appears within a *HAL-FORMS* document. Details describing the meaning and use of all the elements of the design appears in the sections that follow.
+
+----
+{
+  "_templates" : {
+    "default" : {
+      ...
+      "contentType" : "application/json|application/x-www-form-ulencoded",
+      "properties" : [
+        {
+          "name" : "...", 
+          "prompt" : "...", 
+          "options" : {
+            "selectedValues" : ["...", "...", ...], 
+            "inline" : ["...", "..." , ...] | [{"prompt" : "...", "value" : "..."}, {...}, ...],
+            "link" : {
+              "href" : "...",
+              "templated" : "true|false",
+              "type" : "application/json|text/csv..."
+            },
+            "promptField" : "...",
+            "valueField" : "...",
+            "minItems" : 0,
+            "maxItems" : 1
+          }
+        }
+      ]
+    }
+  }
+}
+----
+
+Not all the elements of the `options` object shown above are valid at the same time.
+
+==== A Simple Inline Array of Values
+Below is a simple rendition of the `options` control using the _Inline Array_ style.  Note that, in the example below control's default value would be set to "FedEx".
+
+----
+{
+  "_templates" : {
+    "default" : {
+      ...
+      "properties" : [
+        {
+          "name" : "shipping", 
+          "prompt" : "Select Shipping Method", 
+          "options" : {
+            "selectedValues" : ["FedEx"],
+            "inline" : ["FedEx","UPS","DHL"]
+          }
+        }
+      ]
+    }
+  }
+}
+----
+
+A corresponding `HTML.SELECT` rendering looks like this:
+
+----
+<label for="shipping">Select Shipping Method</label>
+<select name="shipping">
+  <option selected="true">FedEx</option>
+  <option>UPS</option>
+  <option>DHL</option>
+</select>
+----
+
+==== An Inline Array of Name/Value Pairs
+Below is an example of the `options` control using an _Inline Array of Name/Value Paris_.
+
+----
+{
+  "_templates" : {
+    "default" : {
+      ...
+      "properties" : [
+        {
+          "name" : "shipping", 
+          "type" : "radio",
+          "prompt" : "Select Shipping Method", 
+          "options" : {
+            "selectedValues" : ["FedEx"],
+            "inline" : [
+              {"prompt" : "Federal Express", "value" : "FedEx"},
+              {"prompt" : "United Parcel Service", "value" : "UPS"},
+              {"prompt" : "DHL Express", "value" : "DHL"}
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
+----
+
+A corresponding `HTML.INPUT.type="radio"` rendering looks like this:
+
+----
+<p>
+  <input type="radio" id="fedex" name="shipping" value="FedEx" checked="true">
+  <label for="fedex">Federal Express</label><br>
+  
+  <input type="radio" id="ups" name="shipping" value="UPS">
+  <label for="ups">United Parcel Service</label><br>
+  
+  <input type="radio" id="dhl" name="shipping" value="DHL">
+  <label for="dhl">DHL Express</label>
+</p>
+----
+
+==== An External Array of Values
+The source of possible values for a `options` control can also be an external resource. This resource is reachable using an `HTML.GET` against a supplied URL (which MAY be templated) and and OPTIONAL `options.link.type` property that holds a valid registered media type (e.g. `application/json`, `text/csv`, etc.). 
+
+By default, the response value is a _Simple Array_ rendered in `application/json` as simple JSON array.
+
+----
+{
+  "_templates" : {
+    "default" : {
+      ...
+      "properties" : [
+        {
+          "name" : "shipping", 
+          "type" : "radio",
+          "prompt" : "Select Shipping Method", 
+          "options" : {
+            "selectedValues" : ["FedEx"],
+            "link" : {
+              "href" : "http://api.examples.org/shipping-options",
+              "templated" : "false",
+              "type" : "application/json"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+----
+
+The client would dereference the URL using `HTTP.GET`. The exchange (including the response) looks like this:
+
+----
+*** REQUEST
+GET /shipping-options HTTP/2.0
+Host: api.example.org
+Accept: application/json
+
+*** RESPONSE
+HTTP/2.0 200 OK
+Content-Type: application/json
+Content-Length: nn
+
+["Fedex","UPS","DHL"]
+----
+
+A CR-LF delimited set of values MAY be returned if the `options.link.type` attribute is set to `text/csv`
+
+----
+*** REQUEST
+GET /shipping-options HTTP/2.0
+Host: api.example.org
+Accept: text/csv
+
+*** RESPONSE
+HTTP/2.0 200 OK
+Content-Type: text/csv
+Content-Length: nn
+
+Fedex
+UPS
+DHL
+----
+
+==== An External Array of Name/Value Pairs
+The external resource MAY return a collection of name/value pairs.
+
+----
+{
+  "_templates" : {
+    "default" : {
+      ...
+      "properties" : [
+        {
+          "name" : "shipping", 
+          "type" : "dropdown",
+          "prompt" : "Select Shipping Method", 
+          "options" : {
+            "selectedValues" : ["FedEx"],
+            "link" : {
+              "href" : "http://api.examples.org/shipping-options",
+              "templated" : "false",
+              "type : "application/json"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+----
+
+The client would dereference the URL using `HTTP.GET`. The exchange (including the response) looks like this:
+
+----
+*** REQUEST
+GET /shipping-options HTTP/2.0
+Host: api.example.org
+Accept: application/json
+
+*** RESPONSE
+HTTP/2.0 200 OK
+Content-Type: application/json
+Content-Length: nn
+
+[
+  {"prompt" : "Federal Express", "value" : "FedEx"},
+  {"prompt" : "United Parcel Service", "value" : "UPS"},
+  {"prompt" : "DHL Express", "value" : "DHL"}
+]
+----
+The set of name/value pairs MAY be returned in `text/csv` format when the `options.link.type` property is set to `text/csv`.
+
+
+----
+*** REQUEST
+GET /shipping-options HTTP/2.0
+Host: api.example.org
+Accept: text/csv
+
+*** RESPONSE
+HTTP/2.0 200 OK
+Content-Type: text/csv
+Content-Length: nn
+
+Federal Express,FedEx
+United Parcel Service,UPS
+DHL Express,DHL
+----
+
+==== Reference Fields
+The `options` element also supports the use of `options.promptField` and `options.valueField` as custom property names  or _Reference Fields_ instead of using the default names `"prompt"` and `"value"`.  In this case, the `promptField` value contains the name of the field in the source collection (`inline` or `link`) to be used for prompts and the `valueField` value contains the name of the field in the source collection to be used for values.
+
+----
+{
+  "_templates" : {
+    "default" : {
+      ...
+      "properties" : [
+        {
+          "name" : "shipping", 
+          "type" : "radio",
+          "prompt" : "Select Shipping Method", 
+          "options" : {
+            "selectedValues" : ["FedEx"],
+            "inline" : [
+              {"shipName" : "Federal Express", "shipCode" : "FedEx"},
+              {"shipName" : "United Parcel Service", "shipCode" : "UPS"},
+              {"shipName" : "DHL Express", "shipCode" : "DHL"}
+            ],
+            "promptField" : "shipName",
+            "valueField" : "shipCode"
+          }
+        }
+      ]
+    }
+  }
+}
+----
+
+_Reference Fields_ MAY be used when returning an array of JSON objects if the `options.accept` attribute is set to `application/json`
+
+----
+*** REQUEST
+GET /shipping-options HTTP/2.0
+Host: api.example.org
+Accept: application/json
+
+*** RESPONSE
+HTTP/2.0 200 OK
+Content-Type: application/json
+Content-Length: nn
+
+[
+  {"shipName" : "Federal Express", "shipCode" : "FedEx"},
+  {"shipName" : "United Parcel Service", "shipCode" : "UPS"},
+  {"shipName" : "DHL Express", "shipCode" : "DHL"}
+]
+----
+
+==== Multiple Return Values
+You can signal the minimum and maximum number of items that can be selected using the `options.minItems` and `options.maxItems` attributes. By default, these attributes are `options.minItems=0` and `options.maxItems` is unbounded (e.g. there are no limits). Client applications SHOULD validate the number of seleted values using these attributes. This can apply whether the source list comes from `inline` or `link`. These attributes are OPTIONAL and MAY be ignored by the client.
+
+
+----
+{
+  "_templates" : {
+    "default" : {
+      ...
+      "properties" : [
+        {
+          "name" : "shipping", 
+          "type" : "checkbox",
+          "prompt" : "Select Shipping Method", 
+          "options" : {
+            "selectedValues" : ["FedEx"],
+            "inline" : [
+              {"shipName" : "Federal Express", "shipCode" : "FedEx"},
+              {"shipName" : "United Parcel Service", "shipCode" : "UPS"},
+              {"shipName" : "DHL Express", "shipCode" : "DHL"}
+            ],
+            "minItems" : 1,
+            "maxItems" : 2
+            "promptField" : "shipName",
+            "valueField" : "shipCode"
+          }
+        }
+      ]
+    }
+  }
+}
+----
+
+When sending the results of selecting multiple values in the `options.selectedValues` array from the client to the server, the rules associated with the `contentType` SHOULD be applied.  When the `contentType` is set to `application/json`, the contents of the `options.selectedValues` array SHOULD be serialized as a simple JSON array:
+
+----
+{
+  ...
+  shipping=["FedEx", "DHL"]
+  ...
+}
+----
+
+When the `contentType` is set to `application/x-www-form-urlencoded`, the contents of the `options.selectedValues` array SHOULD be serialized as a set of repeating name/value pairs:
+
+----
+shipping=FedEx&shipping=DHL
+----
+
+==== Additional Considerations
+
+ * Support for the `options` object of a `property` element is OPTIONAL. If the client does not understand or cannot parse the `options` object, the `options` object SHOULD be ignored and the corresponding `property` SHOULD be treated as a simple text input element.
+
+ * If the `options` object has no `inline` and no `link` properties, the `options` object is invalid and SHOULD be ignored.
+
+ * If both `inline` and `link` elements appear in the same `options` object, the `inline` element SHOULD be used and the `link` element SHOULD NOT be used.
+
+ * In cases where the possible value collection from (`inline` or `link` elements) only supplies a list of `value` elements, the client SHOULD operate as if a `prompt` element was supplied and set that `prompt` value to equal the contents of the corresponding `value` element.
+ 
+ * Compliant applications SHOULD support both `application/json` and `text/csv` as valid response types for `options.link` implementations. Clients MAY support other values. If no `options.link.type` attribute exists, the client application SHOULD default to `application/json`. Whether the `options.link.type` value appears or not, client applications SHOULD send an `Accept` header when making a request to the server with the supplied URL. If no `Accept` header is sent by the client, the server SHOULD assume the client expects an `Accept` header set to `application/json` and respond accordingly.
+ 
+ * When responding to a `options.link` request, the server MAY return additional fields (e.g. more than `prompt` and `value` fields). Additional fields SHOULD be ignored by the client application.
+ 
+ * When no `minItems` attribute is supplied, the client SHOULD assume the `minItems` value is set to `0` (e.g. there is no minimum number of items that must be selected. When no `maxItems` attribute is supplied, the client SHOULD assume the `maxItems` value is unbounded (e.g. there is no limit to the number of items that can be selected. 
+ 
+ * Document authors need to take care that `property.required` and `property.options.minItems` values do not conflict (e.g. `property.required:true` and `options.minItems:`0`). 
 
 == The HAL-FORMS Query String Registry
 The *HAL-FORMS* media type supports a set of OPTIONAL query string parameters. These can be passed when requesting *HAL-FORMS* documents in order to provide additional information (e.g. document identifiers, etc.) to the server when a client requests a *HAL-FORMS* document. For example, the server can use these parameter values to validate the *HAL-FORMS* request and/or use them to determine how to pre-populate the *HAL-FORMS* document before returning it to the client.
@@ -374,7 +753,9 @@ Authors should be aware that a future version of this specification MAY add new 
  * [[html5mut]] [HTML5MUT] Hickson, I., Ed. et al, "HTML5 (Mutate Action URL)", October 2014, http://www.w3.org/TR/html5/forms.html#submit-mutate-action
  * [[html5enc]] [HTML5ENC] Hickson, I., Ed. et al, "HTML5 (Encoding Algorithm)", October 2014, http://www.w3.org/TR/html5/forms.html#application/x-www-form-urlencoded-encoding-algorithm
  * [[html5type]] [HTML5TYPE] "HTML 5.2 FORMS", December 2017, https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-input-type
- 
+ * [[rfc8259]] [RFC8259] Bray, Tim, Ed., "Javascript Object Notation", December 2017, https://tools.ietf.org/html/rfc8259
+ * [[rfc4180]] [RFC4180] Y. Shafranovich, "Common Format and MIME Type for Comma-Separated Values (CSV) Files", October 2005, https://tools.ietf.org/html/rfc4180
+
 == Acknowledgements
 Thanks to everyone who helped contribute to this specification including: 
 Josh Cohen,
