@@ -847,6 +847,7 @@ Authors should be aware that a future version of this specification MAY add new 
 
 == Acknowledgements
 Thanks to everyone who helped contribute to this specification including: 
+Carlos Beltrame,
 Josh Cohen,
 Oliver Drotbohm,
 Pete Johanson,

@@ -780,7 +780,7 @@ Last Updated
 </dt>
 <dd>
 <p>
-  2021-02-20
+  2021-03-03
 </p>
 </dd>
 </dl></div>
@@ -911,7 +911,7 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 <div class="paragraph"><p>The <code>_templates</code> element contains a dictionary collection of <code>template</code> objects. A valid <strong>HAL-FORMS</strong> document has at least one entry in the <code>_templates</code> dictionary collection. Each <code>template</code> contains the following possible properties:</p></div>
 <div class="sect3">
 <h4 id="_code_contenttype_code">3.2.1. <code>contentType</code></h4>
-<div class="paragraph"><p>The value of <code>contentType</code> is the media type the client SHOULD use when sending a request body to the server. This is an OPTIONAL element. The value of this property SHOULD be set to <code>"application/json"</code> or <code>"application/x-www-form-urlencoded"</code>. It MAY be set to other valid media-type values. If the <code>contentType</code> property is missing, is set to empty, or contains an unrecognized value, the client SHOULD act as if the <code>contentType</code> is set to <code>"application/json"</code>. See <a href="#encoding-request-bodies">Encoding Request Bodies</a> for details.</p></div>
+<div class="paragraph"><p>The value of <code>contentType</code> is the media type the client SHOULD use when sending a request body to the server. This is an OPTIONAL element. The value of this property SHOULD be set to <code>"application/json"</code> or <code>"application/x-www-form-urlencoded"</code>. It MAY be set to other valid media-type values. If the <code>contentType</code> property is missing, is set to empty, or contains an unrecognized value, the client SHOULD act is if the <code>contentType</code> is set to <code>"application/json"</code>. See <a href="#encoding-request-bodies">Encoding Request Bodies</a> for details.</p></div>
 </div>
 <div class="sect3">
 <h4 id="_code_key_code">3.2.2. <code>key</code></h4>
@@ -919,7 +919,7 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </div>
 <div class="sect3">
 <h4 id="_code_method_code">3.2.3. <code>method</code></h4>
-<div class="paragraph"><p>The HTTP method the client SHOULD use when sending a request to the server. Any valid HTTP method is allowed. This is a REQUIRED element. If the value is empty or is not understood by the client, the value MUST be treated as an HTTP GET.</p></div>
+<div class="paragraph"><p>The HTTP method the client SHOULD use when the service request. Any valid HTTP method is allowed. This is a REQUIRED element. If the value is empty or is not understood by the client, the value MUST be treated as an HTTP GET.</p></div>
 </div>
 <div class="sect3">
 <h4 id="_code_properties_code">3.2.4. <code>properties</code></h4>
@@ -927,7 +927,7 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </div>
 <div class="sect3">
 <h4 id="_code_target_code">3.2.5. <code>target</code></h4>
-<div class="paragraph"><p>Contains the identifier of the target URL for the client to use when submitting the completed HAL-FORMS template. For example, if the client should submit the completed template to the following URL: <code>http://api.example.org/jobs/</code> then the <code>target</code> property would be <code>target="http://api.example.org/jobs/"</code>.</p></div>
+<div class="paragraph"><p>Contains the identifier of the target URL for the client to use when submitting the completed HAL-FORMS template. For example, if the client should submit the completed template to the following URL: <code>http://api.example.org/jobs/</code> then the <code>target</code> proprety would be <code>target="http://api.example.org/jobs/"</code>.</p></div>
 <div class="paragraph"><p>This is an OPTIONAL property. If this property is not understood by the recipient, left blank, or contains an invalid URL string, it SHOULD be ignored.</p></div>
 <div class="paragraph"><p>The <code>target</code> property holds the same information as the <a href="#htarget-query-string"><code>_htarget</code></a> query string property. If both the <code>target</code> prorperty and the <code>_htarget</code> query string value appear in the same message, the <code>_htarget</code> query string SHOULD be used and the <code>target</code> property SHOULD be ignored.</p></div>
 </div>
@@ -1036,7 +1036,7 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 <div class="sect4 xxx">
 <h5 id="_code_type_code">3.3.2.10. <code>type</code></h5>
 <div class="paragraph"><p>The <code>type</code> attribute controls the data type of the <code>property</code> value. It is an enumerated attribute. The <code>type</code> can also used to determine the interface control to display for user input. This is an OPTIONAL element. If the <code>type</code> value is not supported by the document consumer, contains a value not understood by the consumer, and/or is missing, the the document consumer SHOULD assume the <code>type</code> attribute is set to the default value: <code>"text"</code> and render the display input as a simple text box.</p></div>
-<div class="paragraph"><p>Possible settings for the <code>type</code> value and the expected contents to be returned are:
+<div class="paragraph"><p>Possible settings for the <code>type</code> value adn teh expected contents to be returned inthe  are:
   <code>hidden</code>,
   <code>text</code>,
   <code>textarea</code>,
@@ -1053,7 +1053,7 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
   <code>number</code>,
   <code>range</code>,
   <code>color</code>.</p></div>
-<div class="paragraph"><p>For hints on how to render and process various <code>type</code> values as well as for guidance on how each <code>type</code> value affects the contents of the associated <code>value</code> property, see <a href="#html5type">[HTML5TYPE]</a>.</p></div>
+<div class="paragraph"><p>For hints on how to render and process various <code>type</code> values as well as for guidance on how each <code>type</code> value affects to the contents of the associated <code>value</code> property, see <a href="#html5type">[HTML5TYPE]</a>.</p></div>
 </div>
 </div>
 </div>
@@ -1084,7 +1084,7 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </ul></div>
 <div class="paragraph"><p>The <code>options</code> control can also be used in machine-to-machine interactions where it is important to provide the client information about the possible values for a <code>property</code>.</p></div>
 <div class="paragraph"><p>The <code>options</code> element contains a set of possible values accessible either <em>by value</em> (e.g. <code>options.inline</code>) or <em>by reference</em> (e.g. via <code>options.link.href</code>) and can be used to provide a constrained list of possble values for a <code>property</code> field. If, when first loaded, the <strong>HAL-FORMS</strong> template has a pre-set value in the corresponding <code>property.options.selectedValues</code> array attribute, the UI MAY render the form with selected value(s) already chosen.</p></div>
-<div class="paragraph"><p>Whatever value is ultimately selected gets placed into the <code>property.options.selectedValues</code> array attribute. When sending the results of the completed <strong>HAL-FORMS</strong> to the server, content <code>property.options.selectedValues</code> is serialized in a manner compliant with the media type value in the <code>contentType</code> attribute (e.g. <code>application/json</code>, <code>application/x-www-form-urlencoded</code>, etc.).</p></div>
+<div class="paragraph"><p>Whatever value is ultimately selected gets placed into the <code>property.options.selectedValues</code> array attribute. When sending the results of the completed <strong>HAL-FORMS</strong> to the server, content <code>property.options.selectedValues</code> is serialized in a manner compliant with the media type value in the <code>contentType</code> attribute (e.g. <code>appilcation/json</code>, <code>application/x-www-form-urlencded</code>, etc.).</p></div>
 <div class="admonitionblock">
 <table><tr>
 <td class="icon">
@@ -1130,12 +1130,11 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </div>
 <div class="sect3">
 <h4 id="_code_options_code_attributes">3.4.2. <code>options</code> Attributes</h4>
-    
-<div class="paragraph"><p>Below is the list of <code>options</code> attributes. <strong>HAL-FORMS</strong> compliant applications that support the <code>options</code> element SHOULD support all the attributes listed here.</p></div>
+<div class="paragraph"><p>Below is the list of <code>options</code> attribute. <strong>HAL-FORMS</strong> compliant applications that support the <code>options</code> element SHOULD support all the attributes listed here.</p></div>
 <div class="sect4 xxx">
 <h5 id="options-inline">3.4.2.1. <code>inline</code></h5>
 <div class="paragraph"><p>The <code>inline</code> attribute is a JSON array that contains the list of possible values. The <code>inline</code> attribute is OPTIONAL. If the <code>inline</code> attribute is missing or unparseable and the <code>link</code> (see <a href="#options-link"><code>link</code></a>) attribute is missing or unparseable, then the <code>options</code> element SHOULD be ignored.</p></div>
-<div class="paragraph"><p>In its simplest form, the <code>inline</code> attribute holds a list of JSON strings in the form <code>[ "...", "...", ... ]</code> (see <a href="#options-inline-simple">A Simple Inline Array of Values</a>). The <code>inline</code> contents can also be an array of unique name-value pairs (see <a href="#options-inline-nvp">An Inline Array of Name/Value Pairs</a>).</p></div>
+<div class="paragraph"><p>In it&#8217;s simplest form, the <code>inline</code> attribute holds a set of anonymous JSON dictionary objects in the form <code>{'"prompt": "...", "value" : ""}</code> (see <a href="#options-inline-simple">A Simple Inline Array of Values</a>). The <code>inline</code> contents can also be an array of unique name-value pairs (see <a href="#options-inline-nvp">An Inline Array of Name/Value Pairs</a>).</p></div>
 <div class="admonitionblock">
 <table><tr>
 <td class="icon">
@@ -1147,7 +1146,7 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </div>
 <div class="sect4 xxx">
 <h5 id="options-link">3.4.2.2. <code>link</code></h5>
-<div class="paragraph"><p>The <code>link</code> attribute is a JSON dictionary object that contains an <code>href</code> which points to an external HTTP resource which contains the collection of possible values for a <code>property</code>. The <code>link</code> attribute is OPTIONAL. If the <code>link</code> attribute is missing or unparseable and the <code>inline</code> (see <a href="#options-inline"><code>inline</code></a>) attribute is missing or unparseable, then the <code>options</code> element SHOULD be ignored.</p></div>
+<div class="paragraph"><p>The <code>link</code> attribute is a JSON dictionary object that contains an <code>href</code> which points to an external HTTP resource which contains the collection of possible values for a <code>property'. The +link</code> attribute is OPTIONAL. If the <code>link</code> attribute is missing or unparseable and the <code>inline</code> (see <a href="#options-inline"><code>inline</code></a>) attribute is missing or unparseable, then the <code>options</code> element SHOULD be ignored.</p></div>
 <div class="paragraph"><p>The <code>link</code> attribute has the following child attributes:</p></div>
 <div class="ulist"><ul>
 <li>
@@ -1207,7 +1206,7 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 <div class="content">
 <pre><code>{
   ...
-  shipping: ["FedEx", "DHL"]
+  shipping=["FedEx", "DHL"]
   ...
 }</code></pre>
 </div></div>
@@ -1679,7 +1678,7 @@ http://api.example.org/task-list/?title=sample&amp;completed=false</code></pre>
 <div class="title">Note</div>
 </td>
 <td class="content">
-<div class="paragraph"><p>The HAL media type already defines support for parameterized HTTP GET queries using URI Templates. However, the <strong>HAL-FORMS</strong> document can be treated as an alternate implementation for GET queries that include additional constraints such as prompts, regular expression validators, etc.</p></div>
+<div class="paragraph"><p>The HAL media type already defines support for parameterized HTTP GET queries using URITemplates. However, the <strong>HAL-FORMS</strong> document can be treated as an alternate implementation for GET queries that include additional constraints such as prompts, regular expression validators, etc.</p></div>
 </td>
 </tr></table>
 </div>
@@ -1708,7 +1707,7 @@ http://api.example.org/task-list/?title=sample&amp;completed=false</code></pre>
 </div>
 <div class="sect3">
 <h4 id="_sending_bodies_for_other_media_types">5.2.3. Sending Bodies for Other Media Types</h4>
-<div class="paragraph"><p>Providers who supply responses that contain <code>contentType</code> values not covered in this specification SHOULD publish documentation instructing clients on the proper way to construct request bodies from <strong>HAL-FORMS</strong> documents.</p></div>
+<div class="paragraph"><p>Providers who supply responses that contain <code>contentType</code> values not covered in this specification SHOULD publish documentation instructing clients on the proper way to construct request bodies from HAL-FORMS documents.</p></div>
 </div>
 </div>
 </div>
@@ -1956,6 +1955,7 @@ All new properties or objects are treated as OPTIONAL (e.g. no new REQUIRED elem
 <h2 id="_acknowledgements">9. Acknowledgements</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>Thanks to everyone who helped contribute to this specification including:
+Carlos Beltrame,
 Josh Cohen,
 Oliver Drotbohm,
 Pete Johanson,
@@ -1970,7 +1970,7 @@ Greg Turnquist.</p></div>
 <div id="footer">
 <div id="footer-text">
 Last updated
- 2021-02-20 16:23:11 EST
+ 2021-03-03 19:28:11 EST
 </div>
 </div>
 </body>
