@@ -804,7 +804,7 @@ Last Updated
 <div class="title">Note</div>
 </td>
 <td class="content">
-<div class="paragraph"><p>The <strong>HAL-FORMS</strong> media type design follows many of the HAL media type conventions. For this reason, <strong>HAL-FORMS</strong> "looks like HAL." However, it is important to keep in mind that <strong>HAL-FORMS</strong> is not the same as HAL&#8201;&#8212;&#8201;the two should not be thought of as interchangeable in any way. Finally, <strong>HAL-FORMS</strong> documents SHOULD always be sent over HTTP using the <code>application/prs.hal-forms+json</code> media type identifer.</p></div>
+<div class="paragraph"><p>The <strong>HAL-FORMS</strong> media type design follows many of the HAL media type conventions. For this reason, <strong>HAL-FORMS</strong> "looks like HAL." However, it is important to keep in mind that <strong>HAL-FORMS</strong> is not the same as HAL&#8201;&#8212;&#8201;the two should not be thought of as interchangeable in any way. Finally, <strong>HAL-FORMS</strong> documents SHOULD always be sent over HTTP using the <code>application/prs.hal-forms+json</code> media type identifier.</p></div>
 </td>
 </tr></table>
 </div>
@@ -915,7 +915,7 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </div>
 <div class="sect3">
 <h4 id="_code_key_code">3.2.2. <code>key</code></h4>
-<div class="paragraph"><p>The unique identifier for this template element. This is a REQUIRED element. For this release, the only pre-defined value for <code>key</code> is <code>"default"</code>. If there is only one element in the collection the <code>key</code> value MUST be set to <code>"default"</code>. Clients MAY ignore additional entries in the collection. If this element is missing, set to empty or is unparsable, this template object SHOULD be ignored.</p></div>
+<div class="paragraph"><p>The unique identifier for this template element. This is a REQUIRED element. For this release, the only pre-defined value for <code>key</code> is <code>"default"</code>. For exactly one element in the collection the <code>key</code> value MUST be set to <code>"default"</code>. Clients MAY ignore additional entries in the collection. If this element is missing, set to empty or is unparsable, this template object SHOULD be ignored.</p></div>
 </div>
 <div class="sect3">
 <h4 id="_code_method_code">3.2.3. <code>method</code></h4>
@@ -927,9 +927,9 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </div>
 <div class="sect3">
 <h4 id="_code_target_code">3.2.5. <code>target</code></h4>
-<div class="paragraph"><p>Contains the identifier of the target URL for the client to use when submitting the completed HAL-FORMS template. For example, if the client should submit the completed template to the following URL: <code>http://api.example.org/jobs/</code> then the <code>target</code> proprety would be <code>target="http://api.example.org/jobs/"</code>.</p></div>
+<div class="paragraph"><p>Contains the identifier of the target URL for the client to use when submitting the completed HAL-FORMS template. For example, if the client should submit the completed template to the following URL: <code>http://api.example.org/jobs/</code> then the <code>target</code> property would be <code>target="http://api.example.org/jobs/"</code>.</p></div>
 <div class="paragraph"><p>This is an OPTIONAL property. If this property is not understood by the recipient, left blank, or contains an invalid URL string, it SHOULD be ignored.</p></div>
-<div class="paragraph"><p>The <code>target</code> property holds the same information as the <a href="#htarget-query-string"><code>_htarget</code></a> query string property. If both the <code>target</code> prorperty and the <code>_htarget</code> query string value appear in the same message, the <code>_htarget</code> query string SHOULD be used and the <code>target</code> property SHOULD be ignored.</p></div>
+<div class="paragraph"><p>The <code>target</code> property holds the same information as the <a href="#htarget-query-string"><code>_htarget</code></a> query string property. If both the <code>target</code> property and the <code>_htarget</code> query string value appear in the same message, the <code>_htarget</code> query string SHOULD be used and the <code>target</code> property SHOULD be ignored.</p></div>
 </div>
 <div class="sect3">
 <h4 id="_code_title_code">3.2.6. <code>title</code></h4>
@@ -1014,11 +1014,11 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </div>
 <div class="sect4 xxx">
 <h5 id="_code_minlength_code">3.3.2.5. <code>minLength</code></h5>
-<div class="paragraph"><p>The <code>minlength</code> attribute specifies the minimum number of characters required in a <code>value</code> property. this attribute MAY appear along with the <code>maxLength</code> attribute. This is an OPTIONAL property and it MAY be ignored.</p></div>
+<div class="paragraph"><p>The <code>minLength</code> attribute specifies the minimum number of characters required in a <code>value</code> property. this attribute MAY appear along with the <code>maxLength</code> attribute. This is an OPTIONAL property and it MAY be ignored.</p></div>
 </div>
 <div class="sect4 xxx">
 <h5 id="_code_options_code">3.3.2.6. <code>options</code></h5>
-<div class="paragraph"><p>The <code>options</code> element contains a set of possible values accessible either byValue (e.g. <code>inline</code>) or byReference (e.g. via <code>link.href</code>) and can be used to provide a constrained list of possble values for a <code>property</code> field. See <a href="#options-element">The <code>options</code> Element</a> for details.</p></div>
+<div class="paragraph"><p>The <code>options</code> element contains a set of possible values accessible either byValue (e.g. <code>inline</code>) or byReference (e.g. via <code>link.href</code>) and can be used to provide a constrained list of possible values for a <code>property</code> field. See <a href="#options-element">The <code>options</code> element</a> for details.</p></div>
 <div class="paragraph"><p>Support for the <code>options</code> object of a <code>property</code> element is OPTIONAL. If the client does not understand or cannot parse the <code>options</code> element, the <code>options</code> element SHOULD be ignored and the corresponding <code>property</code> SHOULD be treated as a simple text input element.</p></div>
 </div>
 <div class="sect4 xxx">
@@ -1027,7 +1027,7 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </div>
 <div class="sect4 xxx">
 <h5 id="_code_rows_code">3.3.2.8. <code>rows</code></h5>
-<div class="paragraph"><p>The <code>rows</code> attribute specifies the expected maximum number of lines to display when rendering the input box. This attribute applies to the associated <code>property</code> element when that <code>property</code> element&#8217;s <code>type</code> attribute is set to <code>"textarea"</code>. The <code>cols</code> attribute is a non-negative integer greater than zero. If the <code>cols</code> attribute is missing or contains an invalid value, it can be assumed to be set to the value of <code>5</code>. If the <code>type</code> attribute of the associated <code>property</code> element is not set to <code>"textarea"</code>, this attribute SHOULD be ignored. This is an OPTIONAL attribute and it MAY be ignored. The <code>rows</code> attribute SHOULD appear along with the <code>cols</code> attribute.</p></div>
+<div class="paragraph"><p>The <code>rows</code> attribute specifies the expected maximum number of lines to display when rendering the input box. This attribute applies to the associated <code>property</code> element when that <code>property</code> element&#8217;s <code>type</code> attribute is set to <code>"textarea"</code>. The <code>rows</code> attribute is a non-negative integer greater than zero. If the <code>rows</code> attribute is missing or contains an invalid value, it can be assumed to be set to the value of <code>5</code>. If the <code>type</code> attribute of the associated <code>property</code> element is not set to <code>"textarea"</code>, this attribute SHOULD be ignored. This is an OPTIONAL attribute and it MAY be ignored. The <code>rows</code> attribute SHOULD appear along with the <code>cols</code> attribute.</p></div>
 </div>
 <div class="sect4 xxx">
 <h5 id="_code_step_code">3.3.2.9. <code>step</code></h5>
@@ -1035,8 +1035,8 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </div>
 <div class="sect4 xxx">
 <h5 id="_code_type_code">3.3.2.10. <code>type</code></h5>
-<div class="paragraph"><p>The <code>type</code> attribute controls the data type of the <code>property</code> value. It is an enumerated attribute. The <code>type</code> can also used to determine the interface control to display for user input. This is an OPTIONAL element. If the <code>type</code> value is not supported by the document consumer, contains a value not understood by the consumer, and/or is missing, the the document consumer SHOULD assume the <code>type</code> attribute is set to the default value: <code>"text"</code> and render the display input as a simple text box.</p></div>
-<div class="paragraph"><p>Possible settings for the <code>type</code> value adn teh expected contents to be returned inthe  are:
+<div class="paragraph"><p>The <code>type</code> attribute controls the data type of the <code>property</code> value. It is an enumerated attribute. The <code>type</code> can also used to determine the interface control to display for user input. This is an OPTIONAL element. If the <code>type</code> value is not supported by the document consumer, contains a value not understood by the consumer, and/or is missing, the document consumer SHOULD assume the <code>type</code> attribute is set to the default value: <code>"text"</code> and render the display input as a simple text box.</p></div>
+<div class="paragraph"><p>Possible settings for the <code>type</code> value and the expected contents to be returned are:
   <code>hidden</code>,
   <code>text</code>,
   <code>textarea</code>,
@@ -1083,8 +1083,8 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </li>
 </ul></div>
 <div class="paragraph"><p>The <code>options</code> control can also be used in machine-to-machine interactions where it is important to provide the client information about the possible values for a <code>property</code>.</p></div>
-<div class="paragraph"><p>The <code>options</code> element contains a set of possible values accessible either <em>by value</em> (e.g. <code>options.inline</code>) or <em>by reference</em> (e.g. via <code>options.link.href</code>) and can be used to provide a constrained list of possble values for a <code>property</code> field. If, when first loaded, the <strong>HAL-FORMS</strong> template has a pre-set value in the corresponding <code>property.options.selectedValues</code> array attribute, the UI MAY render the form with selected value(s) already chosen.</p></div>
-<div class="paragraph"><p>Whatever value is ultimately selected gets placed into the <code>property.options.selectedValues</code> array attribute. When sending the results of the completed <strong>HAL-FORMS</strong> to the server, content <code>property.options.selectedValues</code> is serialized in a manner compliant with the media type value in the <code>contentType</code> attribute (e.g. <code>appilcation/json</code>, <code>application/x-www-form-urlencded</code>, etc.).</p></div>
+<div class="paragraph"><p>The <code>options</code> element contains a set of possible values accessible either <em>by value</em> (e.g. <code>options.inline</code>) or <em>by reference</em> (e.g. via <code>options.link.href</code>) and can be used to provide a constrained list of possible values for a <code>property</code> field. If, when first loaded, the <strong>HAL-FORMS</strong> template has a pre-set value in the corresponding <code>property.options.selectedValues</code> array attribute, the UI MAY render the form with selected value(s) already chosen.</p></div>
+<div class="paragraph"><p>Whatever value is ultimately selected gets placed into the <code>property.options.selectedValues</code> array attribute. When sending the results of the completed <strong>HAL-FORMS</strong> to the server, content <code>property.options.selectedValues</code> is serialized in a manner compliant with the media type value in the <code>contentType</code> attribute (e.g. <code>application/json</code>, <code>application/x-www-form-urlencoded</code>, etc.).</p></div>
 <div class="admonitionblock">
 <table><tr>
 <td class="icon">
@@ -1102,7 +1102,7 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
   "_templates" : {
     "default" : {
       ...
-      "contentType" : "application/json|application/x-www-form-ulencoded",
+      "contentType" : "application/json|application/x-www-form-urlencoded",
       "properties" : [
         {
           "name" : "...",
@@ -1306,7 +1306,7 @@ Multiple Return Values
 </div>
 <div class="sect4 xxx">
 <h5 id="options-inline-nvp">3.4.4.2. An Inline Array of Name/Value Pairs</h5>
-<div class="paragraph"><p>Below is an example of the <code>options</code> control using an <em>Inline Array of Name/Value Paris</em>.</p></div>
+<div class="paragraph"><p>Below is an example of the <code>options</code> control using an <em>Inline Array of Name/Value Pairs</em>.</p></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>{
@@ -1526,7 +1526,7 @@ Content-Length: nn
 </div>
 <div class="sect4 xxx">
 <h5 id="options-return-values">3.4.4.6. Multiple Return Values</h5>
-<div class="paragraph"><p>You can signal the minimum and maximum number of items that can be selected using the <code>options.minItems</code> and <code>options.maxItems</code> attributes. By default, these attributes are <code>options.minItems=0</code> and <code>options.maxItems</code> is unbounded (e.g. there are no limits). Client applications SHOULD validate the number of seleted values using these attributes. This can apply whether the source list comes from <code>inline</code> or <code>link</code>. These attributes are OPTIONAL and MAY be ignored by the client.</p></div>
+<div class="paragraph"><p>You can signal the minimum and maximum number of items that can be selected using the <code>options.minItems</code> and <code>options.maxItems</code> attributes. By default, these attributes are <code>options.minItems=0</code> and <code>options.maxItems</code> is unbounded (e.g. there are no limits). Client applications SHOULD validate the number of selected values using these attributes. This can apply whether the source list comes from <code>inline</code> or <code>link</code>. These attributes are OPTIONAL and MAY be ignored by the client.</p></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>{
@@ -1643,7 +1643,7 @@ Content-Length: nn
       "templated": false
     },
     "http://api.example.org/rels/filter": {
-      "href": "http://api.example.org/task-list/",
+      "href": "http://api.example.org/rels/filter",
       "title": "Filter Tasks",
       "templated": false
     },
@@ -1678,7 +1678,7 @@ http://api.example.org/task-list/?title=sample&amp;completed=false</code></pre>
 <div class="title">Note</div>
 </td>
 <td class="content">
-<div class="paragraph"><p>The HAL media type already defines support for parameterized HTTP GET queries using URITemplates. However, the <strong>HAL-FORMS</strong> document can be treated as an alternate implementation for GET queries that include additional constraints such as prompts, regular expression validators, etc.</p></div>
+<div class="paragraph"><p>The HAL media type already defines support for parameterized HTTP GET queries using URI templates. However, the <strong>HAL-FORMS</strong> document can be treated as an alternate implementation for GET queries that include additional constraints such as prompts, regular expression validators, etc.</p></div>
 </td>
 </tr></table>
 </div>
@@ -1719,7 +1719,7 @@ http://api.example.org/task-list/?title=sample&amp;completed=false</code></pre>
 <div class="olist arabic"><ol class="arabic">
 <li>
 <p>
-Servers emit HAL responses that contain <code>rel</code> values which are valid URLs that return <strong>HAL-FORMS</strong> documents.
+Servers emit HAL responses that contain <code>rel</code> values which are valid URLs that return <strong>HAL-FORMS</strong> documents. The <code>rel</code> values MAY contain the <code>type</code> property with value <code>application/prs.hal-forms+json</code> to indicate <strong>HAL-FORMS</strong> documents as return value.
 </p>
 </li>
 <li>
