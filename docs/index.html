@@ -915,7 +915,7 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 </div>
 <div class="sect3">
 <h4 id="_code_key_code">3.2.2. <code>key</code></h4>
-<div class="paragraph"><p>The unique identifier for this template element. This is a REQUIRED element. For this release, the only pre-defined value for <code>key</code> is <code>"default"</code>. If there is only one element in the collection the <code>key</code> value MUST be set to <code>"default"</code>. Clients MAY ignore additional entries in the collection. If this element is missing, set to empty or is unparsable, this template object SHOULD be ignored.</p></div>
+<div class="paragraph"><p>The unique identifier for this template element. This is a REQUIRED element. For this release, the only pre-defined value for <code>key</code> is <code>"default"</code>. For exactly one element in the collection the <code>key</code> value MUST be set to <code>"default"</code>. Clients MAY ignore additional entries in the collection. If this element is missing, set to empty or is unparsable, this template object SHOULD be ignored.</p></div>
 </div>
 <div class="sect3">
 <h4 id="_code_method_code">3.2.3. <code>method</code></h4>
