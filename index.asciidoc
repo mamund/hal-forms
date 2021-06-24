@@ -832,7 +832,7 @@ Authors should be aware that a future version of this specification MAY add new 
 
 == References
  * [[hal]] [HAL] Kelly, M. "HAL - Hypertext Application Language", September 2013, http://stateless.co/hal_specification.html
- * [[hal-spec]] [HALSPEC] Kelly, M. "JSON Hypertext Application Language" (Draft), July 2015 https://tools.ietf.org/html/draft-kelly-json-hal-07
+ * [[hal-spec]] [HALSPEC] Kelly, M. "JSON Hypertext Application Language" (Draft), May 2016 https://tools.ietf.org/html/draft-kelly-json-hal
  * [[repo]] [REPO] Github, "HAL-FORMS", https://github.com/RWCBook/hal-forms
  * [[rfc2119]] [RFC2119] Bradner, S.,"Key words for use in RFCs to Indicate Requirement Levels", March 1997, http://tools.ietf.org/html/rfc2119
  * [[rfc7159]] [RFC7159] Bray, T. "The JavaScript Object Notation (JSON) Data Interchange Format", March 2014, https://tools.ietf.org/html/rfc7159
