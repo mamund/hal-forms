@@ -194,7 +194,7 @@ The +step+ attribute specifies the interval between legal numbers in a +value+ p
 ===== +type+
 The +type+ attribute controls the data type of the +property+ value. It is an enumerated attribute. The +type+ can also used to determine the interface control to display for user input. This is an OPTIONAL element. If the +type+ value is not supported by the document consumer, contains a value not understood by the consumer, and/or is missing, the the document consumer SHOULD assume the +type+ attribute is set to the default value: +"text"+ and render the display input as a simple text box. 
 
-Possible settings for the +type+ value adn teh expected contents to be returned inthe  are: 
+Possible settings for the +type+ value and the expected contents to be returned by the client are: 
   +hidden+, 
   +text+,
   +textarea+,
