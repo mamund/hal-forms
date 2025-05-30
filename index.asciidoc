@@ -71,6 +71,7 @@ The media type identifier string for *HAL-FORMS* documents is: +application/prs.
 == Properties of a HAL-FORMS Document
 All *HAL-FORMS* documents MUST be valid JSON documents. A well-formed *HAL-FORMS* document has two top-level objects: +_links+ and +_templates+. The following is a summary of the structure of the *HAL-FORMS* media type.
 
+[[links-element]]
 === The +_links+ Collection
 The +_links+ collection contains a dictionary collection of +link+ elements associated with the *HAL-FORMS* document. 
 
@@ -107,7 +108,7 @@ An array of one or more anonymous +property+ elements (see <<property-element, T
 ==== +target+
 Contains the identifier of the target URL for the client to use when submitting the completed HAL-FORMS template. For example, if the client should submit the completed template to the following URL: +http://api.example.org/jobs/+ then the +target+ proprety would be +target="http://api.example.org/jobs/"+. 
 
-This is an OPTIONAL property. If this property is not understood by the recipient, left blank, or contains an invalid URL string, it SHOULD be ignored.
+This is an OPTIONAL property. If this property is not understood by the recipient, left blank, or contains an invalid URL string, it SHOULD be ignored. In that case, the target URL for requests to be submitted is the +href+ attribute of the +self+ link contained in the <<links-element,+_links+ collection>>. If neither a +target+ is specified not a +self+ link can be found, the template SHOULD be ignored.
 
 The +target+ property holds the same information as the <<htarget-query-string, +_htarget+>> query string property. If both the +target+ prorperty and the +_htarget+ query string value appear in the same message, the +_htarget+ query string SHOULD be used and the +target+ property SHOULD be ignored.
 
