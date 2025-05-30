@@ -91,13 +91,12 @@ NOTE: Additional properties MAY appear within a +link+ element. *HAL-FORMS* clie
 === The +_templates+ Collection
 The +_templates+ collection describes the available state transition details including the HTTP method, message content-type, and arguments for the transition. This is a REQUIRED element. If the *HAL-FORMS* document does not contain this element or the contents are unrecognized or unparsable, the *HAL-FORMS* document SHOULD be ignored.
 
-The +_templates+ element contains a dictionary collection of +template+ objects. A valid *HAL-FORMS* document has at least one entry in the +_templates+ dictionary collection. Each +template+ contains the following possible properties: 
+The +_templates+ element contains a dictionary collection of +template+ objects. A valid *HAL-FORMS* document has at least one entry in the +_templates+ dictionary collection. For this release, the only pre-defined key for those entries is +"default"+. If there is only one element in the collection the entry's key SHOULD be set to +"default"+. If no +"default"+ key is present, clients SHOULD assume the first element to be the default template. Clients MAY ignore additional entries in the collection. If this element is missing, set to empty or is unparsable, this template object SHOULD be ignored.
+
+Each +template+ contains the following possible properties: 
 
 ==== +contentType+
 The value of +contentType+ is the media type the client SHOULD use when sending a request body to the server. This is an OPTIONAL element. The value of this property SHOULD be set to +"application/json"+ or +"application/x-www-form-urlencoded"+. It MAY be set to other valid media-type values. If the +contentType+ property is missing, is set to empty, or contains an unrecognized value, the client SHOULD act is if the +contentType+ is set to +"application/json"+. See <<encoding-request-bodies,Encoding Request Bodies>> for details.
-
-==== +key+
-The unique identifier for this template element. This is a REQUIRED element. For this release, the only pre-defined value for +key+ is +"default"+. If there is only one element in the collection the +key+ value MUST be set to +"default"+. Clients MAY ignore additional entries in the collection. If this element is missing, set to empty or is unparsable, this template object SHOULD be ignored. 
 
 ==== +method+
 The HTTP method the client SHOULD use when the service request. Any valid HTTP method is allowed. This is a REQUIRED element. If the value is empty or is not understood by the client, the value MUST be treated as an HTTP GET.
