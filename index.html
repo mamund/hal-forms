@@ -780,7 +780,7 @@ Last Updated
 </dt>
 <dd>
 <p>
-  2021-10-08
+  2025-05-30
 </p>
 </dd>
 </dl></div>
@@ -873,7 +873,7 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 <div class="sectionbody">
 <div class="paragraph"><p>All <strong>HAL-FORMS</strong> documents MUST be valid JSON documents. A well-formed <strong>HAL-FORMS</strong> document has two top-level objects: <code>_links</code> and <code>_templates</code>. The following is a summary of the structure of the <strong>HAL-FORMS</strong> media type.</p></div>
 <div class="sect2">
-<h3 id="_the_code__links_code_collection">3.1. The <code>_links</code> Collection</h3>
+<h3 id="links-element">3.1. The <code>_links</code> Collection</h3>
 <div class="paragraph"><p>The <code>_links</code> collection contains a dictionary collection of <code>link</code> elements associated with the <strong>HAL-FORMS</strong> document.</p></div>
 <div class="sect3">
 <h4 id="_code__links_code">3.1.1. <code>_links</code></h4>
@@ -908,31 +908,28 @@ interpreted as described in <a href="#rfc2119">[RFC2119]</a>.</p></div>
 <div class="sect2">
 <h3 id="templates-element">3.2. The <code>_templates</code> Collection</h3>
 <div class="paragraph"><p>The <code>_templates</code> collection describes the available state transition details including the HTTP method, message content-type, and arguments for the transition. This is a REQUIRED element. If the <strong>HAL-FORMS</strong> document does not contain this element or the contents are unrecognized or unparsable, the <strong>HAL-FORMS</strong> document SHOULD be ignored.</p></div>
-<div class="paragraph"><p>The <code>_templates</code> element contains a dictionary collection of <code>template</code> objects. A valid <strong>HAL-FORMS</strong> document has at least one entry in the <code>_templates</code> dictionary collection. Each <code>template</code> contains the following possible properties:</p></div>
+<div class="paragraph"><p>The <code>_templates</code> element contains a dictionary collection of <code>template</code> objects. A valid <strong>HAL-FORMS</strong> document has at least one entry in the <code>_templates</code> dictionary collection. For this release, the only pre-defined key for those entries is <code>"default"</code>. If there is only one element in the collection the entry&#8217;s key SHOULD be set to <code>"default"</code>. If no <code>"default"</code> key is present, clients SHOULD assume the first element to be the default template. Clients MAY ignore additional entries in the collection. If this element is missing, set to empty or is unparsable, this template object SHOULD be ignored.</p></div>
+<div class="paragraph"><p>Each <code>template</code> contains the following possible properties:</p></div>
 <div class="sect3">
 <h4 id="_code_contenttype_code">3.2.1. <code>contentType</code></h4>
 <div class="paragraph"><p>The value of <code>contentType</code> is the media type the client SHOULD use when sending a request body to the server. This is an OPTIONAL element. The value of this property SHOULD be set to <code>"application/json"</code> or <code>"application/x-www-form-urlencoded"</code>. It MAY be set to other valid media-type values. If the <code>contentType</code> property is missing, is set to empty, or contains an unrecognized value, the client SHOULD act is if the <code>contentType</code> is set to <code>"application/json"</code>. See <a href="#encoding-request-bodies">Encoding Request Bodies</a> for details.</p></div>
 </div>
 <div class="sect3">
-<h4 id="_code_key_code">3.2.2. <code>key</code></h4>
-<div class="paragraph"><p>The unique identifier for this template element. This is a REQUIRED element. For this release, the only pre-defined value for <code>key</code> is <code>"default"</code>. If there is only one element in the collection the <code>key</code> value MUST be set to <code>"default"</code>. Clients MAY ignore additional entries in the collection. If this element is missing, set to empty or is unparsable, this template object SHOULD be ignored.</p></div>
-</div>
-<div class="sect3">
-<h4 id="_code_method_code">3.2.3. <code>method</code></h4>
+<h4 id="_code_method_code">3.2.2. <code>method</code></h4>
 <div class="paragraph"><p>The HTTP method the client SHOULD use when the service request. Any valid HTTP method is allowed. This is a REQUIRED element. If the value is empty or is not understood by the client, the value MUST be treated as an HTTP GET.</p></div>
 </div>
 <div class="sect3">
-<h4 id="_code_properties_code">3.2.4. <code>properties</code></h4>
+<h4 id="_code_properties_code">3.2.3. <code>properties</code></h4>
 <div class="paragraph"><p>An array of one or more anonymous <code>property</code> elements (see <a href="#property-element">The <code>property</code> Element</a>) that each describe a parameter for the associated state transition. This is an OPTIONAL element. If the array is missing or empty, the <code>properties</code> collection MUST be treated as an empty set of parameters&#8201;&#8212;&#8201;meaning that the transition is meant to be executed without passing any parameters.</p></div>
 </div>
 <div class="sect3">
-<h4 id="_code_target_code">3.2.5. <code>target</code></h4>
+<h4 id="_code_target_code">3.2.4. <code>target</code></h4>
 <div class="paragraph"><p>Contains the identifier of the target URL for the client to use when submitting the completed HAL-FORMS template. For example, if the client should submit the completed template to the following URL: <code>http://api.example.org/jobs/</code> then the <code>target</code> proprety would be <code>target="http://api.example.org/jobs/"</code>.</p></div>
-<div class="paragraph"><p>This is an OPTIONAL property. If this property is not understood by the recipient, left blank, or contains an invalid URL string, it SHOULD be ignored.</p></div>
+<div class="paragraph"><p>This is an OPTIONAL property. If this property is not understood by the recipient, left blank, or contains an invalid URL string, it SHOULD be ignored. In that case, the target URL for requests to be submitted is the <code>href</code> attribute of the <code>self</code> link contained in the <a href="#links-element"><code>_links</code> collection</a>. If neither a <code>target</code> is specified not a <code>self</code> link can be found, the template SHOULD be ignored.</p></div>
 <div class="paragraph"><p>The <code>target</code> property holds the same information as the <a href="#htarget-query-string"><code>_htarget</code></a> query string property. If both the <code>target</code> prorperty and the <code>_htarget</code> query string value appear in the same message, the <code>_htarget</code> query string SHOULD be used and the <code>target</code> property SHOULD be ignored.</p></div>
 </div>
 <div class="sect3">
-<h4 id="_code_title_code">3.2.6. <code>title</code></h4>
+<h4 id="_code_title_code">3.2.5. <code>title</code></h4>
 <div class="paragraph"><p>A human-readable string that can be used to identify this template. This is a valid JSON string. This is an OPTIONAL element. If it does not exist or is unparsable, consumers MAY use the <code>key</code> value of the template as the value for <code>title</code>.</p></div>
 </div>
 </div>
@@ -1970,7 +1967,7 @@ Greg Turnquist.</p></div>
 <div id="footer">
 <div id="footer-text">
 Last updated
- 2021-10-08 11:37:14 EDT
+ 2025-05-30 15:12:47 EDT
 </div>
 </div>
 </body>
